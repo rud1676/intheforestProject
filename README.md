@@ -5,7 +5,8 @@
 ### sysmon and winlogbeat
 
 - sysmon: v12.03
-- winlogbeat: v7.9.1
+- metricbeat oss: v7.9.1
+- wazuh:
 
 ### gui interface
 

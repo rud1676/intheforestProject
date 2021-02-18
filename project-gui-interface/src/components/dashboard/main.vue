@@ -1,5 +1,9 @@
 <template>
-  <v-container class="py-2 px-1" fluid style="height: 100vh">
+  <v-container
+    class="py-2 px-1 d-flex align-center"
+    fluid
+    style="height: 100vh"
+  >
     <v-card class="mx-auto" max-width="300" tile>
       <v-list rounded>
         <v-list-item-group color="primary">
@@ -23,7 +27,9 @@ export default {
     items: [
       {
         text: "Sysmon-All-Dashboard",
-        icon: "mdi-clock",
+        icon: "mdi-dashboard",
+        descript:
+          "Integrated dashboard about Sysmon - ProcessCreate,DNSQuery,FileCreate and so on..",
         router_name: "sysmon",
       },
       { text: "LOL", icon: "mdi-account", router_name: "sysmon" },
