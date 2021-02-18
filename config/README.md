@@ -1,7 +1,8 @@
-# sysmon&winlogbeat config
+# sysmon&metricbeat wazuh config
 
 - ver 1.0 => 기존 설정 그대로 씀.
 - [ver 1.01](#02.03)
+- [ver 1.02](#02.18) wazuh + sysmon + metricbeat로 변경(metricbeat는 활용도에 따라 변할 수 있음)
 
 ## about sysmon config
 
@@ -193,12 +194,14 @@ ClipRenew => 온라인 파일 분석 서비스
 
 ---
 
-## FileCreateTime
+### 02.18
 
-include
+**DNSQuery**
 
 ```
-C:\User에 만들어지는
-.exe로 만들어지는
-harddiskvolumeshadowcopy
+.googleapis.com / google로 실행할때 알게모르게 호출하는 주소임 따라서 제외
 ```
+
+## ossec.con (wazuh agent)
+
+1. sysmon 설정 추가

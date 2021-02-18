@@ -1016,6 +1016,7 @@
 				<QueryName condition="end with">.exelator.com</QueryName>				<!--Ads:Nielson Marketing Cloud-->
 				<QueryName condition="end with">.google-analytics.com</QueryName>				<!--Ads:Google | Microsoft default exclusion-->
 				<QueryName condition="end with">.googleadservices.com</QueryName>				<!--Google-->
+				<QueryName condition="end with">.googleapis.com</QueryName>				<!--Google api-->
 				<QueryName condition="end with">.googlesyndication.com</QueryName>				<!--Ads:Google, sometimes called during malicious ads, but not directly responsible | Microsoft default exclusion [ https://www.hackread.com/wp-content/uploads/2018/06/Bitdefender-Whitepaper-Zacinlo.pdf ]-->
 				<QueryName condition="end with">.googletagmanager.com</QueryName>				<!--Google-->
 				<QueryName condition="end with">.googlevideo.com</QueryName>				<!--Google | Microsoft default exclusion-->

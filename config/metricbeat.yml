@@ -1,32 +1,61 @@
-###################### Winlogbeat Configuration Example ########################
+--- # ---------------------------- Elasticsearch Output ----------------------------
 
-# This file is an example configuration file highlighting only the most common
-# options. The winlogbeat.reference.yml file from the same directory contains
-# all the supported options with more comments. You can use it as a reference.
+####################### Metricbeat Configuration Example #######################
 #
-# You can find the full configuration reference here:
-# https://www.elastic.co/guide/en/beats/winlogbeat/index.html
-
-# ======================== Winlogbeat specific options =========================
-
-# event_logs specifies a list of event logs to monitor as well as any
-# accompanying options. The YAML data type of event_logs is a list of
-# dictionaries.
+## This file is an example configuration file highlighting only the most common
+## options. The metricbeat.reference.yml file from the same directory contains all the
+## supported options with more comments. You can use it as a reference.
+##
+## You can find the full configuration reference here:
+## https://www.elastic.co/guide/en/beats/metricbeat/index.html
 #
-# The supported keys are name (required), tags, fields, fields_under_root,
-# forwarded, ignore_older, level, event_id, provider, and include_xml. Please
-# visit the documentation for the complete details of each option.
-# https://go.es.io/WinlogbeatConfig
+## =========================== Modules configuration ============================
+#
+metricbeat.modules:
+  #  - module: windows
+  #    metricsets:
+  #      - service
+  #    period: 6h
+  #  - module: windows
+  #    metricsets: [perfmon]
+  #    period: 10s
+  #    perfmon.ignore_non_existent_counters: true
+  #    perfmon.group_measurements_by_instance: true
+  #    perfmon.queries:
+  #      - object: "Process"
+  #        instance: ["svchost*", "conhost*"]
+  #        counters:
+  #          - name: "% Processor Time"
+  #            field: time.processor.pct
+  #            format: "float"
+  #          - name: "Thread Count"
+  #            field: thread_count
+  #          - name: "IO Read Operations/sec"
+  #      - object: "PhysicalDisk"
+  #        field: "disk"
+  #        instance: "*"
+  #        counters:
+  #          - name: "Disk Writes/sec"
+  #          - name: "% Disk Write Time"
+  #            field: "write_time"
+  #            format: "float"
+  - module: system
+    metricsets:
+      - process
+      - process_summary
+      - uptime
+      - service
+    enabled: true
+    period: 15s
+    processes: [".*"]
+    process.include_top_n:
+      by_cpu: 10 # include top 5 processes by CPU
 
-winlogbeat.event_logs:
-  - name: Microsoft-Windows-Sysmon/Operational
-  - name: System
-# ====================== Elasticsearch template settings =======================
+# Period on which files under path should be checked for changes
+#reload.period: 10s
 
-setup.template.settings:
-  index.number_of_shards: 1
-  #index.codec: best_compression
-  #_source.enabled: false
+# ======================= Elasticsearch template setting =======================
+#_source.enabled: false
 
 # ================================== General ===================================
 
@@ -60,13 +89,14 @@ setup.template.settings:
 # Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
 # This requires a Kibana endpoint configuration.
 #setup.kibana:
-
 # Kibana Host
 # Scheme and port can be left out and will be set to the default (http and 5601)
 # In case you specify and additional path, the scheme is required: http://localhost:5601/path
 # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
-#host: "localhost:5601"
-
+# host: "34.64.140.231:443"
+#ssl.certificate_authorities: ["../root-ca.pem"]
+#ssl.certificate: "../kibana.pem"
+#ssl.key: "../kibana.key"
 # Kibana Space ID
 # ID of the Kibana Space into which the dashboards should be loaded. By default,
 # the Default Space will be used.
@@ -74,38 +104,49 @@ setup.template.settings:
 
 # =============================== Elastic Cloud ================================
 
-# These settings simplify using Winlogbeat with the Elastic Cloud (https://cloud.elastic.co/).
+# These settings simplify using Metricbeat with the Elastic Cloud (https://cloud.elastic.co/).
 
 # The cloud.id setting overwrites the `output.elasticsearch.hosts` and
 # `setup.kibana.host` options.
 # You can find the `cloud.id` in the Elastic Cloud web UI.
-#cloud.id: "i-o-optimized-deployment:ZWFzdHVzMi5henVyZS5lbGFzdGljLWNsb3VkLmNvbTo5MjQzJDVkZTNmODU5NmEyNzQ4Yzg5MzQ0MjcyNzZjOWEwMGVkJGExMjg0ODZjYWRkYTQxOWI4ZjQ3MWE5N2IyMDE0NWY0"
+#cloud.id:
 
 # The cloud.auth setting overwrites the `output.elasticsearch.username` and
 # `output.elasticsearch.password` settings. The format is `<user>:<pass>`.
-#cloud.auth: "elastic:M2gAWoF0Qvz8psVt3WqedwLm"
+#cloud.auth:
 
 # ================================== Outputs ===================================
 
 # Configure what output to use when sending the data collected by the beat.
 
-# ---------------------------- Elasticsearch Output ----------------------------
-#output.elasticsearch:
-# Array of hosts to connect to.
-#hosts: ["localhost:9200"]
-
+output.elasticsearch:
+  # Array of hosts to connect to.
+  hosts: ["34.64.140.231:9200"]
+  protocol: "http"
+  #  hosts: ["http://34.64.140.231:9200"]
+  ssl.verification_mode: none
+#  protocol: "http"
+#  username: "admin"
+#  password: "admin"
+#setup.template.json.enabled: true
+#setup.template.json.path: "./template.json"
+#setup.template.json.name: "metric"
+#setup.ilm.overwrite: true
+#setup.ilm.enable: false
+#https://discuss.opendistrocommunity.dev/t/logstash-setting/197/9
 # Protocol - either `http` (default) or `https`.
 #protocol: "https"
-
 # Authentication credentials - either API key or username/password.
 #api_key: "id:api_key"
 #username: "elastic"
 #password: "changeme"
 
 # ------------------------------ Logstash Output -------------------------------
-output.logstash:
-  # The Logstash hosts
-  hosts: ["34.64.140.231:5044"]
+#output.logstash:
+# The Logstash hosts
+#ssl.certificate_authorities: ["../root-ca.pem"]
+#ssl.certificate: "../logstash.pem"
+#ssl.key: "../logstash.key"
 
 # Optional SSL. By default is off.
 # List of root certificates for HTTPS server verifications
@@ -118,10 +159,14 @@ output.logstash:
 #ssl.key: "/etc/pki/client/cert.key"
 
 # ================================= Processors =================================
+
+# Configure processors to enhance or manipulate events generated by the beat.
+
 processors:
-  - add_host_metadata:
-      when.not.contains.tags: forwarded
+  - add_host_metadata: ~
   - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
 # ================================== Logging ===================================
 
 # Sets log level. The default log level is info.
@@ -134,7 +179,7 @@ processors:
 #logging.selectors: ["*"]
 
 # ============================= X-Pack Monitoring ==============================
-# Winlogbeat can export internal metrics to a central Elasticsearch monitoring
+# Metricbeat can export internal metrics to a central Elasticsearch monitoring
 # cluster.  This requires xpack monitoring to be enabled in Elasticsearch.  The
 # reporting is disabled by default.
 
@@ -142,7 +187,7 @@ processors:
 #monitoring.enabled: false
 
 # Sets the UUID of the Elasticsearch cluster under which monitoring data for this
-# Winlogbeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
+# Metricbeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
 # is enabled, the UUID is derived from the Elasticsearch cluster referenced by output.elasticsearch.
 #monitoring.cluster_uuid:
 
@@ -157,12 +202,12 @@ processors:
 
 # ============================== Instrumentation ===============================
 
-# Instrumentation support for the winlogbeat.
+# Instrumentation support for the metricbeat.
 #instrumentation:
-# Set to true to enable instrumentation of winlogbeat.
+# Set to true to enable instrumentation of metricbeat.
 #enabled: false
 
-# Environment in which winlogbeat is running on (eg: staging, production, etc.)
+# Environment in which metricbeat is running on (eg: staging, production, etc.)
 #environment: ""
 
 # APM Server hosts to report instrumentation results to.
