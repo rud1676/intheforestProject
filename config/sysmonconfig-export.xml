@@ -252,8 +252,8 @@
 				<Image condition="is">C:\Windows\System32\SppExtComObj.Exe</Image>
 				<Image condition="is">C:\Windows\SysWOW64\WerFault.exe</Image>
 				<Image condition="is">C:\Windows\SysWOW64\runonce.exe</Image>
+				<Image condition="is">C:\Windows\Sysmon64.exe</Image>
 				<Image condition="is">C:\Windows\System32\ClipRenew.exe</Image>
-				<Image condition="contains">Sysmon64.exe</Image>
 				<Image condition="contains">GoogleCrashHandler</Image>
 				<Image condition="contains">MpCmdRun.exe</Image>
 				<Image condition="contains">TiWorker.exe</Image>
@@ -965,10 +965,13 @@
 				<QueryName condition="is">clients4.google.com</QueryName>				<!--Google-->
 				<QueryName condition="is">clients5.google.com</QueryName>				<!--Google-->
 				<QueryName condition="is">clients6.google.com</QueryName>				<!--Google-->
+				<QueryName condition="is">ad.wappalyzer.com</QueryName>				<!--wappalyzer-->
+				<QueryName condition="is">aa.google.com</QueryName>				<!--google-->
 				<QueryName condition="is">safebrowsing.googleapis.com</QueryName>				<!--Google-->
 				<!--Goodlist CDN-->
 				<QueryName condition="end with">.akadns.net</QueryName>				<!--AkamaiCDN, extensively used by Microsoft | Microsoft default exclusion-->
 				<QueryName condition="end with">.netflix.com</QueryName>
+				<QueryName condition="end with">googleapis.com</QueryName>				<!--google api-->
 				<QueryName condition="end with">aspnetcdn.com</QueryName>				<!--Microsoft [ https://docs.microsoft.com/en-us/aspnet/ajax/cdn/overview ]-->
 				<QueryName condition="is">ajax.googleapis.com</QueryName>
 				<QueryName condition="is">cdnjs.cloudflare.com</QueryName>				<!--Cloudflare: Hosts popular javascript libraries-->
@@ -1016,7 +1019,6 @@
 				<QueryName condition="end with">.exelator.com</QueryName>				<!--Ads:Nielson Marketing Cloud-->
 				<QueryName condition="end with">.google-analytics.com</QueryName>				<!--Ads:Google | Microsoft default exclusion-->
 				<QueryName condition="end with">.googleadservices.com</QueryName>				<!--Google-->
-				<QueryName condition="end with">.googleapis.com</QueryName>				<!--Google api-->
 				<QueryName condition="end with">.googlesyndication.com</QueryName>				<!--Ads:Google, sometimes called during malicious ads, but not directly responsible | Microsoft default exclusion [ https://www.hackread.com/wp-content/uploads/2018/06/Bitdefender-Whitepaper-Zacinlo.pdf ]-->
 				<QueryName condition="end with">.googletagmanager.com</QueryName>				<!--Google-->
 				<QueryName condition="end with">.googlevideo.com</QueryName>				<!--Google | Microsoft default exclusion-->

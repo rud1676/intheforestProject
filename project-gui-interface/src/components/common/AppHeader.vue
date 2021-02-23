@@ -38,25 +38,24 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-
   </div>
 </template>
 
 <script>
 export default {
   data: () => ({
-    cards: ['Today', 'Yesterday'],
+    cards: ["Today", "Yesterday"],
     drawer: null,
     links: [
-      ['mdi-view-dashboard', 'Dashboard', '/dashboard'],
-      ['mdi-magnify', 'Discover', '/discover'],
-      ['mdi-clock', 'check', '/check'],
-      ['mdi-function', 'function', '/function'],
-      ['mdi-tune', 'Management', '/function'],
+      ["mdi-view-dashboard", "Dashboard", "/dashboard"],
+      ["mdi-magnify", "Discover", "/discover"],
+      ["mdi-clock", "check", "/check"],
+      ["mdi-function", "function", "/function"],
+      ["mdi-tune", "Management", "/5444"],
     ],
   }),
   methods: {
-    tolink: function(l) {
+    tolink: function (l) {
       console.log(l);
       this.$router.push({ path: l });
     },

@@ -17,9 +17,9 @@ const routes = [
     component: () => import("@/views/Mainpage.vue"),
     children: [
       {
-        path: "sysmon",
-        name: "sysmon",
-        component: () => import("@/components/dashboard/testdashboard.vue")
+        path: "dashmain",
+        name: "dashmain",
+        component: () => import("@/components/dashboard/dashMain.vue")
       },
       {
         path: "/",

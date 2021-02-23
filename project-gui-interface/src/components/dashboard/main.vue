@@ -7,7 +7,7 @@
     <v-card class="mx-auto" max-width="300" tile>
       <v-list rounded>
         <v-list-item-group color="primary">
-          <v-list-item v-for="(item, i) in items" :key="i" @click="print(item)">
+          <v-list-item v-for="(item, i) in items" :key="i" @click="link(item)">
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
@@ -26,20 +26,24 @@ export default {
   data: () => ({
     items: [
       {
-        text: "Sysmon-All-Dashboard",
-        icon: "mdi-dashboard",
+        text: "Sysmon-Dashboard",
+        icon: "mdi-calendar-account",
         descript:
           "Integrated dashboard about Sysmon - ProcessCreate,DNSQuery,FileCreate and so on..",
-        router_name: "sysmon",
       },
-      { text: "LOL", icon: "mdi-account", router_name: "sysmon" },
-      { text: "Maplestory", icon: "mdi-flag", router_name: "check" },
-      { text: "twitch", icon: "mdi-flag", router_name: "function" },
+      { text: "metric-dashboard", icon: "mdi-account" },
+      { text: "Maplestory", icon: "mdi-flag" },
+      { text: "twitch", icon: "mdi-flag" },
     ],
   }),
   methods: {
-    print: function (item) {
-      console.log(this.$router.push({ name: item.router_name }));
+    link: function (item) {
+      console.log(
+        this.$router.push({
+          name: "dashmain",
+          query: { currentItem: item.text },
+        })
+      );
     },
   },
 };
