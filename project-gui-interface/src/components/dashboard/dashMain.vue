@@ -18,7 +18,6 @@
         <iframe width="100%" height="875px" :src="item.url"></iframe>
       </v-tab-item>
     </v-tabs-items>
-    <!--  -->
   </v-container>
 </template>
 <script>
@@ -39,8 +38,7 @@ export default {
     ],
   }),
   mounted() {
-    console.log("hi");
-    this.currentItem = this.$router.query.currentItem;
+    this.currentItem = this.$route.query.currentItem;
   },
 };
 </script>

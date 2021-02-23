@@ -51,12 +51,12 @@ export default {
       ["mdi-magnify", "Discover", "/discover"],
       ["mdi-clock", "check", "/check"],
       ["mdi-function", "function", "/function"],
+      ["mdi-alarm", "alert", "/alert"],
       ["mdi-tune", "Management", "/5444"],
     ],
   }),
   methods: {
     tolink: function (l) {
-      console.log(l);
       this.$router.push({ path: l });
     },
   },

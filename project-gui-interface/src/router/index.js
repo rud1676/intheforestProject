@@ -49,6 +49,17 @@ const routes = [
         component: () => import("../components/check.vue")
       }
     ]
+  },
+  {
+    path: "/alert",
+    name: "alert",
+    component: () => import("@/views/Mainpage.vue"),
+    children: [
+      {
+        path: "/",
+        component: () => import("../components/alert.vue")
+      }
+    ]
   }
 ];
 
