@@ -44,4 +44,6 @@ class userlist(Resource):
             images.append(image.replace(
                 ".+", "").replace("[", "").replace("]", ""))
         print(images)
-        return {"images": images}
+        return {
+            "images": images
+        }
