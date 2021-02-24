@@ -60,13 +60,6 @@ As follow updated, increated version!
 # Front struct
 
 ```
-App.vue (main page)
--> dashboard.vue
---> main.vue
---> sysmonallview.vue
-
--> function.vue
--> Discover.vue
--> alert.vue
+App.vue
 (component folder => dashboard folder => for several environment)
 ```
