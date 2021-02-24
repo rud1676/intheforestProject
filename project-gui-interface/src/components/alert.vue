@@ -66,14 +66,13 @@ export default {
     },
     submit: function () {
       let checkImage = [];
-      console.log(this.BlackList);
       for (const black of this.BlackList) {
         if (black.notSelected == false) {
           checkImage.push(black.image);
         }
       }
       //axios로 backend랑 통신해서 alert로 추가하는 부분
-      const URL = "http://localhost:80/processCreate/addblacklist";
+      const URL = "http://localhost:80/processCreate/BlackList";
       console.log("Push Black List");
       axios({
         method: "put",
@@ -83,6 +82,8 @@ export default {
         },
       }).then((result) => {
         console.log(result.data);
+        alert("적용이 완료되었습니다!");
+        window.location.reload();
       });
     },
   },

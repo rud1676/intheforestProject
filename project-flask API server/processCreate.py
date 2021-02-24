@@ -15,15 +15,15 @@ ProcessCreate = Namespace(name='ProcessCreate',
                           description="About Process create - BlackList alert and so on")
 es = Elasticsearch('http://34.64.140.231:9200')
 print(es)
+alertId = ""
 
 
 @ProcessCreate.route('/BlackList')
 class userlist(Resource):
     def get(self):
         """opendistro alert에 있는 블랙 리스트를 받아옵니다"""
-
+        global alertId
         # BlackList alert 찾기
-        blackalert = None
         index = ".opendistro-alerting-config"
         body = {
             "query": {
@@ -34,6 +34,7 @@ class userlist(Resource):
         for r in result["hits"]["hits"]:
             alert = r["_source"].get("monitor")
             if alert != None:
+                alertId = r["_id"]
                 if alert["name"] == "processCreate - BlackList":
                     blackalert = alert["inputs"][0]["search"]["query"]["query"]["bool"]["should"]
 
@@ -47,3 +48,54 @@ class userlist(Resource):
         return {
             "images": images
         }
+
+    def put(self):
+        """vue에서 받아온 image를 flitering 규칙으로 regex표현으로 바꿔서 입력합니다"""
+        global alertId
+        im = request.json.get('images')
+        image = []
+        for i in im:
+            image.append(i.replace(".", "[.]"))
+        print(image)
+        # 메모! 스크립트로 할땐 {대신 [를 쓰더라 쉬벌]}
+
+        # 스크립트 만드는 부분
+        sc = "["
+        for i in image:
+            sc = sc+"['regexp':['data.win.eventdata.image':['value' : '.+"+i + \
+                "','flags_value' : 65535,'max_determinized_states' : 10000,'boost' : 1.0]]],"
+        sc = sc[:-1]
+        sc += "]"
+        body = {
+            'script':  "ctx._source.monitor.inputs[0].search.query.query.bool.should = "+sc
+        }
+        # 엘라스틱 서치에 표현한 식을 넣어 alert로 처리합니다
+        print(es.update(index=".opendistro-alerting-config",
+                        id=alertId, doc_type="_doc", body=body))
+        return {"test": "test"}
+
+
+s = """\
+[
+    [
+        'regexp':[
+            'data.win.eventdata.image':[
+                'value' : '.+vmplayer[.]exe',
+                'flags_value' : 65535,
+                'max_determinized_states' : 10000,
+                'boost' : 1.0
+                ]
+            ]
+    ],
+    [
+        'regexp' : [
+            'data.win.eventdata.image' : [
+                'value' : '.+powershell[.]exe',
+                'flags_value' : 65535,
+                'max_determinized_states' : 10000,
+                'boost' : 1.0
+                ]
+            ]
+    ]
+]
+"""
