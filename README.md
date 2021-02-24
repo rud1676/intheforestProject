@@ -61,5 +61,16 @@ As follow updated, increated version!
 
 ```
 App.vue
+-> views(MainPage.vue , Homepage.vue)
+--->MainPage.vue (depends common)
+---->components
+---->dashboard(call kibana dashboard by iframe)
+---->alert.vue(call api -> /processCreate/addblacklist,/processCreate/BlackList)
 (component folder => dashboard folder => for several environment)
 ```
+
+# How to Use
+
+Alert.vue can add or delete images. close button of chip can do this. if you want to add image, input image text field and press add button!
+
+don't forget submit button at last.
