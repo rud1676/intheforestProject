@@ -202,6 +202,28 @@ ClipRenew => 온라인 파일 분석 서비스
 .googleapis.com / google로 실행할때 알게모르게 호출하는 주소임 따라서 제외
 aa.google.com
 ad.wappalyzer.com
+
+<!--My config + naver and so on! 2월 26일-->
+<QueryName condition="is">castbox.shopping.naver.com</QueryName>
+<QueryName condition="is">lcs.naver.com</QueryName>
+<QueryName condition="end with">pstatic.net</QueryName>
+<QueryName condition="is">siape.veta.naver.com</QueryName>
+<QueryName condition="is">ogs.google.com</QueryName>
+<QueryName condition="is">nelo2-col.navercorp.com</QueryName>
+<QueryName condition="is">safebrowsing.google.com</QueryName>
+<QueryName condition="is">play.google.com</QueryName>
+<QueryName condition="is">yt3.ggpht.com</QueryName>
+<QueryName condition="is">stat.tiara.tistory.com</QueryName>
+<QueryName condition="is">img-s-msn-com.akamaized.net</QueryName>
+<QueryName condition="is">img-prod-cms-rt-microsoft-com.akamaized.net</QueryName>
+<QueryName condition="is">ws9.hotjar.com</QueryName>
+<QueryName condition="is">aefd.nelreports.net</QueryName>
+<QueryName condition="is">atm.acecounter.com</QueryName>
+<QueryName condition="end with">kakao.com</QueryName>
+<QueryName condition="end with">.ad.daum.net</QueryName>
+<QueryName condition="end with">tiara.daum.net</QueryName>
+<QueryName condition="end with">daumcdn.net</QueryName>
+<QueryName condition="end with">kakaocdn.net</QueryName>
 ```
 
 ## ossec.con (wazuh agent)

@@ -75,7 +75,7 @@ class userlist(Resource):
         return {"test": "test"}
 
 
-s = """\
+"""
 [
     [
         'regexp':[
