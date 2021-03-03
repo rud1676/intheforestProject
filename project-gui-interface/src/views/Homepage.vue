@@ -1,69 +1,86 @@
 <template>
   <div>
-    <v-toolbar dark>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-      <v-icon color="green darken-2"> mdi-home </v-icon>home
-
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-export</v-icon>
+    <v-app-bar color="#7CB342">
+      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+      <v-btn text href="javascript:window.location.reload(true);">
+        <v-icon> mdi-home </v-icon>home
       </v-btn>
-    </v-toolbar>
-    <v-col class="d-felx flex-column justify-center">
-      <v-layout class="d-flex justify-center mb-10">
+    <v-spacer></v-spacer>     
+    <v-btn icon>
+      <v-icon>mdi-export</v-icon>
+    </v-btn>
+    </v-app-bar>
+
+    <v-navigation-drawer
+      v-model="drawer"
+      :width="330"
+      absolute
+      temporary
+    >
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group
+          color="#7CB342"
+        >
+        <img
+          src="../assets/logo2.png"
+        />
+        <p class="text-center black--text">
+          Wellcome, admin!😊
+        </p>
+        <v-divider></v-divider>
+
+          <v-list-item v-for="(item, i) in items" :key="i" @click="link(item)">
+            <v-list-item-icon>
+              <v-icon v-text="item.icon"></v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.text"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+  
         <img
           width="400"
-          style="position: absolute; top: -30px; left: 38%"
+          style="display: block; margin: -100px auto;"
           src="../assets/logo.png"
         />
-      </v-layout>
-    </v-col>
-
-    <v-item-group>
-    <v-container grid-list-md>
-      <v-layout wrap>
-        <v-flex v-for="[text, l] in links"
-        :key="l"
-        link
-        v-on:click="tolink(l)">
-          <v-item>
-            <v-card
-              slot-scope="{ active, toggle }"
-              :color="active ? 'primary' : ''"
-              dark
-              height="200"
-              width="200"
-              @click="toggle"
-              align="center"
-            >
-              <p class="text-sm-center">{{ text }}</p>
-            </v-card>
-          </v-item>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-item-group>
+      <v-icon>mdi-clipboard-text</v-icon>
+      Modules
+    <v-divider></v-divider>
+    <ModuleList></ModuleList>
   </div>
 </template>
 
 <script>
+import ModuleList from '../components/common/ModuleList.vue';
 export default {
-  data(){
-    return{
-      links: [
-      [ 'Dashboard', '/dashboard'],
-      [ 'Discover', '/discover'],
-      [ 'check', '/check'],
-      ]
-    }
+  data: () => ({
+      drawer: false,
+      items: [
+      {
+        text: "Home",
+        icon: "mdi-home",
+        link: "/home"
+      },
+      { text: "Account", icon: "mdi-account", link:"/" },
+      { text: "Module", icon: "mdi-clipboard-text" , link:"/dashboard"},
+      { text: "Admin Panel", icon: "mdi-wrench" },
+      { text: "Logout", icon: "mdi-export" },
+    ],
+    }),
+  components:{
+    ModuleList,
   },
-  methods: {
-    gotomain() {
-      this.$router.push('/dashboard');
-    },
-    tolink(l){
-      this.$router.push({ path: l});
+  methods:{
+    link(item){
+      this.$router.push({ path: item.link })
     }
   },
 };
