@@ -1,54 +1,10 @@
 <template>
   <div>
-    <v-app-bar color="#7CB342">
-      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-      <v-btn text href="javascript:window.location.reload(true);">
-        <v-icon> mdi-home </v-icon>home
-      </v-btn>
-    <v-spacer></v-spacer>     
-    <v-btn icon>
-      <v-icon>mdi-export</v-icon>
-    </v-btn>
-    </v-app-bar>
-
-    <v-navigation-drawer
-      v-model="drawer"
-      :width="330"
-      absolute
-      temporary
-    >
-      <v-list
-        nav
-        dense
-      >
-        <v-list-item-group
-          color="#7CB342"
-        >
-        <img
-          src="../assets/logo2.png"
-        />
-        <p class="text-center black--text">
-          Wellcome, admin!😊
-        </p>
-        <v-divider></v-divider>
-
-          <v-list-item v-for="(item, i) in items" :key="i" @click="link(item)">
-            <v-list-item-icon>
-              <v-icon v-text="item.icon"></v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title v-text="item.text"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
+    <toolbar></toolbar>
   
         <img
           width="400"
-          style="display: block; margin: -100px auto;"
+          style="display: block; margin: -60px auto;"
           src="../assets/logo.png"
         />
       <v-icon>mdi-clipboard-text</v-icon>
@@ -60,6 +16,7 @@
 
 <script>
 import ModuleList from '../components/common/ModuleList.vue';
+import Toolbar from '../components/common/Toolbar.vue';
 export default {
   data: () => ({
       drawer: false,
@@ -77,6 +34,7 @@ export default {
     }),
   components:{
     ModuleList,
+    Toolbar,
   },
   methods:{
     link(item){

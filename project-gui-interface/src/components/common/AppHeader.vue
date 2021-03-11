@@ -1,16 +1,6 @@
 <template>
   <div id="inspire">
-    <v-system-bar app color="#AED581">
-      <v-spacer></v-spacer>
-
-      <v-icon>mdi-square</v-icon>
-
-      <v-icon>mdi-circle</v-icon>
-
-      <v-icon>mdi-triangle</v-icon>
-    </v-system-bar>
-
-    <v-navigation-drawer color="#9CCC65" v-model="drawer" app>
+    <v-navigation-drawer color="#9CCC65" clipped app>
       <v-sheet color="#7CB342" class="pa-4 justify-center">
         <v-avatar class="mb-4" color="grey darken-1" size="64">
           <img src="../../assets/logo.png"

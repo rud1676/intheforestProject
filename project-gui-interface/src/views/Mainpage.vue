@@ -1,6 +1,8 @@
 <template>
   <v-app>
+    <toolbar></toolbar>
     <app-header></app-header>
+    
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -10,10 +12,12 @@
 
 <script>
 import AppHeader from '../components/common/AppHeader';
+import Toolbar from '../components/common/Toolbar.vue';
 export default {
     components:{
-        AppHeader,
-    }
+      Toolbar,
+      AppHeader}
+        
 }
 </script>
 
