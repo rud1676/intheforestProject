@@ -34,13 +34,13 @@
 export default {
 data(){ 
     return{
+      //일반 유저별 모듈 추가 및 제거 가능(현재 management 빼고 관리)
       links: [
       [ 'Dashboard', '/dashboard',require("../../assets/dashboard.png")],
       [ 'Discover', '/discover',require("../../assets/search.png")],
       [ 'check', '/check',require("../../assets/check.png")],
       [ 'function', '/function',require("../../assets/function.png")],
       [ 'alert', '/alert', require("../../assets/alert.png")],
-      [ 'Management', '/Management',require("../../assets/management.png")],
       ]
     }
   },

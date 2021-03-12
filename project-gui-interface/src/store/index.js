@@ -1,11 +1,16 @@
 import Vue from "vue"
 import Vuex from "vuex"
+import createPersistedState from "vuex-persistedstate";
 import router from '@/router'
 
 Vue.use(Vuex)
 
 
+
 export default new Vuex.Store({
+    plugins: [
+        createPersistedState(),
+  ],
     state: {
         allUsers: [
             { id: "imyuseop", name: "임유섭", password: "1234" },
@@ -50,5 +55,5 @@ export default new Vuex.Store({
             commit('logout')
             router.push('/login')
         }
-    }
+    },
 })

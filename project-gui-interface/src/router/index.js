@@ -20,6 +20,7 @@ const onlyAuthUser = (to, from, next) => {
     next()
   }
 }
+
 // const originalPush = VueRouter.prototype.push;
 // VueRouter.prototype.push = function push(location) {
 //   return originalPush.call(this, location).catch(() => {
@@ -32,6 +33,10 @@ const routes = [
   {
     path: "/",
     redirect: "/login"
+  },
+  {
+    path: "*",
+    component: () => import("../views/Notfoundpage.vue")
   },
   {
     path: "/home",
