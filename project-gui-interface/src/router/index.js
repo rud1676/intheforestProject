@@ -20,6 +20,14 @@ const onlyAuthUser = (to, from, next) => {
     next()
   }
 }
+const adminUser = (to, from, next) => {
+  if (store.state.isAdmin === false) {
+    alert('관리자 권한이 필요합니다.');
+    next('/no-auth')
+  } else {
+    next()
+  }
+}
 
 // const originalPush = VueRouter.prototype.push;
 // VueRouter.prototype.push = function push(location) {
@@ -93,6 +101,18 @@ const routes = [
       {
         path: "/",
         component: () => import("../components/alert.vue")
+      }
+    ]
+  },
+  {
+    path: "/management",
+    name: "management",
+    beforeEnter: adminUser,
+    component: () => import("@/views/Mainpage.vue"),
+    children: [
+      {
+        path: "/",
+        component: () => import("../components/management.vue")
       }
     ]
   },

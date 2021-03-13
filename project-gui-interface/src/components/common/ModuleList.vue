@@ -2,13 +2,13 @@
   <v-item-group>
     <v-container grid-list-md>
       <v-layout wrap>
-        <v-flex v-for="[text, l, img] in links"
+        <v-flex v-for="[text, l, img, admin] in links"
         :key="l"
         link
         >
        
           <v-item>
-            <v-card
+            <v-card v-if="isAdmin(admin)"
               slot-scope="{ active }"
               :color="active ? 'primary' : ''"
               height="200"
@@ -31,23 +31,30 @@
 </template>
 
 <script>
+import store from "@/store/index"
 export default {
 data(){ 
     return{
       links: [
-      [ 'Dashboard', '/dashboard',require("../../assets/dashboard.png")],
-      [ 'Discover', '/discover',require("../../assets/search.png")],
-      [ 'check', '/check',require("../../assets/check.png")],
-      [ 'function', '/function',require("../../assets/function.png")],
-      [ 'alert', '/alert', require("../../assets/alert.png")],
-      [ 'Management', '/Management',require("../../assets/management.png")],
+      [ 'Dashboard', '/dashboard',require("../../assets/dashboard.png"),true],
+      [ 'Discover', '/discover',require("../../assets/search.png"),true],
+      [ 'check', '/check',require("../../assets/check.png"),true],
+      [ 'function', '/function',require("../../assets/function.png"),true],
+      [ 'alert', '/alert', require("../../assets/alert.png"),true],
+      [ 'Management', '/Management',require("../../assets/management.png"),false],
       ]
     }
   },
   methods: {
     tolink(l){
       this.$router.push({ path: l});
-    }
+    },
+    isAdmin(admin){
+      if(store.state.isAdmin) return true;
+      else{
+        return admin
+      }
+    },
   },
 }
 </script>

@@ -6,6 +6,8 @@
         <v-icon> mdi-home </v-icon>home
       </v-btn>
     <v-spacer></v-spacer>
+      <v-icon v-if="isAdmin(false)">mdi-account-tie</v-icon>
+      <v-icon v-else>mdi-account</v-icon>
     <v-btn text v-if="isLogin">{{ userInfo.name }}님 환영합니다.</v-btn>     
     <v-btn icon>
       <v-icon @click="logout">mdi-export</v-icon>
@@ -33,7 +35,7 @@
         </p>
         <v-divider></v-divider>
 
-          <v-list-item v-for="(item, i) in items" :key="i" @click="link(item)">
+          <v-list-item v-for="(item, i) in items" :key="i" @click="link(item)" v-show="isAdmin(item.admin)">
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
@@ -58,6 +60,7 @@
 </template>
 
 <script>
+import store from "@/store/index"
 import { mapState, mapActions } from "vuex"
 export default {
 data: () => ({
@@ -66,11 +69,12 @@ data: () => ({
       {
         text: "Home",
         icon: "mdi-home",
-        link: "/home"
+        link: "/home",
+        admin: true,
       },
-      { text: "Account", icon: "mdi-account", link:"/" },
-      { text: "Module", icon: "mdi-clipboard-text" , link:"/dashboard"},
-      { text: "Admin Panel", icon: "mdi-wrench" },
+      { text: "Account", icon: "mdi-account", link:"/",admin: true, },
+      { text: "Module", icon: "mdi-clipboard-text" , link:"/dashboard",admin: true,},
+      { text: "Admin Panel", icon: "mdi-wrench" ,admin: false},
     ],
     }),
     computed:{
@@ -78,6 +82,12 @@ data: () => ({
     },
     methods:{
     ...mapActions(['logout']),
+    isAdmin(admin){
+      if(store.state.isAdmin) return true;
+      else{
+        return admin
+      }
+    },
 
     link(item){
       this.$router.push({ path: item.link })
