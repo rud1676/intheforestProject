@@ -4,7 +4,7 @@ import store from "@/store/index"
 const rejectAuthUser = (to, from, next) => {
   if (store.state.isLogin === true) {
     //이미 로그인 된 유저이므로 막아야함
-    alert('이미 로그인을 하였습니다.');
+    //alert('이미 로그인을 하였습니다.');
     next("/home")
   }
   else{

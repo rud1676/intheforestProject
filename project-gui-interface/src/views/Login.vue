@@ -29,6 +29,7 @@
                             v-model="id"
                                 label="아이디를 입력하세요."
                                 color="green"
+                                 ref="inputid"
                                 :rules="rules.name"
                             ></v-text-field>
                             <v-text-field
@@ -37,22 +38,34 @@
                                 type="password"
                                 color="green"
                                 :rules="rules.name"
+                                 ref="inputpassword"
                                 @keyup.enter.prevent="login({
                                     id,
                                     password
                                 })"
                             ></v-text-field>
+                            <v-row class="mx-4 my-2">
                             <v-btn
                                 color="#9CCC65"
-                                large
-                                block
+                                
+
+                                depressed
+                                @click="clearinput()">
+                                <v-icon> mdi-window-close </v-icon>Clear
+                            </v-btn>
+                           <v-spacer></v-spacer>
+                            <v-btn
+                                color="#9CCC65"
+                                class="right-align"
+                                
                                 depressed
                                 @click="login({
                                     id,
                                     password
                                 })">
-                                로그인
+                                <v-icon> mdi-account-circle </v-icon>Sign In
                             </v-btn>
+                            </v-row>
                         </div>
                     </v-card>
               </v-flex>
@@ -78,6 +91,10 @@ export default {
   },
   methods:{
       ...mapActions(["login"]),
+      clearinput(){
+          this.$refs.inputid.clearableCallback();
+          this.$refs.inputpassword.clearableCallback();
+      },
   }
 
 }

@@ -17,6 +17,7 @@
 <script>
 import ModuleList from '../components/common/ModuleList.vue';
 import Toolbar from '../components/common/Toolbar.vue';
+
 export default {
   data: () => ({
       drawer: false,
