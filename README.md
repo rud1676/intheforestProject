@@ -63,9 +63,14 @@ As follow updated, increated version!
 App.vue
 -> views(MainPage.vue , Homepage.vue)
 --->MainPage.vue (depends common)
----->components
----->dashboard(call kibana dashboard by iframe)
----->alert.vue(call api -> /processCreate/addblacklist,/processCreate/BlackList)
+->components
+--*dashboard.vue(router-view)
+--*noauth.vue(when user abnomaly approach, view this component)
+-->checkList
+----*DriverLoad.vue (for checking usb connect)
+-->dashboard(call kibana dashboard by iframe)
+-->common
+
 (component folder => dashboard folder => for several environment)
 ```
 

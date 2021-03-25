@@ -4,18 +4,10 @@ import store from "@/store/index";
 const rejectAuthUser = (to, from, next) => {
   if (store.state.isLogin === true) {
     //이미 로그인 된 유저이므로 막아야함
-<<<<<<< HEAD
     alert("이미 로그인을 하였습니다.");
     next("/home");
   } else {
     next();
-=======
-    //alert('이미 로그인을 하였습니다.');
-    next("/home")
-  }
-  else{
-    next()
->>>>>>> ec14522464510ceddd7a2857618a56d0694e9c81
   }
 };
 const onlyAuthUser = (to, from, next) => {
