@@ -54,7 +54,7 @@ const routes = [
   {
     path: "/dashboard",
     name: "dashboard",
-    beforeEnter: onlyAuthUser,
+    beforeEnter: adminUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
       {
@@ -71,7 +71,7 @@ const routes = [
   {
     path: "/discover",
     name: "discover",
-    beforeEnter: onlyAuthUser,
+    beforeEnter: adminUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
       {
@@ -83,7 +83,7 @@ const routes = [
   {
     path: "/check",
     name: "check",
-    beforeEnter: onlyAuthUser,
+    beforeEnter: adminUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
       {
@@ -95,7 +95,7 @@ const routes = [
   {
     path: "/alert",
     name: "alert",
-    beforeEnter: onlyAuthUser,
+    beforeEnter: adminUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
       {

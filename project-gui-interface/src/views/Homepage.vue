@@ -10,12 +10,15 @@
       <v-icon>mdi-clipboard-text</v-icon>
       Modules
     <v-divider></v-divider>
-    <ModuleList></ModuleList>
+    <v-show="isAdmin()">
+    <v-divider></v-divider>
+    <adModuleList></adModuleList>
   </div>
 </template>
 
 <script>
-import ModuleList from '../components/common/ModuleList.vue';
+import store from "@/store/index"
+import adModuleList from '../components/common/adModuleList.vue';
 import Toolbar from '../components/common/Toolbar.vue';
 
 export default {
@@ -34,12 +37,15 @@ export default {
     ],
     }),
   components:{
-    ModuleList,
+    adModuleList,
     Toolbar,
   },
   methods:{
     link(item){
       this.$router.push({ path: item.link })
+    },
+    isAdmin(){
+      return store.state.isAdmin;
     }
   },
 };

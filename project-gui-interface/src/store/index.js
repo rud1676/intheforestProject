@@ -20,6 +20,7 @@ export default new Vuex.Store({
         isLoginError: false,
         userInfo: null,
         isAdmin: false,
+        
     },
     mutations: {
         //로그인 성공,

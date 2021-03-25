@@ -2,7 +2,7 @@
   <v-item-group>
     <v-container grid-list-md>
       <v-layout wrap>
-        <v-flex v-for="[text, l, img, admin] in links"
+        <v-flex v-for="[text, l, img, admin] in adminlinks"
         :key="l"
         link
         >
@@ -35,14 +35,14 @@ import store from "@/store/index"
 export default {
 data(){ 
     return{
-      links: [
-      [ 'Dashboard', '/dashboard',require("../../assets/dashboard.png"),true],
-      [ 'Discover', '/discover',require("../../assets/search.png"),true],
-      [ 'check', '/check',require("../../assets/check.png"),true],
-      [ 'function', '/function',require("../../assets/function.png"),true],
-      [ 'alert', '/alert', require("../../assets/alert.png"),true],
+      adminlinks: [
+      [ 'Dashboard', '/dashboard',require("../../assets/dashboard.png"),false],
+      [ 'Discover', '/discover',require("../../assets/search.png"),false],
+      [ 'check', '/check',require("../../assets/check.png"),false],
+      [ 'function', '/function',require("../../assets/function.png"),false],
+      [ 'alert', '/alert', require("../../assets/alert.png"),false],
       [ 'Management', '/Management',require("../../assets/management.png"),false],
-      ]
+      ],
     }
   },
   methods: {
