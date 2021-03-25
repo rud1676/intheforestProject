@@ -1,33 +1,32 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import store from "@/store/index"
+import store from "@/store/index";
 const rejectAuthUser = (to, from, next) => {
   if (store.state.isLogin === true) {
     //이미 로그인 된 유저이므로 막아야함
-    alert('이미 로그인을 하였습니다.');
-    next("/home")
+    alert("이미 로그인을 하였습니다.");
+    next("/home");
+  } else {
+    next();
   }
-  else{
-    next()
-  }
-}
+};
 const onlyAuthUser = (to, from, next) => {
-  if(store.state.isLogin === false){
+  if (store.state.isLogin === false) {
     //아직 로그인이 안 된 유저
-    alert("로그인이 필요한 기능입니다.")
-    next("/")
-  } else{
-    next()
+    alert("로그인이 필요한 기능입니다.");
+    next("/");
+  } else {
+    next();
   }
-}
+};
 const adminUser = (to, from, next) => {
   if (store.state.isAdmin === false) {
-    alert('관리자 권한이 필요합니다.');
-    next('/no-auth')
+    alert("관리자 권한이 필요합니다.");
+    next("/no-auth");
   } else {
-    next()
+    next();
   }
-}
+};
 
 // const originalPush = VueRouter.prototype.push;
 // VueRouter.prototype.push = function push(location) {
@@ -93,6 +92,19 @@ const routes = [
     ]
   },
   {
+    //only test
+    path: "/function",
+    name: "function",
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/views/Mainpage.vue"),
+    children: [
+      {
+        path: "/",
+        component: () => import("../components/CheckList/DriverLoad.vue")
+      }
+    ]
+  },
+  {
     path: "/alert",
     name: "alert",
     beforeEnter: onlyAuthUser,
@@ -120,7 +132,7 @@ const routes = [
     path: "/no-auth",
     name: "noauth",
     component: () => import("@/views/Mainpage.vue"),
-    children:[
+    children: [
       {
         path: "/",
         component: () => import("@/components/noauth.vue")

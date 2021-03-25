@@ -3,6 +3,7 @@ from flask_restx import Api
 from flask_cors import CORS
 from processCreate import ProcessCreate
 from Employee import employee
+from driverload import driverload
 
 
 app = Flask(__name__)
@@ -17,6 +18,7 @@ api = Api(app,
 
 api.add_namespace(ProcessCreate, '/processCreate')
 api.add_namespace(employee, '/employee')
+api.add_namespace(driverload, '/driverload')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=80)
