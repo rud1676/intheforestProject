@@ -34,7 +34,7 @@ urllib3                   1.25.11                    py_0   (not used)
 selenium                  3.141.0         py38he774522_1000 (not used)
 ```
 
-# How to Use....
+## How to Use....
 
 1. run vue
 
@@ -51,30 +51,75 @@ pip install (packages) # refer for independent
 python app.py
 ```
 
-# Update
+## Update
 
 2021-02-01 is version 1.0
 
 As follow updated, increated version!
 
-# Front struct
+## Front struct
+
+struct about component
 
 ```
 App.vue
--> views(MainPage.vue , Homepage.vue)
---->MainPage.vue (depends common)
-->components
---*dashboard.vue(router-view)
---*noauth.vue(when user abnomaly approach, view this component)
--->checkList
-----*DriverLoad.vue (for checking usb connect)
--->dashboard(call kibana dashboard by iframe)
--->common
+->views
+-->MainPage.vue (depends common)
+-->Homepage.vue (depends common)
+-->Login.vue (save state in vuex)
+-->Notfoundpage.vue
 
+->components
+--*dashboard.vue(router-view - depends on dashboard folder)
+--*noauth.vue(when user abnomaly approach, view this component)
+--*discover.vue(show log => used iframe)
+--*check.vue(show basic log => depend on checklist folder)
+--*alert.vue(setting for alert)
+
+-->checkList
+---*DriverLoad.vue (for checking usb connect)
+
+-->dashboard(call kibana dashboard by iframe)
+---*main.vue(list of dashboard)
+---*dashMain.vue(show kibana dashboard)
+
+-->common(this component can be called whenever want to use)
+---*adModuleList.vue(first page in login state)
+---*AppHeader.vue(show menu on left side)
+---*Loading.vue(loading page)
+---*Toolbar.vue(side menu about user menu)
 (component folder => dashboard folder => for several environment)
 ```
 
-# How to Use
+router link
+
+```
+root path: '/' => "/login"
+/home
+/dashboard
+/dashboard/dashmain
+/discover
+/check
+/function
+/alert
+/management
+/no-auth
+/login
+```
+
+----------여기에 vuex설명 적기!----------------
+
+## backend struct
+
+used flask API server => you can refer code comment
+
+```
+app.py => main
+driverload.py => call driverload page -> query elasticsearch
+
+```
+
+## How to Use
 
 Alert.vue can add or delete images. close button of chip can do this. if you want to add image, input image text field and press add button!
 

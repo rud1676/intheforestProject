@@ -44,7 +44,7 @@ export default {
     overlay: false,
     zIndex: 0,
     events: [
-      { timestamp: "21:10:05", hostname: "DKDFS-dfa", driver: "Samsung" },
+      { timestamp: "21:10:05", hostname: "DKDFS-dfa", driver: "Samsung" }, //example data not used
     ],
     headers: [
       {
@@ -106,5 +106,4 @@ export default {
     });
   },
 };
-//카드로 프로세스 리스트 뿌리고 - 클릭으로 삭제, add 기능으로 추가! => id를 기억해서 수정하는거 해봐야할듯
 </script>

@@ -23,7 +23,7 @@ class addemployee(Resource):
                         }, {
                             "range": {
                                 "@timestamp": {
-                                    "gte": "now-1d/d",
+                                    "gte": "now-7d/d",
                                     "lt": "now"
                                 }
                             }
