@@ -312,6 +312,8 @@
 				<Image name="Usermode" condition="begin with">C:\Users</Image>				<!--Tools downloaded by users can use other processes for networking, but this is a very valuable indicator.-->
 				<Image name="Caution" condition="begin with">C:\Recycle</Image>				<!--Nothing should operate from the RecycleBin locations.-->
 				<Image condition="begin with">C:\ProgramData</Image>				<!--Normally, network communications should be sourced from "Program Files" not from ProgramData, something to look at-->
+				<Image condition="begin with">C:\Program Files</Image>				<!--Normally, network communications should be sourced from "Program Files" not from ProgramData, something to look at-->
+				<Image condition="begin with">C:\Program Files(x86)</Image>				<!--Normally, network communications should be sourced from "Program Files" not from ProgramData, something to look at-->
 				<Image condition="begin with">C:\Windows\Temp</Image>				<!--Suspicious anything would communicate from the system-level temp directory-->
 				<Image name="Caution" condition="begin with">\</Image>				<!--Devices and VSC shouldn't be executing changes | Credit: @SBousseaden @ionstorm @neu5ron @PerchedSystems [ https://twitter.com/SwiftOnSecurity/status/1133167323991486464 ] -->
 				<Image name="Caution" condition="begin with">C:\perflogs</Image>				<!-- Credit @blu3_team [ https://blu3-team.blogspot.com/2019/05/netconn-from-suspicious-directories.html ] -->
@@ -391,6 +393,8 @@
 			<NetworkConnect onmatch="exclude">
 				<!--SECTION: Microsoft-->
 				<Image condition="begin with">C:\ProgramData\Microsoft\Windows Defender\Platform\</Image>
+				<Image condition="begin with">C:\ProgramData\Microsoft\Windows Defender\Platform\</Image>
+				<Image condition="contains">\Chrome\</Image>
 				<Image condition="end with">AppData\Local\Microsoft\Teams\current\Teams.exe</Image>				<!--Microsoft: Teams-->
 				<DestinationHostname condition="end with">.microsoft.com</DestinationHostname>				<!--Microsoft:Update delivery-->
 				<DestinationHostname condition="end with">microsoft.com.akadns.net</DestinationHostname>				<!--Microsoft:Update delivery-->
