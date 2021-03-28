@@ -92,14 +92,13 @@ const routes = [
     ]
   },
   {
-    //only test
-    path: "/function",
-    name: "function",
+    path: "/driverload",
     beforeEnter: onlyAuthUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
       {
         path: "/",
+        name: "driverload",
         component: () => import("../components/CheckList/DriverLoad.vue")
       }
     ]

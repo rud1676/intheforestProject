@@ -116,7 +116,6 @@ used flask API server => you can refer code comment
 ```
 app.py => main
 driverload.py => call driverload page -> query elasticsearch
-
 ```
 
 ## How to Use

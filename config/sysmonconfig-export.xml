@@ -251,15 +251,20 @@
 				<Image condition="is">C:\Windows\System32\consent.exe</Image>
 				<Image condition="is">C:\Windows\System32\SppExtComObj.Exe</Image>
 				<Image condition="is">C:\Windows\SysWOW64\WerFault.exe</Image>
+				<Image condition="is">C:\Windows\System32\taskhostw.exe</Image>
 				<Image condition="is">C:\Windows\SysWOW64\runonce.exe</Image>
 				<Image condition="is">C:\Windows\Sysmon64.exe</Image>
 				<Image condition="is">C:\Windows\System32\ClipRenew.exe</Image>
+				<Image condition="is">C:\Windows\System32\MusNotifyIcon.exe</Image>
+				<Image condition="is">C:\Windows\System32\UsoClient.exe</Image>
 				<Image condition="contains">GoogleCrashHandler</Image>
 				<Image condition="contains">MpCmdRun.exe</Image>
 				<Image condition="contains">TiWorker.exe</Image>
 				<Image condition="contains">LocalBridge.exe</Image>
 				<Image condition="contains">HxTsr.exe</Image>
+				<Image condition="contains">AhnLab</Image>
 				<Image condition="begin with">C:\ProgramData\Microsoft\Windows Defender\Platform</Image>
+				<Image condition="end with">FileCoAuth.exe</Image>
 
 				<!--(02.03)-->
 			</ProcessCreate>
@@ -428,6 +433,8 @@
 			<DriverLoad onmatch="exclude">
 				<Signature condition="contains">microsoft</Signature>				<!--Exclude signed Microsoft drivers-->
 				<Signature condition="contains">windows</Signature>				<!--Exclude signed Microsoft drivers-->
+				<Signature condition="contains">AhnLab</Signature>				<!--Exclude signed AhnLab drivers-->
+				<Signature condition="contains">INCA Internet</Signature>				<!--Exclude signed INCA Internet drivers-->
 				<Signature condition="begin with">Intel </Signature>				<!--Exclude signed Intel drivers-->
 			</DriverLoad>
 		</RuleGroup>
