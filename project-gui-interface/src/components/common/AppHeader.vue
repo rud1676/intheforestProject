@@ -112,6 +112,11 @@ export default {
         link: "adnormal"
       },
       {
+        no: 1,
+        title: "파일 다운로드 리스트",
+        link: "download"
+      },
+      {
         no: 2,
         title: "이상행위"
       },

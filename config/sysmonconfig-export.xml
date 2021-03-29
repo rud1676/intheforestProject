@@ -824,6 +824,8 @@
 		<!--DATA: UtcTime, ProcessGuid, ProcessId, Image, TargetFilename, CreationUtcTime, Hash-->
 		<FileCreateStreamHash onmatch="include">
 			<TargetFilename condition="contains">Downloads</TargetFilename>			<!--Downloaded files. Does not include "Run" files in IE-->
+			<Image condition="end with">KakaoTalk.exe</Image>
+			<TargetFilename condition="contains">Documents</TargetFilename>			<!--Downloaded files. Does not include "Run" files in IE-->
 			<TargetFilename condition="contains">Temp\7z</TargetFilename>			<!--7zip extractions-->
 			<TargetFilename condition="contains">Startup</TargetFilename>			<!--ADS startup | Example: [ https://www.hybrid-analysis.com/sample/a314f6106633fba4b70f9d6ddbee452e8f8f44a72117749c21243dc93c7ed3ac?environmentId=100 ] -->
 			<TargetFilename condition="end with">.bat</TargetFilename>			<!--Batch scripting-->

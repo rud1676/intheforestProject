@@ -146,7 +146,7 @@ const routes = [
     ]
   },
   {
-    path: "/adnormal",
+    path: "/adnormal", //근무 시간 외에 활동 체크
     beforeEnter: onlyAuthUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
@@ -154,6 +154,18 @@ const routes = [
         path: "/",
         name: "adnormal",
         component: () => import("../components/CheckList/abnormal.vue")
+      }
+    ]
+  },
+  {
+    path: "/download", //근무 시간 외에 활동 체크
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/views/Mainpage.vue"),
+    children: [
+      {
+        path: "/",
+        name: "download",
+        component: () => import("../components/CheckList/downloadList.vue")
       }
     ]
   }

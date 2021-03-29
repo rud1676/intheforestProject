@@ -1,9 +1,5 @@
 # flask모듈을 import
-from flask import request
-from flask_restx import Resource, Namespace
-from elastic import es
-import datetime  # UTC로 나온 시간을 한국시간으로 맞추기 위함
-import time
+from needs import es, request, Resource, Namespace, timefunc
 driverload = Namespace(name='driverload',
                        description="About DriverLoad 이벤트")
 
@@ -66,10 +62,7 @@ class event(Resource):
         for s in es.search(index="wazuh-alerts*", body=body)["hits"]["hits"]:
             name = s["_source"]["agent"]["name"]
             signature = s["_source"]["data"]["win"]["eventdata"]["signature"]
-            times = s["_source"]["@timestamp"].replace("T", " ")[:19]
-            date_t = datetime.datetime.strptime(times, '%Y-%m-%d %H:%M:%S')
-            date_t = date_t + datetime.timedelta(hours=9)
-            # 2021-03-25 23:50:56
+            date_t = timefunc(s["_source"]["@timestamp"])
             result.append(
-                {"hostname": name, "driver": signature, "timestamp": str(date_t)})
+                {"hostname": name, "driver": signature, "timestamp": date_t})
         return result

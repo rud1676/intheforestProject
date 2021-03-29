@@ -1,9 +1,4 @@
-# flask모듈을 import
-from flask import request
-from flask_restx import Resource, Namespace
-import datetime  # UTC로 나온 시간을 한국시간으로 맞추기 위함
-import time
-from elastic import es
+from needs import es, request, Resource, Namespace
 networkConnection = Namespace(name='networkConnection',
                               description="About networkConnection 이벤트")
 

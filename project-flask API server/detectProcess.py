@@ -1,8 +1,4 @@
-# flask모듈을 import
-from flask import request
-from flask_restx import Resource, Namespace
-import datetime  # UTC로 나온 시간을 한국시간으로 맞추기 위함
-from elastic import es
+from needs import es, request, Resource, Namespace, timefunc, datetime
 detect = Namespace(name='detect',
                    description="About detect 이벤트")
 
@@ -46,10 +42,8 @@ class alert(Resource):
             }
             for r in es.search(index="wazuh-monitoring*", body=body)["hits"]["hits"]:
                 name = r["_source"]["name"]
-                time = r["_source"]["timestamp"].replace("T", " ")[:19]
-                date_t = datetime.datetime.strptime(time, '%Y-%m-%d %H:%M:%S')
-                date_t = date_t + datetime.timedelta(hours=9)
-                result.append({"name": name, "timestamp": str(date_t)})
+                date_t = timefunc(r["_source"]["timestamp"])
+                result.append({"name": name, "timestamp": date_t})
 
             starttime = startday + " " + request.json.get('data')["start"]
             body = {
@@ -80,10 +74,8 @@ class alert(Resource):
             }
             for r in es.search(index="wazuh-monitoring*", body=body)["hits"]["hits"]:
                 name = r["_source"]["name"]
-                time = r["_source"]["timestamp"].replace("T", " ")[:19]
-                date_t = datetime.datetime.strptime(time, '%Y-%m-%d %H:%M:%S')
-                date_t = date_t + datetime.timedelta(hours=9)
-                result.append({"name": name, "timestamp": str(date_t)})
+                date_t = timefunc(r["_source"]["timestamp"])
+                result.append({"name": name, "timestamp": date_t})
             # 0시부터 근무 출근시간 까지 로그 수집햇음
 
             # 퇴근 시간 부터~ 0시까지 수집
