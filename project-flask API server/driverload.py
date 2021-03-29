@@ -1,12 +1,13 @@
 # flask모듈을 import
 from flask import request
 from flask_restx import Resource, Namespace
+from elastic import es
 import datetime  # UTC로 나온 시간을 한국시간으로 맞추기 위함
 import time
-from elasticsearch import Elasticsearch  # elk서버와의 통신
 driverload = Namespace(name='driverload',
                        description="About DriverLoad 이벤트")
-es = Elasticsearch('34.64.140.231:9200')
+
+# 아직 회사내 컴퓨터에서 알람기능을 추가안함 곧 할예정
 
 
 @driverload.route("/alert")
@@ -72,26 +73,3 @@ class event(Resource):
             result.append(
                 {"hostname": name, "driver": signature, "timestamp": str(date_t)})
         return result
-
-    def post(self):
-        """driver event를 얻습니다."""
-        arg = request.args.get('arg')
-        hostname = request.args.get('host')
-        doc = {
-            "host": hostname,
-            "name": username,
-        }
-        body = {
-            "query": {
-                "match": {
-                    "host": hostname
-                }
-            }
-        }
-        result = es.search(index="user", body=body)
-        if result['hits']['total']['value'] == 0:
-            es.index(index="user", doc_type="_doc", body=doc)
-            result = "success"
-        else:
-            result = "fail"
-        return {"state": result}

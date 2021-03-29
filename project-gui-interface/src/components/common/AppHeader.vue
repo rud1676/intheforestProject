@@ -17,7 +17,7 @@
           :key="lev1.no"
           v-show="isAdmin(lev1.admin)"
         >
-          <!--v-on:click="tolink(lev1.link)" 삭제 필요...-->
+          <!--v-on:click="tolink(lev1.link)" 삭제 필요... 유섭이한태 오류 내용 말해주기-->
           <template v-slot:activator>
             <v-list-item-content>
               <strong>
@@ -74,72 +74,77 @@ export default {
       ["mdi-clock", "check", "check", true],
       ["mdi-function", "function", "driverload", true], //this is test... need to 수정
       ["mdi-alarm", "alert", "alert", true],
-      ["mdi-tune", "Management", "management", false],
+      ["mdi-tune", "Management", "management", false]
     ],
     lev1: [
       //admin true인것은 무엇인가?
       {
         title: "No.1",
         no: 1,
-        admin: true,
+        admin: true
       },
       {
         title: "No.2",
         no: 2,
-        admin: true,
+        admin: true
       },
       {
         title: "관리자",
         no: 3,
-        admin: false,
-      },
+        admin: false
+      }
     ],
     //라우터 링크 추가하기
     lev2: [
       {
         no: 1,
-        title: "게임 관련",
+        title: "게임 관련"
         //link:"/dashboard",
       },
       {
         no: 1,
         title: "USB, Bluetooth 연결 감지(DriverLoad)",
-        link: "driverload",
+        link: "driverload"
+      },
+      {
+        no: 1,
+        title: "근무 시간외에 컴퓨터 active",
+        link: "adnormal"
       },
       {
         no: 2,
-        title: "이상행위",
+        title: "이상행위"
       },
       {
         no: 2,
-        title: "외부 침입",
+        title: "외부 침입"
       },
       {
         no: 3,
         title: "Dashboard",
-        link: "dashboard",
+        link: "dashboard"
       },
       {
         no: 3,
         title: "Discover",
-        link: "discover",
+        link: "discover"
       },
       {
         no: 3,
         title: "Check",
-        link: "check",
+        link: "check"
       },
       {
         no: 3,
         title: "Function",
-        link: "function",
+        link: "function"
       },
       {
         no: 3,
         title: "Alert",
-        link: "alert",
-      },
-    ],
+        link: "alert"
+      }
+    ]
   }),
   methods: {
     tolink: function (l) {
@@ -150,8 +155,8 @@ export default {
       else {
         return admin;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

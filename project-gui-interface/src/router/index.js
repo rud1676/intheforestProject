@@ -92,18 +92,6 @@ const routes = [
     ]
   },
   {
-    path: "/driverload",
-    beforeEnter: onlyAuthUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
-        name: "driverload",
-        component: () => import("../components/CheckList/DriverLoad.vue")
-      }
-    ]
-  },
-  {
     path: "/alert",
     name: "alert",
     beforeEnter: adminUser,
@@ -143,6 +131,31 @@ const routes = [
     name: "login",
     beforeEnter: rejectAuthUser,
     component: () => import("@/views/Login.vue")
+  },
+  //------------------sector checkList router--------------------
+  {
+    path: "/driverload",
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/views/Mainpage.vue"),
+    children: [
+      {
+        path: "/",
+        name: "driverload",
+        component: () => import("../components/CheckList/DriverLoad.vue")
+      }
+    ]
+  },
+  {
+    path: "/adnormal",
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/views/Mainpage.vue"),
+    children: [
+      {
+        path: "/",
+        name: "adnormal",
+        component: () => import("../components/CheckList/abnormal.vue")
+      }
+    ]
   }
 ];
 

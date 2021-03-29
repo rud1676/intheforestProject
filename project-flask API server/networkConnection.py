@@ -3,10 +3,9 @@ from flask import request
 from flask_restx import Resource, Namespace
 import datetime  # UTC로 나온 시간을 한국시간으로 맞추기 위함
 import time
-from elasticsearch import Elasticsearch  # elk서버와의 통신
+from elastic import es
 networkConnection = Namespace(name='networkConnection',
                               description="About networkConnection 이벤트")
-es = Elasticsearch('34.64.140.231:9200')
 
 
 @networkConnection.route("/alert")
