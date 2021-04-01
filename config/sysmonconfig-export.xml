@@ -552,6 +552,7 @@
 				<TargetFilename name="T1053" condition="begin with">C:\Windows\system32\Tasks</TargetFilename>				<!--Microsoft:ScheduledTasks [ https://attack.mitre.org/wiki/Technique/T1053 ] -->
 				<TargetFilename name="T1053" condition="begin with">C:\Windows\SysWOW64\Tasks</TargetFilename>				<!--Microsoft:ScheduledTasks [ https://attack.mitre.org/wiki/Technique/T1053 ] -->
 				<Image condition="begin with">\Device\HarddiskVolumeShadowCopy</Image>				<!--Nothing should be executing from VSC | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] -->
+				<Image condition="end with">KakaoTalk.exe</Image>				<!--Nothing should be executing from VSC | Credit: @SBousseaden [ https://twitter.com/SBousseaden/status/1133030955407630336 ] -->
 				<!--Windows application compatibility-->
 				<TargetFilename condition="begin with">C:\Windows\AppPatch\Custom</TargetFilename>				<!--Windows: Application compatibility shims [ https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html ] -->
 				<TargetFilename condition="contains">VirtualStore</TargetFilename>				<!--Windows: UAC virtualization [ https://blogs.msdn.microsoft.com/oldnewthing/20150902-00/?p=91681 ] -->
@@ -575,6 +576,8 @@
 				<Image condition="is">C:\Windows\system32\mobsync.exe</Image>				<!--Windows: Network file syncing-->
 				<TargetFilename condition="begin with">C:\Windows\system32\DriverStore\Temp\</TargetFilename>				<!-- Windows: Temp files by DrvInst.exe-->
 				<TargetFilename condition="begin with">C:\Windows\system32\wbem\Performance\</TargetFilename>				<!-- Windows: Created in wbem by WMIADAP.exe-->
+				<TargetFilename condition="contains">AhnLab</TargetFilename>				<!-- Windows: Created in wbem by WMIADAP.exe-->
+				<TargetFilename condition="contains">Temp</TargetFilename>				<!-- Windows: Created in wbem by WMIADAP.exe-->
 				<TargetFilename condition="begin with">C:\Windows\Installer\</TargetFilename>				<!--Windows:Installer: Ignore MSI installer files caching-->
 				<!--SECTION: Windows:Updates-->
 				<TargetFilename condition="begin with">C:\$WINDOWS.~BT\Sources\</TargetFilename>				<!-- Windows: Feature updates containing lots of .exe and .sys-->
