@@ -1,16 +1,12 @@
 <template>
-  <v-item-group>
+  <v-item-group class="pa-4">
     <v-container grid-list-md>
       <v-layout wrap>
-<<<<<<< HEAD:project-gui-interface/src/components/common/ModuleList.vue
-        <v-flex v-for="[text, l, img, admin] in links" :key="l" link>
-=======
         <v-flex v-for="[text, l, img, admin] in adminlinks"
         :key="l"
         link
         >
-       
->>>>>>> 01f87fcf04616878fe124f9f06f00be76e8893de:project-gui-interface/src/components/common/adModuleList.vue
+
           <v-item>
             <v-card
               v-if="isAdmin(admin)"
@@ -35,29 +31,6 @@
 <script>
 import store from "@/store/index";
 export default {
-<<<<<<< HEAD:project-gui-interface/src/components/common/ModuleList.vue
-  data() {
-    return {
-      links: [
-        [
-          "Dashboard",
-          "/dashboard",
-          require("../../assets/dashboard.png"),
-          true,
-        ],
-        ["Discover", "/discover", require("../../assets/search.png"), true],
-        ["check", "/check", require("../../assets/check.png"), true],
-        ["function", "/function", require("../../assets/function.png"), true],
-        ["alert", "/alert", require("../../assets/alert.png"), true],
-        [
-          "Management",
-          "/Management",
-          require("../../assets/management.png"),
-          false,
-        ],
-      ],
-    };
-=======
 data(){ 
     return{
       adminlinks: [
@@ -66,10 +39,8 @@ data(){
       [ 'check', '/check',require("../../assets/check.png"),false],
       [ 'function', '/function',require("../../assets/function.png"),false],
       [ 'alert', '/alert', require("../../assets/alert.png"),false],
-      [ 'Management', '/Management',require("../../assets/management.png"),false],
       ],
     }
->>>>>>> 01f87fcf04616878fe124f9f06f00be76e8893de:project-gui-interface/src/components/common/adModuleList.vue
   },
   methods: {
     tolink(l) {

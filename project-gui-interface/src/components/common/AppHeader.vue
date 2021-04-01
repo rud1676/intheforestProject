@@ -17,10 +17,12 @@
           :key="lev1.no"
           v-show="isAdmin(lev1.admin)"
           v-on:click="tolink(lev1.link)"
+          color="green darken-3"
           >
           <template v-slot:activator>
             <v-list-item-content>
               <strong>
+                <v-icon>{{ lev1.icon }} </v-icon>
                 {{lev1.title}}
               </strong>
             </v-list-item-content>
@@ -35,7 +37,7 @@
             v-on:click="tolink(lev2.link)"
             >
               <v-list-item-icon>
-                <v-icon>mdi-check-circle</v-icon>
+                <v-icon>{{ lev2.icon }}</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title v-text="lev2.title"></v-list-item-title>
@@ -89,7 +91,8 @@ export default {
         admin: true
       },
       {
-        title: "관리자",
+        title: "Admin Panal",
+        icon: "mdi-wrench",
         no: 3
         ,
         admin: false
@@ -101,45 +104,60 @@ export default {
       {
         no: 1,
         title:"게임 관련",
+        icon:"mdi-gamepad-variant-outline",
         //link:"/dashboard",
       },
       {
         no: 1,
-        title: "근무시간중",
+        title: "근무시간외",
+        icon: "mdi-office-building-marker-outline"
+        //link:"/check"
+      },
+      {
+        no: 1,
+        title: "다운로드",
+        icon: "mdi-folder-download-outline"
         //link:"/check"
       },
       {
         no: 2,
-        title: "이상행위"
+        title: "이상행위",
+        icon:"mdi-shield-search"
       },
       {
         no:2,
-        title: "외부 침입"
+        title: "외부 침입",
+        icon:"mdi-shield-check"
       },
       {
         no:3,
         title: "Dashboard",
         link:"/dashboard",
+        icon:"mdi-chart-bar"
       },
       {
         no:3,
         title: "Discover",
         link:"/discover",
+        icon:"mdi-magnify"
       },
       {
         no:3,
         title: "Check",
         link:"/check",
+        icon:"mdi-check"
       },
       {
         no:3,
         title: "Function",
         link:"/function",
+        icon:"mdi-function"
       },
       {
         no:3,
         title: "Alert",
         link:"/alert",
+        icon:"mdi-bullhorn-outline"
       },
     ]
 

@@ -10,14 +10,19 @@
       <v-icon>mdi-clipboard-text</v-icon>
       Modules
     <v-divider></v-divider>
-    <v-show="isAdmin()">
-    <v-divider></v-divider>
-    <adModuleList></adModuleList>
+    <ModuleList></ModuleList>
+    <template v-if="isAdmin()">
+      <v-icon>mdi-wrench</v-icon>
+      Admin Panel
+      <v-divider></v-divider>
+      <adModuleList></adModuleList>
+    </template>
   </div>
 </template>
 
 <script>
 import store from "@/store/index"
+import ModuleList from '../components/common/ModuleList.vue';
 import adModuleList from '../components/common/adModuleList.vue';
 import Toolbar from '../components/common/Toolbar.vue';
 
@@ -38,6 +43,7 @@ export default {
     }),
   components:{
     adModuleList,
+    ModuleList,
     Toolbar,
   },
   methods:{
