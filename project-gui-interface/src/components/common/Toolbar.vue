@@ -73,8 +73,9 @@ data: () => ({
         admin: true,
       },
       { text: "Account", icon: "mdi-account", link:"/",admin: true, },
-      { text: "Module", icon: "mdi-clipboard-text" , link:"/dashboard",admin: true,},
-      { text: "Admin Panel", icon: "mdi-wrench" ,admin: false},
+      //module은 일반 유저 기본 화면으로 link 추가하기
+      { text: "Module", icon: "mdi-clipboard-text" , link:"",admin: true,},
+      { text: "Admin Panel", icon: "mdi-wrench",link:"/dashboard" ,admin: false},
     ],
     }),
     computed:{

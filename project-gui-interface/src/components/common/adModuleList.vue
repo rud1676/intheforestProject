@@ -1,8 +1,16 @@
 <template>
-  <v-item-group>
+  <v-item-group class="pa-4">
     <v-container grid-list-md>
       <v-layout wrap>
+<<<<<<< HEAD
+        <v-flex v-for="[text, l, img, admin] in adminlinks"
+        :key="l"
+        link
+        >
+
+=======
         <v-flex v-for="[text, l, img, admin] in links" :key="l" link>
+>>>>>>> b8d590321102d97a497a49b5fc4ef850e6aee9b5
           <v-item>
             <v-card
               v-if="isAdmin(admin)"
@@ -27,6 +35,18 @@
 <script>
 import store from "@/store/index";
 export default {
+<<<<<<< HEAD
+data(){ 
+    return{
+      adminlinks: [
+      [ 'Dashboard', '/dashboard',require("../../assets/dashboard.png"),false],
+      [ 'Discover', '/discover',require("../../assets/search.png"),false],
+      [ 'check', '/check',require("../../assets/check.png"),false],
+      [ 'function', '/function',require("../../assets/function.png"),false],
+      [ 'alert', '/alert', require("../../assets/alert.png"),false],
+      ],
+    }
+=======
   data() {
     return {
       description: "",
@@ -49,6 +69,7 @@ export default {
         ],
       ],
     };
+>>>>>>> b8d590321102d97a497a49b5fc4ef850e6aee9b5
   },
   methods: {
     tolink(l) {
