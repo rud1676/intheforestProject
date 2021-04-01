@@ -251,15 +251,20 @@
 				<Image condition="is">C:\Windows\System32\consent.exe</Image>
 				<Image condition="is">C:\Windows\System32\SppExtComObj.Exe</Image>
 				<Image condition="is">C:\Windows\SysWOW64\WerFault.exe</Image>
+				<Image condition="is">C:\Windows\System32\taskhostw.exe</Image>
 				<Image condition="is">C:\Windows\SysWOW64\runonce.exe</Image>
 				<Image condition="is">C:\Windows\Sysmon64.exe</Image>
 				<Image condition="is">C:\Windows\System32\ClipRenew.exe</Image>
+				<Image condition="is">C:\Windows\System32\MusNotifyIcon.exe</Image>
+				<Image condition="is">C:\Windows\System32\UsoClient.exe</Image>
 				<Image condition="contains">GoogleCrashHandler</Image>
 				<Image condition="contains">MpCmdRun.exe</Image>
 				<Image condition="contains">TiWorker.exe</Image>
 				<Image condition="contains">LocalBridge.exe</Image>
 				<Image condition="contains">HxTsr.exe</Image>
+				<Image condition="contains">AhnLab</Image>
 				<Image condition="begin with">C:\ProgramData\Microsoft\Windows Defender\Platform</Image>
+				<Image condition="end with">FileCoAuth.exe</Image>
 
 				<!--(02.03)-->
 			</ProcessCreate>
@@ -307,6 +312,8 @@
 				<Image name="Usermode" condition="begin with">C:\Users</Image>				<!--Tools downloaded by users can use other processes for networking, but this is a very valuable indicator.-->
 				<Image name="Caution" condition="begin with">C:\Recycle</Image>				<!--Nothing should operate from the RecycleBin locations.-->
 				<Image condition="begin with">C:\ProgramData</Image>				<!--Normally, network communications should be sourced from "Program Files" not from ProgramData, something to look at-->
+				<Image condition="begin with">C:\Program Files</Image>				<!--Normally, network communications should be sourced from "Program Files" not from ProgramData, something to look at-->
+				<Image condition="begin with">C:\Program Files(x86)</Image>				<!--Normally, network communications should be sourced from "Program Files" not from ProgramData, something to look at-->
 				<Image condition="begin with">C:\Windows\Temp</Image>				<!--Suspicious anything would communicate from the system-level temp directory-->
 				<Image name="Caution" condition="begin with">\</Image>				<!--Devices and VSC shouldn't be executing changes | Credit: @SBousseaden @ionstorm @neu5ron @PerchedSystems [ https://twitter.com/SwiftOnSecurity/status/1133167323991486464 ] -->
 				<Image name="Caution" condition="begin with">C:\perflogs</Image>				<!-- Credit @blu3_team [ https://blu3-team.blogspot.com/2019/05/netconn-from-suspicious-directories.html ] -->
@@ -386,6 +393,8 @@
 			<NetworkConnect onmatch="exclude">
 				<!--SECTION: Microsoft-->
 				<Image condition="begin with">C:\ProgramData\Microsoft\Windows Defender\Platform\</Image>
+				<Image condition="begin with">C:\ProgramData\Microsoft\Windows Defender\Platform\</Image>
+				<Image condition="contains">\Chrome\</Image>
 				<Image condition="end with">AppData\Local\Microsoft\Teams\current\Teams.exe</Image>				<!--Microsoft: Teams-->
 				<DestinationHostname condition="end with">.microsoft.com</DestinationHostname>				<!--Microsoft:Update delivery-->
 				<DestinationHostname condition="end with">microsoft.com.akadns.net</DestinationHostname>				<!--Microsoft:Update delivery-->
@@ -428,6 +437,8 @@
 			<DriverLoad onmatch="exclude">
 				<Signature condition="contains">microsoft</Signature>				<!--Exclude signed Microsoft drivers-->
 				<Signature condition="contains">windows</Signature>				<!--Exclude signed Microsoft drivers-->
+				<Signature condition="contains">AhnLab</Signature>				<!--Exclude signed AhnLab drivers-->
+				<Signature condition="contains">INCA Internet</Signature>				<!--Exclude signed INCA Internet drivers-->
 				<Signature condition="begin with">Intel </Signature>				<!--Exclude signed Intel drivers-->
 			</DriverLoad>
 		</RuleGroup>
@@ -813,6 +824,8 @@
 		<!--DATA: UtcTime, ProcessGuid, ProcessId, Image, TargetFilename, CreationUtcTime, Hash-->
 		<FileCreateStreamHash onmatch="include">
 			<TargetFilename condition="contains">Downloads</TargetFilename>			<!--Downloaded files. Does not include "Run" files in IE-->
+			<Image condition="end with">KakaoTalk.exe</Image>
+			<TargetFilename condition="contains">Documents</TargetFilename>			<!--Downloaded files. Does not include "Run" files in IE-->
 			<TargetFilename condition="contains">Temp\7z</TargetFilename>			<!--7zip extractions-->
 			<TargetFilename condition="contains">Startup</TargetFilename>			<!--ADS startup | Example: [ https://www.hybrid-analysis.com/sample/a314f6106633fba4b70f9d6ddbee452e8f8f44a72117749c21243dc93c7ed3ac?environmentId=100 ] -->
 			<TargetFilename condition="end with">.bat</TargetFilename>			<!--Batch scripting-->
