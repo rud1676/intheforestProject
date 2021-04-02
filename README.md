@@ -109,6 +109,20 @@ root path: '/' => "/login"
 
 ----------여기에 vuex설명 적기!----------------
 
+Vuex
+
+state - UserInfo, isLogin, isLoginError, userInfo, isAdmin
+
+4 login state
+    - userloginSuccess => Only isLogin
+    - adminloginSuccess => isLogin and isAdmin
+    - loginError => isLoginError
+    - Logout => All state false, userInfo is NULL
+
+2 Actions
+    - Login() => if admin user then commit adminloginSuccess, not admin then commit userloginSuccess else... commit loginError
+    - Logout() => commit logout.
+
 ## backend struct
 
 used flask API server => you can refer code comment
