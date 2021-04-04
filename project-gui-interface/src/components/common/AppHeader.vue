@@ -111,6 +111,12 @@ export default {
       },
       {
         no: 1,
+        title:"Dns Query",
+        icon:"mdi-gamepad-variant-outline",
+        link:"dns",
+      },
+      {
+        no: 1,
         title: "근무시간외",
         icon: "mdi-office-building-marker-outline",
         link:"adnormal"
@@ -118,8 +124,8 @@ export default {
       {
         no: 1,
         title: "다운로드",
-        icon: "mdi-folder-download-outline"
-        //link:"/check"
+        icon: "mdi-folder-download-outline",
+        link:"download"
       },
       {
         no: 2,

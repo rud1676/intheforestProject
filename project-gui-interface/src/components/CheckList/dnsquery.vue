@@ -1,13 +1,13 @@
 <template>
   <v-container class="py-2 px-1" fluid style="height: 100vh">
-    <v-card class="mx-auto" max-width="800" color="light-green lighten-4">
-      <v-card-title>Dns Query 감지</v-card-title>
+    <v-card class="mx-auto" max-width="1400" color="light-green lighten-4">
+      <v-card-title>Dns Query 리스트</v-card-title>
       <v-card>
         <v-card-title>
           <v-text-field
             v-model="search"
             append-icon="mdi-magnify"
-            label="Filter about user"
+            label="Filter about user, program, query"
             single-line
             hide-details
           ></v-text-field>
@@ -23,17 +23,18 @@
         ></v-data-table>
       </v-card>
       <v-divider class="mx-5 mt-4"></v-divider>
-      <v-row>
+      <v-row class="v-flex">
+        <v-col>
+
+        </v-col>
         <v-col class="d-flex justify-center">
           <v-card-actions>
-            <v-badge bordered :color="alertOn" icon="mdi-alert-circle" overlap>
-              <v-btn
-                class="mt-2"
-                color="light-green lighten-1"
-                @click="getAlertState"
-                >checkAlert</v-btn
-              >
-            </v-badge>
+            <v-btn
+              class="mt-2"
+              color="light-green lighten-1"
+              @click="acceptTable"
+              >checkAlert</v-btn
+            >
           </v-card-actions>
         </v-col>
       </v-row>
@@ -45,9 +46,10 @@
 import axios from "axios";
 export default {
   data: () => ({
+    start: "10:00",
+    end: "19:00",
     search: "",
     load: true,
-    alertOn: "unknown",
     events: [],
     headers: [
       {
@@ -55,29 +57,37 @@ export default {
         align: "start",
         filterable: false,
         sortable: false,
-        value: "timestamp",
+        value: "timestamp"
       },
-      { text: "Hostname", value: "hostname" },
-      { text: "Driver Cop.", filterable: false, value: "driver" },
-    ],
+      { text: "Hostname", value: "name" },
+      { text: "Program", value: "image" },
+      { text: "Queryname", value: "query" }
+    ]
   }),
   methods: {
-    getAlertState: function () {
-      const URL = "http://127.0.0.1:80/driverload/alert";
-      console.log("get alert state");
-      axios.get(URL).then((result) => {
-        this.$data.alertOn = result.data;
-        console.log(this.$data.alertOn);
-      });
-    },
+    acceptTable: function () {
+      alert("적용하였습니다!");
+      const URL = "http://127.0.0.1:80/filedown/filestream";
+      axios
+        .post(URL, {
+          data: {
+            start: this.$data.start,
+            end: this.$data.end
+          }
+        })
+        .then((result) => {
+          this.$data.events = result.data;
+          this.$data.load = false;
+        });
+    }
   },
   mounted() {
-    const URL = "http://127.0.0.1:80/driverload/event";
-    console.log("get Driver Event");
+    const URL = "http://127.0.0.1:80/filedown/filestream";
+    console.log("post time and abnormal detect");
     axios.get(URL).then((result) => {
       this.$data.events = result.data;
       this.$data.load = false;
     });
-  },
+  }
 };
 </script>
