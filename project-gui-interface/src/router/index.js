@@ -168,6 +168,18 @@ const routes = [
         component: () => import("../components/CheckList/downloadList.vue")
       }
     ]
+  },
+  {
+    path: "/dns", 
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/views/Mainpage.vue"),
+    children: [
+      {
+        path: "/",
+        name: "dns",
+        component: () => import("../components/CheckList/dnsquery.vue")
+      }
+    ]
   }
 ];
 

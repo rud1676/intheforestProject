@@ -79,19 +79,19 @@ export default {
       ["mdi-clock", "check", "check", true],
       ["mdi-function", "function", "driverload", true], //this is test... need to 수정
       ["mdi-alarm", "alert", "alert", true],
-      ["mdi-tune", "Management", "management", false]
+      ["mdi-tune", "Management", "management", false],
     ],
     lev1: [
       //admin true인것은 무엇인가?
       {
         title: "No.1",
         no: 1,
-        admin: true
+        admin: true,
       },
       {
         title: "No.2",
         no: 2,
-        admin: true
+        admin: true,
       },
       {
         title: "Admin Panal",
@@ -112,8 +112,8 @@ export default {
       {
         no: 1,
         title: "근무시간외",
-        icon: "mdi-office-building-marker-outline"
-        //link:"/check"
+        icon: "mdi-office-building-marker-outline",
+        link:"adnormal"
       },
       {
         no: 1,
@@ -124,7 +124,7 @@ export default {
       {
         no: 2,
         title: "이상행위",
-        icon:"mdi-shield-search"
+        icon: "mdi-shield-search",
       },
       {
         no:2,
@@ -134,31 +134,31 @@ export default {
       {
         no: 3,
         title: "Dashboard",
-        link:"/dashboard",
+        link:"dashboard",
         icon:"mdi-chart-bar"
       },
       {
         no: 3,
         title: "Discover",
-        link:"/discover",
+        link:"discover",
         icon:"mdi-magnify"
       },
       {
         no: 3,
         title: "Check",
-        link:"/check",
+        link:"check",
         icon:"mdi-check"
       },
       {
         no: 3,
         title: "Function",
-        link:"/function",
+        link:"function",
         icon:"mdi-function"
       },
       {
         no: 3,
         title: "Alert",
-        link:"/alert",
+        link:"alert",
         icon:"mdi-bullhorn-outline"
       },
     ]
@@ -172,8 +172,8 @@ export default {
       else {
         return admin;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

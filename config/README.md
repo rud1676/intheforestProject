@@ -234,6 +234,14 @@ ad.wappalyzer.com
 
 ```
 
+### filecreate event
+
+```xml
+<!--exclude에 추가함-->
+<TargetFilename condition="contains">AhnLab</TargetFilename>				<!-- Windows: Created in wbem by WMIADAP.exe-->
+<TargetFilename condition="contains">Temp</TargetFilename>				<!-- 카톡 임시 파일 저장-->
+```
+
 ## ossec.con (wazuh agent)
 
 1. sysmon 설정 추가
