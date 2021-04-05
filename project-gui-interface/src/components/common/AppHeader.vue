@@ -18,13 +18,12 @@
           v-show="isAdmin(lev1.admin)"
           v-on:click="tolink(lev1.link)"
           color="green darken-3"
-          >
+        >
           <template v-slot:activator>
             <v-list-item-content>
               <strong>
                 <v-icon>{{ lev1.icon }} </v-icon>
-                {{lev1.title}}
-
+                {{ lev1.title }}
               </strong>
             </v-list-item-content>
           </template>
@@ -36,15 +35,13 @@
             link
             v-show="lev2.no == lev1.no"
             v-on:click="tolink(lev2.link)"
-            >
-              <v-list-item-icon>
-                <v-icon>{{ lev2.icon }}</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title v-text="lev2.title"></v-list-item-title>
-              </v-list-item-content>
-
-
+          >
+            <v-list-item-icon>
+              <v-icon>{{ lev2.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title v-text="lev2.title"></v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
         </v-list-group>
         <!-- <v-list-item
@@ -96,36 +93,41 @@ export default {
       {
         title: "Admin Panal",
         icon: "mdi-wrench",
-        no: 3
-        ,
-        admin: false
-      }
+        no: 3,
+        admin: false,
+      },
     ],
     //라우터 링크 추가하기
     lev2: [
       {
         no: 1,
-        title:"게임 관련",
-        icon:"mdi-gamepad-variant-outline",
-        //link:"/dashboard",
+        title: "게임 관련",
+        icon: "mdi-gamepad-variant-outline",
+        link: "gametest",
       },
       {
         no: 1,
-        title:"Dns Query",
-        icon:"mdi-gamepad-variant-outline",
-        link:"dns",
+        title: "Dns Query",
+        icon: "mdi-gamepad-variant-outline",
+        link: "dns",
+      },
+      {
+        no: 1,
+        title: "드라이버 로드 이벤트",
+        icon: "mdi-usb-flash-drive",
+        link: "driverload",
       },
       {
         no: 1,
         title: "근무시간외",
         icon: "mdi-office-building-marker-outline",
-        link:"adnormal"
+        link: "timeout",
       },
       {
         no: 1,
         title: "다운로드",
         icon: "mdi-folder-download-outline",
-        link:"download"
+        link: "download",
       },
       {
         no: 2,
@@ -133,41 +135,41 @@ export default {
         icon: "mdi-shield-search",
       },
       {
-        no:2,
+        no: 2,
         title: "외부 침입",
-        icon:"mdi-shield-check"
+        icon: "mdi-shield-check",
       },
       {
         no: 3,
         title: "Dashboard",
-        link:"dashboard",
-        icon:"mdi-chart-bar"
+        link: "dashboard",
+        icon: "mdi-chart-bar",
       },
       {
         no: 3,
         title: "Discover",
-        link:"discover",
-        icon:"mdi-magnify"
+        link: "discover",
+        icon: "mdi-magnify",
       },
       {
         no: 3,
         title: "Check",
-        link:"check",
-        icon:"mdi-check"
+        link: "check",
+        icon: "mdi-check",
       },
       {
         no: 3,
         title: "Function",
-        link:"function",
-        icon:"mdi-function"
+        link: "function",
+        icon: "mdi-function",
       },
       {
         no: 3,
         title: "Alert",
-        link:"alert",
-        icon:"mdi-bullhorn-outline"
+        link: "alert",
+        icon: "mdi-bullhorn-outline",
       },
-    ]
+    ],
   }),
   methods: {
     tolink: function (l) {

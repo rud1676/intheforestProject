@@ -3,6 +3,7 @@ from driverload import driverload
 from networkConnection import networkConnection
 from detectProcess import detect
 from fileDownList import filedown
+from gamelist import gamelist
 
 app = Flask(__name__)
 CORS(app)
@@ -18,6 +19,7 @@ api.add_namespace(driverload, '/driverload')
 api.add_namespace(networkConnection, '/networkConnection')
 api.add_namespace(detect, '/detect')
 api.add_namespace(filedown, '/filedown')
+api.add_namespace(gamelist, '/gamelist')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=80)
