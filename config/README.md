@@ -380,4 +380,43 @@ ad.wappalyzer.com
   </rule>
 
 
+  <!--0575 win base rule add => make level3!-->
+
+  <rule id="60009" level="3">
+    <if_sid>60000</if_sid>
+    <field name="win.system.severityValue">^INFORMATION$</field>
+    <description>Windows informational event</description>
+    <options>no_full_log</options>
+  </rule>
+  <rule id="60010" level="3">
+    <if_sid>60000</if_sid>
+    <field name="win.system.severityValue">^WARNING$</field>
+    <description>Windows warning event</description>
+    <options>no_full_log</options>
+    <group>gpg13_4.12,</group>
+  </rule>
+
+    <!--local rule add => add networkprofile event!-->
+<rule id="100002" level="0">
+    <if_sid>60000</if_sid>
+    <field name="win.system.channel">^Microsoft-Windows-NetworkProfile/Operational$</field>
+    <options>no_full_log</options>
+    <description>Group of Windows rules for the NetworkProfile</description>
+  </rule>
+
+  <rule id="100003" level="3">
+    <if_sid>100002</if_sid>
+    <field name="win.system.eventID">^10000$</field>
+    <description>NetworkProfile Event 10000: Connected LAN by $(win.eventdata.Name)</description>
+    <options>no_full_log</options>
+    <group>networkProfile</group>
+  </rule>
+
+  <rule id="100004" level="3">
+    <if_sid>100002</if_sid>
+    <field name="win.system.eventID">^10001$</field>
+    <description>NetworkProfile Event 10001: Disconnected LAN by $(win.eventdata.Name)</description>
+    <options>no_full_log</options>
+    <group>networkProfile</group>
+  </rule>
 ```
