@@ -52,7 +52,6 @@ const routes = [
   },
   {
     path: "/dashboard",
-    name: "dashboard",
     beforeEnter: adminUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
@@ -63,54 +62,57 @@ const routes = [
       },
       {
         path: "/",
+        name: "dashboard",
         component: () => import("@/components/dashboard/main.vue")
       }
     ]
   },
   {
     path: "/discover",
-    name: "discover",
     beforeEnter: adminUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
       {
         path: "/",
+        name: "discover",
         component: () => import("../components/discover.vue")
       }
     ]
   },
   {
     path: "/check",
-    name: "check",
     beforeEnter: adminUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
       {
         path: "/",
+        name: "check",
         component: () => import("../components/check.vue")
       }
     ]
   },
   {
     path: "/alert",
-    name: "alert",
+
     beforeEnter: adminUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
       {
         path: "/",
+        name: "alert",
         component: () => import("../components/alert.vue")
       }
     ]
   },
   {
     path: "/management",
-    name: "management",
+
     beforeEnter: adminUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
       {
         path: "/",
+        name: "management",
         component: () => import("../components/management.vue")
       }
     ]
@@ -190,6 +192,30 @@ const routes = [
         path: "/",
         name: "dns",
         component: () => import("../components/CheckList/dnsquery.vue")
+      }
+    ]
+  },
+  {
+    path: "/thread",
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/views/Mainpage.vue"),
+    children: [
+      {
+        path: "/",
+        name: "thread",
+        component: () => import("../components/abnormal/threadCreate.vue")
+      }
+    ]
+  },
+  {
+    path: "/networkconnection",
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/views/Mainpage.vue"),
+    children: [
+      {
+        path: "/",
+        name: "networkconnection",
+        component: () => import("../components/abnormal/networkconnection.vue")
       }
     ]
   }

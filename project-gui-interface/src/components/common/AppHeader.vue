@@ -131,8 +131,15 @@ export default {
       },
       {
         no: 2,
-        title: "이상행위",
+        title: "네트워크 연결된 프로세스들",
         icon: "mdi-shield-search",
+        link: "networkconnection",
+      },
+      {
+        no: 2,
+        title: "프로세스가 만든 Thread",
+        icon: "mdi-shield-search",
+        link: "thread",
       },
       {
         no: 2,

@@ -18,7 +18,6 @@ class userlist(Resource):
                             },
                             "regexp": {
                                 "data.win.eventdata.originalFileName": "LeagueClientUx.+",
-
                             }
                         }
                     ]
