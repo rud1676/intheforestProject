@@ -159,6 +159,18 @@ const routes = [
     ]
   },
   {
+    path: "/newserivce",
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/views/Mainpage.vue"),
+    children: [
+      {
+        path: "/",
+        name: "newSerivce",
+        component: () => import("../components/CheckList/newSerivce.vue")
+      }
+    ]
+  },
+  {
     path: "/timeout", //근무 시간 외에 활동 체크
     beforeEnter: onlyAuthUser,
     component: () => import("@/views/Mainpage.vue"),

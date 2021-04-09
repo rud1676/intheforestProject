@@ -132,8 +132,14 @@ export default {
       {
         no: 1,
         title: "wifi연결",
-        icon: "mdi-folder-download-outline",
+        icon: "mdi-wifi",
         link: "wifi",
+      },
+      {
+        no: 1,
+        title: "새로운 서비스 설치",
+        icon: "mdi-progress-download",
+        link: "newSerivce",
       },
       {
         no: 2,

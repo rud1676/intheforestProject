@@ -7,7 +7,6 @@ wificonnection = Namespace(
 class userlist(Resource):
     def get(self):
         """wi-fi(사실 랜연결도 잡음)연결 감지이벤트불러오기"""
-        index = "wazuh-alerts*"
         body = {
             "query": {
                 "bool": {
