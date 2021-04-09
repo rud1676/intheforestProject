@@ -6,7 +6,7 @@ createThread = Namespace(name='createThread',
 @createThread.route("/thread")
 class alert(Resource):
     def get(self):
-        """SQL문으로 Network connection 정보를 얻어옵니다."""
+        """SQL문으로 createThread 정보를 얻어옵니다."""
         body = {
             "query": "select DISTINCT data.win.eventdata.sourceImage,data.win.eventdata.targetImage,agent.name from wazuh-alert* where data.win.system.eventID='8'"
         }

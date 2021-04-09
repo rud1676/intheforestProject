@@ -130,6 +130,12 @@ export default {
         link: "download",
       },
       {
+        no: 1,
+        title: "wifi연결",
+        icon: "mdi-folder-download-outline",
+        link: "wifi",
+      },
+      {
         no: 2,
         title: "네트워크 연결된 프로세스들",
         icon: "mdi-shield-search",
