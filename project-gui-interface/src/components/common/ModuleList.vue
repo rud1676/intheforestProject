@@ -30,10 +30,15 @@ export default {
   data() {
     return {
       links: [
-        ["Game------", "", require("../../assets/game.png"), true],
+        ["Game------", "gametest", require("../../assets/game.png"), true],
         ["Download", "download", require("../../assets/download.png"), true],
-        ["Not office hours", "", require("../../assets/office.png"), true],
-        ["Anomaly", "adnormal", require("../../assets/anomaly.png"), true],
+        [
+          "Not office hours",
+          "timeout",
+          require("../../assets/office.png"),
+          true,
+        ],
+        ["Anomaly", "timeout", require("../../assets/anomaly.png"), true],
         ["usb Check", "driverload", require("../../assets/develop.png"), true],
       ],
     };

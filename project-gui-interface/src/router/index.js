@@ -145,14 +145,14 @@ const routes = [
     ]
   },
   {
-    path: "/adnormal", //근무 시간 외에 활동 체크
+    path: "/timeout", //근무 시간 외에 활동 체크
     beforeEnter: onlyAuthUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
       {
         path: "/",
-        name: "adnormal",
-        component: () => import("../components/CheckList/abnormal.vue")
+        name: "timeout",
+        component: () => import("../components/CheckList/timeout.vue")
       }
     ]
   },
@@ -169,7 +169,19 @@ const routes = [
     ]
   },
   {
-    path: "/dns", 
+    path: "/gametest", //근무 시간 외에 활동 체크
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/views/Mainpage.vue"),
+    children: [
+      {
+        path: "/",
+        name: "gametest",
+        component: () => import("../components/CheckList/gametest.vue")
+      }
+    ]
+  },
+  {
+    path: "/dns",
     beforeEnter: onlyAuthUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
