@@ -93,13 +93,20 @@ const routes = [
   },
   {
     path: "/alert",
+<<<<<<< HEAD
+=======
 
+>>>>>>> 57c138ceee76fdf281dd92d9bc49d18f03f7d9b0
     beforeEnter: adminUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
       {
+<<<<<<< HEAD
+        path: "/", name: "alert",
+=======
         path: "/",
         name: "alert",
+>>>>>>> 57c138ceee76fdf281dd92d9bc49d18f03f7d9b0
         component: () => import("../components/alert.vue")
       }
     ]
