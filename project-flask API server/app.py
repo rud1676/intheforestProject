@@ -7,6 +7,7 @@ from gamelist import gamelist
 from dnsquery import dnsquery
 from wificonnection import wificonnection
 from service import service
+from RDPClient import rdp
 
 app = Flask(__name__)
 CORS(app)
@@ -26,6 +27,7 @@ api.add_namespace(gamelist, '/gamelist')
 api.add_namespace(dnsquery, '/dnsquery')
 api.add_namespace(wificonnection, '/wificonnection')
 api.add_namespace(service, '/service')
+api.add_namespace(rdp, '/rdp')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=80)

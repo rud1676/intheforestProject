@@ -142,6 +142,12 @@ export default {
         link: "newSerivce",
       },
       {
+        no: 1,
+        title: "RDP client 사용 여부",
+        icon: "mdi-remote",
+        link: "rdp",
+      },
+      {
         no: 2,
         title: "네트워크 연결된 프로세스들",
         icon: "mdi-shield-search",

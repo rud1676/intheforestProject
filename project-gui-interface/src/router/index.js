@@ -207,6 +207,18 @@ const routes = [
     ]
   },
   {
+    path: "/rdp",
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/views/Mainpage.vue"),
+    children: [
+      {
+        path: "/",
+        name: "rdp",
+        component: () => import("../components/CheckList/rdp.vue")
+      }
+    ]
+  },
+  {
     path: "/dns",
     beforeEnter: onlyAuthUser,
     component: () => import("@/views/Mainpage.vue"),
@@ -218,6 +230,8 @@ const routes = [
       }
     ]
   },
+
+  //--------------sector for abnomal
   {
     path: "/thread",
     beforeEnter: onlyAuthUser,
