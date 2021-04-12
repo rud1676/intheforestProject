@@ -82,7 +82,7 @@ export default {
     }
   },
   mounted() {
-    const URL = "http://127.0.0.1/dnsquery/dnsquery";
+    const URL = this.$store.state.pyurl+"/dnsquery/dnsquery";
     console.log("post time and abnormal detect");
     axios.get(URL).then((result) => {
       this.$data.events = result.data;

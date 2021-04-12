@@ -61,7 +61,7 @@ export default {
   }),
   methods: {},
   mounted() {
-    const URL = "http://127.0.0.1:80/service/7045";
+    const URL = this.$store.state.pyurl+"/service/7045";
     axios.get(URL).then((result) => {
       this.$data.events = result.data;
       this.$data.load = false;

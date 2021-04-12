@@ -15,7 +15,8 @@ export default new Vuex.Store({
     isLogin: false,
     isLoginError: false,
     userInfo: null,
-    isAdmin: true //test를 위해 true로 바꿈
+    isAdmin: true, //test를 위해 true로 바꿈
+    pyurl: "http://127.0.0.1:8888"
   },
   mutations: {
     //로그인 성공,

@@ -72,7 +72,7 @@ export default {
     },
   },
   mounted() {
-    const URL = "http://127.0.0.1:80/driverload/event";
+    const URL = this.$store.state.pyurl+"/driverload/event";
     console.log("get Driver Event");
     axios.get(URL).then((result) => {
       this.$data.events = result.data;

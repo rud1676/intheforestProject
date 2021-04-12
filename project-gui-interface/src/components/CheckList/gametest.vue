@@ -49,7 +49,7 @@ export default {
       }
     },
   mounted() {
-    const URL = "http://127.0.0.1/gamelist/gamelist";
+    const URL = this.$store.state.pyurl+"/gamelist/gamelist";
     console.log("Get Gamelist!");
     axios.get(URL).then((result) => {
       console.log(result);

@@ -64,7 +64,7 @@ export default {
   }),
   methods: {},
   mounted() {
-    const URL = "http://127.0.0.1:80/createThread/thread";
+    const URL = this.$store.state.pyurl+"/createThread/thread";
     console.log("post time and abnormal detect");
     axios.get(URL).then((result) => {
       this.$data.events = result.data;

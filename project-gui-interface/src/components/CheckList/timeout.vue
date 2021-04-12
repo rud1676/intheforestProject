@@ -96,7 +96,7 @@ export default {
     }
   },
   mounted() {
-    const URL = "http://127.0.0.1:80/detect/abnormal";
+    const URL = this.$store.state.pyurl+"/detect/abnormal";
     console.log("post time and abnormal detect");
     axios
       .post(URL, {

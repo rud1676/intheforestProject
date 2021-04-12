@@ -66,7 +66,7 @@ export default {
   methods: {
     acceptTable: function () {
       alert("적용하였습니다!");
-      const URL = "http://127.0.0.1:80/filedown/filestream";
+      const URL = this.$store.state.pyurl+"/filedown/filestream";
       axios
         .post(URL, {
           data: {

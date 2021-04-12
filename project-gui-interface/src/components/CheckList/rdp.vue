@@ -62,7 +62,7 @@ export default {
   }),
   methods: {},
   mounted() {
-    const URL = "http://127.0.0.1:80/rdp/get";
+    const URL = this.$store.state.pyurl+"/rdp/get";
     console.log("post time and abnormal detect");
     axios.get(URL).then((result) => {
       this.$data.events = result.data;
