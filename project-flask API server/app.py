@@ -31,6 +31,5 @@ api.add_namespace(service, '/service')
 api.add_namespace(rdp, '/rdp')
 api.add_namespace(alert, '/alert')
 api.add_namespace(wazuh, '/wazuh')
-getToken() #wazuh api use!
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8888)

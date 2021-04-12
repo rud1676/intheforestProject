@@ -2,6 +2,7 @@
   <v-container class="py-2 px-1" fluid style="height: 100vh">
     <v-card class="mx-auto" max-width="1400" color="light-green lighten-4">
       <v-card-title>파일 다운로드 리스트</v-card-title>
+      <user-list/>
       <v-card>
         <v-card-title>
           <v-text-field
@@ -51,7 +52,11 @@
 
 <script>
 import axios from "axios";
+import userList from "../common/userlist"
 export default {
+  components:{
+    userList
+  },
   data: () => ({
     start: "10:00",
     end: "19:00",

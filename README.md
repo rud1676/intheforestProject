@@ -84,7 +84,8 @@ App.vue
 ---*dashMain.vue(show kibana dashboard)
 
 -->common(this component can be called whenever want to use)
----*adModuleList.vue(first page in login state)
+---*adModuleList.vue(first page in login state this menu is for admin!)
+---*ModuleList.vue(first page in login state this menu is for user!)
 ---*AppHeader.vue(show menu on left side)
 ---*Loading.vue(loading page)
 ---*Toolbar.vue(side menu about user menu)
@@ -106,8 +107,6 @@ root path: '/' => "/login"
 /no-auth
 /login
 ```
-
-----------여기에 vuex설명 적기!----------------
 
 Vuex
 ```
