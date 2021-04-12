@@ -1,6 +1,6 @@
 from needs import es, request, Resource, Namespace, timefunc, lastPath
 service = Namespace(
-    name="service", description="서비스가 설치될때 이벤트 7045 등 에 의해서 그 목록들을 불러옵니다")
+    name="service", description="시스템 이벤트를 불러오는 라우팅 서비스가 설치될때 이벤트 7045 등 에 의해서 그 목록들을 불러옵니다")
 
 
 @service.route('/7045')

@@ -3,7 +3,7 @@ from flask import request, Flask
 from flask_restx import Resource, Namespace, Api
 from flask_cors import CORS
 import datetime  # UTC로 나온 시간을 한국시간으로 맞추기 위함
-es = Elasticsearch('34.64.140.231:9200')
+es = Elasticsearch('192.168.0.241:9200')
 
 
 def timefunc(t):

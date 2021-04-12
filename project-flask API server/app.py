@@ -8,7 +8,7 @@ from dnsquery import dnsquery
 from wificonnection import wificonnection
 from service import service
 from RDPClient import rdp
-
+from alertfunction import alert  # make after... first modify function
 app = Flask(__name__)
 CORS(app)
 api = Api(app,
@@ -28,6 +28,7 @@ api.add_namespace(dnsquery, '/dnsquery')
 api.add_namespace(wificonnection, '/wificonnection')
 api.add_namespace(service, '/service')
 api.add_namespace(rdp, '/rdp')
+api.add_namespace(alert, '/alert')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=80)
