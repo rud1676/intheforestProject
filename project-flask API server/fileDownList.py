@@ -1,4 +1,4 @@
-from needs import es, request, Resource, Namespace, timefunc, lastPath
+from needs import es, request, Resource, Namespace, timefunc, lastPath,catchurl
 filedown = Namespace(name='filedown',
                      description="About filedown 이벤트")
 
@@ -48,9 +48,9 @@ class alert(Resource):
             time = timefunc(r["_source"]["@timestamp"])
             name = r["_source"]["agent"]["name"]
             prog = lastPath(r["_source"]["data"]["win"]["eventdata"]["image"])
-
+            url = catchurl(r["_source"]["data"]["win"]["eventdata"]["contents"])
             file = lastPath(r["_source"]["data"]["win"]
                             ["eventdata"]["targetFilename"]).replace(":Zone.Identifier", "")
             result.append({"timestamp": time, "name": name,
-                           "image": prog, "file": file})
+                           "image": prog, "file": file,"url":url})
         return result

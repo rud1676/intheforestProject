@@ -19,34 +19,30 @@
           :items="events"
           :loading="load"
           :search="search"
+          @click:row="showurl"
           loading-text="wait a moment"
           class="elevation-1"
         ></v-data-table>
       </v-card>
       <v-divider class="mx-5 mt-4"></v-divider>
-      <v-row class="v-flex">
-        <v-col>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon color="light-green" dark v-bind="attrs" v-on="on">
-                mdi-information
-              </v-icon>
-            </template>
-            <span>암호같은 파일은 임시 파일일 수 있음!</span>
-          </v-tooltip>
-        </v-col>
-        <v-col class="d-flex justify-center">
-          <v-card-actions>
-            <v-btn
-              class="mt-2"
-              color="light-green lighten-1"
-              @click="acceptTable"
-              >checkAlert</v-btn
-            >
-          </v-card-actions>
-        </v-col>
-      </v-row>
     </v-card>
+    <v-snackbar
+      v-model="snackbar"
+      multi-line
+      timeout = -1
+    >
+      <p style="width:1500px">{{url}}</p>
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="white"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -58,8 +54,8 @@ export default {
     userList
   },
   data: () => ({
-    start: "10:00",
-    end: "19:00",
+    snackbar: false,
+    url:"",
     search: "",
     load: true,
     events: [],
@@ -77,20 +73,9 @@ export default {
     ]
   }),
   methods: {
-    acceptTable: function () {
-      alert("적용하였습니다!");
-      const URL = this.$store.state.pyurl+"/filedown/filestream";
-      axios
-        .post(URL, {
-          data: {
-            start: this.$data.start,
-            end: this.$data.end
-          }
-        })
-        .then((result) => {
-          this.$data.events = result.data;
-          this.$data.load = false;
-        });
+    showurl(items){
+      this.$data.url = items.url
+      this.$data.snackbar = true;
     }
   },
   mounted() {

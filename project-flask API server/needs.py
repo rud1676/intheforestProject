@@ -3,6 +3,7 @@ from flask import request, Flask
 from flask_restx import Resource, Namespace, Api
 from flask_cors import CORS
 import datetime  # UTC로 나온 시간을 한국시간으로 맞추기 위함
+import re # regex
 #for wazuh api!
 import json
 import requests
@@ -39,6 +40,12 @@ def lastPath(l):
     l = l.split("\\")
     print(l)
     return l[-1]
+
+def catchurl(l):
+    """this use filedownlist.py => extract url"""
+    match_g = re.compile(".+HostUrl=(.+)")
+    m=match_g.match(l)
+    return m.group(1)
 
 #wazuh api needs token
 def getToken():
