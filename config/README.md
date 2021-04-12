@@ -420,3 +420,18 @@ ad.wappalyzer.com
     <group>networkProfile</group>
   </rule>
 ```
+
+### wazuh-api setting
+
+![link](https://documentation.wazuh.com/current/user-manual/api/getting-started.html)
+![docs](https://documentation.wazuh.com/current/user-manual/api/reference.html#tag/Agents)
+change for this {WAZUH_PATH}/api/configuration/api.yaml
+```
+https:
+   enabled: no
+   #key: "api/configuration/ssl/server.key"
+   #cert: "api/configuration/ssl/server.crt"
+   #use_ca: False
+   #ca: "api/configuration/ssl/ca.crt"
+   #ssl_cipher: "TLSv1.2"
+```

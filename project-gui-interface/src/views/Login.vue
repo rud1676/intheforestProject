@@ -13,11 +13,12 @@
                             style="display: block; margin: -60px auto;"
                             src="../assets/logo.png"
                             />
+                            <v-text>(user: rud, admin: imyuseop, password: 1234 only test!)</v-text>
                             <v-alert
                             class="mb-3"
                             :value="isLoginError"
                             type="error">
-                                아이디와 비밀번호를 확인하세요.
+                                아이디와 비밀번호를 확인하세요. 
                             </v-alert>
                             <v-alert
                             class="mb-3"

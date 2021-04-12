@@ -1,4 +1,4 @@
-from needs import Flask, Api, CORS
+from needs import Flask, Api, CORS, getToken, callWazuhApi
 from driverload import driverload
 from networkConnection import networkConnection
 from detectProcess import detect
@@ -8,6 +8,7 @@ from dnsquery import dnsquery
 from wificonnection import wificonnection
 from service import service
 from RDPClient import rdp
+from wazuhapi import wazuh
 from alertfunction import alert  # make after... first modify function
 app = Flask(__name__)
 CORS(app)
@@ -29,6 +30,7 @@ api.add_namespace(wificonnection, '/wificonnection')
 api.add_namespace(service, '/service')
 api.add_namespace(rdp, '/rdp')
 api.add_namespace(alert, '/alert')
-
+api.add_namespace(wazuh, '/wazuh')
+getToken() #wazuh api use!
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8888)
