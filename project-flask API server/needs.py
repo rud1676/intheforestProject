@@ -55,10 +55,8 @@ def wazuhlogin():
     requests_headers = {'Content-Type': 'application/json',
                     'Authorization': f'Bearer {token}'}
     response = requests.get(f"{protocol}://{host}:{port}/?pretty=true", headers=requests_headers, verify=False)
-    print(token)
 
 #wazuh api call!
 def callWazuhApi(s):
-    print(f"{protocol}://{host}:{port}"+s+"?pretty=true")
     r = requests.get(f"{protocol}://{host}:{port}"+s+"?pretty=true", headers=requests_headers, verify=False)
     return r.json()

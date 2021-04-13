@@ -1,7 +1,7 @@
 from needs import Flask, Api, CORS, wazuhlogin
 from driverload import driverload
 from networkConnection import networkConnection
-from detectProcess import detect
+from timeout import timeout
 from fileDownList import filedown
 from gamelist import gamelist
 from dnsquery import dnsquery
@@ -22,7 +22,7 @@ api = Api(app,
 
 api.add_namespace(driverload, '/driverload')
 api.add_namespace(networkConnection, '/networkConnection')
-api.add_namespace(detect, '/detect')
+api.add_namespace(timeout, '/timeout')
 api.add_namespace(filedown, '/filedown')
 api.add_namespace(gamelist, '/gamelist')
 api.add_namespace(dnsquery, '/dnsquery')

@@ -42,7 +42,8 @@ export default new Vuex.Store({
       state.isLoginError = false;
       state.userInfo = null;
       state.isAdmin = false;
-    }
+    },
+    //for making Loading view, call this function in dashboard
   },
   actions: {
     //로그인 시도

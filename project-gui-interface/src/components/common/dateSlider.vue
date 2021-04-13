@@ -20,7 +20,6 @@ export default {
     },
     data: () => ({
         slider: { label: '..days ago', val: 7, color: 'blue' },
-        agents:[]
     }),
     methods:{
       submit(){
