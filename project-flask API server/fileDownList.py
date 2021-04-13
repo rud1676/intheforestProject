@@ -32,7 +32,7 @@ class alert(Resource):
                         {
                             "range": {
                                 "@timestamp": {
-                                    "gte": "now-7d/d",
+                                    "gte": "now-8d/d",
                                     "lt": "now"
                                 }
                             }

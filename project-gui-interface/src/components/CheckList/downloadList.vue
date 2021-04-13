@@ -30,8 +30,9 @@
       v-model="snackbar"
       multi-line
       timeout = -1
+      max-width="1500px"
     >
-      <p style="width:1500px">{{url}}</p>
+      {{url}}
       <template v-slot:action="{ attrs }">
         <v-btn
           color="white"
@@ -64,7 +65,6 @@ export default {
         text: "TimeStamp",
         align: "start",
         filterable: false,
-        sortable: false,
         value: "timestamp"
       },
       { text: "Hostname", value: "name" },

@@ -38,7 +38,6 @@ def timefunc(t):
 
 def lastPath(l):
     l = l.split("\\")
-    print(l)
     return l[-1]
 
 def catchurl(l):
