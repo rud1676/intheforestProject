@@ -3,6 +3,7 @@
     <v-card class="mx-auto" max-width="1400" color="light-green lighten-4">
       <v-card-title>파일 다운로드 리스트</v-card-title>
       <user-list/>
+      <date-slider @onload="pload" @finishload="pload" @submitEvent="eventchangt" :url="apiurl"/>
       <v-card>
         <v-card-title>
           <v-text-field
@@ -30,10 +31,6 @@
       v-model="snackbar"
       multi-line
       timeout = -1
-      max-width="1500px"
-      class="custom"
-      bottom="true"
-      vertical="true"
     >
       {{url}}
       <template v-slot:action="{ attrs }">
@@ -53,12 +50,15 @@
 <script>
 import axios from "axios";
 import userList from "../common/userlist"
+import dateSlider from '../common/dateSlider.vue';
 export default {
   components:{
-    userList
+    userList,
+    dateSlider
   },
   data: () => ({
     snackbar: false,
+    apiurl:"/filedown/filestream",
     url:"",
     search: "",
     load: true,
@@ -79,12 +79,19 @@ export default {
     showurl(items){
       this.$data.url = items.url
       this.$data.snackbar = true;
+    },
+    pload(load){
+      this.$data.load =load;
+    },
+    eventchangt(data){
+      this.$data.events = data;
+      console.log(this.$data.events)
     }
   },
   mounted() {
-    const URL = this.$store.state.pyurl+"/filedown/filestream";
-    console.log("post time and abnormal detect");
-    axios.get(URL).then((result) => {
+    const URL = this.$store.state.pyurl+this.$data.apiurl;
+    console.log(this.$store.state.pyurl);
+    axios.post(URL,{"date":7}).then((result) => {
       this.$data.events = result.data;
       this.$data.load = false;
     });

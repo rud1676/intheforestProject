@@ -1,4 +1,4 @@
-from needs import es, request, Resource, Namespace, timefunc, lastPath, callWazuhApi, getToken
+from needs import es, request, Resource, Namespace, timefunc, lastPath, callWazuhApi, wazuhlogin
 
 
 wazuh = Namespace(
@@ -8,7 +8,7 @@ wazuh = Namespace(
 @wazuh.route('/agents')
 class userlist(Resource):
     def get(self):
-        getToken()
+        wazuhlogin()
         """get Agent info => ip,name,status!"""
         agents = []
         for r in callWazuhApi("/agents")["data"]["affected_items"]:

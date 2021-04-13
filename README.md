@@ -89,6 +89,8 @@ App.vue
 ---*AppHeader.vue(show menu on left side)
 ---*Loading.vue(loading page)
 ---*Toolbar.vue(side menu about user menu)
+---*dateSlider.vue(emit => on,offload (link: load value), submitEvent (link:datarow in Datatable) &&&&& props => url(api path))
+
 (component folder => dashboard folder => for several environment)
 ```
 

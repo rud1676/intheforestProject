@@ -46,14 +46,16 @@ def catchurl(l):
     m=match_g.match(l)
     return m.group(1)
 
+#=====================about wazuh
 #wazuh api needs token
-def getToken():
+def wazuhlogin():
     global requests_headers
     response = requests.get(login_url, headers=login_headers, verify=False)
     token = json.loads(response.content.decode())['data']['token']
     requests_headers = {'Content-Type': 'application/json',
                     'Authorization': f'Bearer {token}'}
     response = requests.get(f"{protocol}://{host}:{port}/?pretty=true", headers=requests_headers, verify=False)
+    print(token)
 
 #wazuh api call!
 def callWazuhApi(s):

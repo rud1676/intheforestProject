@@ -7,7 +7,9 @@ filedown = Namespace(name='filedown',
 
 @filedown.route("/filestream")
 class alert(Resource):
-    def get(self):
+    def post(self):
+        daysago = request.json.get("date")
+        print(daysago)
         result = []
         body = {
             "size": 10000,
@@ -32,7 +34,7 @@ class alert(Resource):
                         {
                             "range": {
                                 "@timestamp": {
-                                    "gte": "now-8d/d",
+                                    "gte": "now-"+str(daysago)+"d/d",
                                     "lt": "now"
                                 }
                             }

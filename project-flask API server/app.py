@@ -1,4 +1,4 @@
-from needs import Flask, Api, CORS, getToken, callWazuhApi
+from needs import Flask, Api, CORS, wazuhlogin
 from driverload import driverload
 from networkConnection import networkConnection
 from detectProcess import detect
@@ -31,5 +31,6 @@ api.add_namespace(service, '/service')
 api.add_namespace(rdp, '/rdp')
 api.add_namespace(alert, '/alert')
 api.add_namespace(wazuh, '/wazuh')
+
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8888)
