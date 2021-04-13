@@ -9,7 +9,6 @@ filedown = Namespace(name='filedown',
 class alert(Resource):
     def post(self):
         daysago = request.json.get("date")
-        print(daysago)
         result = []
         body = {
             "size": 10000,

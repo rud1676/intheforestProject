@@ -26,6 +26,16 @@
         ></v-data-table>
       </v-card>
       <v-divider class="mx-5 mt-4"></v-divider>
+      
+            <v-alert
+      border="top"
+      colored-border
+      type="info"
+      elevation="2"
+      close-icon="$cancel"
+    >
+      when you click row, page show direct download url
+    </v-alert>
     </v-card>
     <v-snackbar
       v-model="snackbar"
@@ -90,7 +100,6 @@ export default {
   },
   mounted() {
     const URL = this.$store.state.pyurl+this.$data.apiurl;
-    console.log(this.$store.state.pyurl);
     axios.post(URL,{"date":7}).then((result) => {
       this.$data.events = result.data;
       this.$data.load = false;

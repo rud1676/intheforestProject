@@ -6,7 +6,7 @@
           <img src="../../assets/logo.png"
         /></v-avatar>
 
-        <div>intheForest-Project</div>
+        <div>IntheForest-Project</div>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -16,7 +16,6 @@
           v-for="lev1 in lev1"
           :key="lev1.no"
           v-show="isAdmin(lev1.admin)"
-          v-on:click="tolink(lev1.link)"
           color="green darken-3"
         >
           <template v-slot:activator>

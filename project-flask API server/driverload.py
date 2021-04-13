@@ -32,8 +32,9 @@ class alert(Resource):
 
 @driverload.route('/event')
 class event(Resource):
-    def get(self):
+    def post(self):
         """필터링 되지 않은 driver event를 얻습니다."""
+        daysago = request.json.get("date")
         body = {
             "size": 10000,
             "query": {
@@ -43,10 +44,11 @@ class event(Resource):
                             "match": {
                                 "data.win.system.eventID": 6
                             }
-                        }, {
+                        },
+                        {
                             "range": {
                                 "@timestamp": {
-                                    "gte": "now-7d/d",
+                                    "gte": "now-"+str(daysago)+"d/d",
                                     "lt": "now"
                                 }
                             }
@@ -61,8 +63,13 @@ class event(Resource):
         result = []
         for s in es.search(index="wazuh-alerts*", body=body)["hits"]["hits"]:
             name = s["_source"]["agent"]["name"]
-            signature = s["_source"]["data"]["win"]["eventdata"]["signature"]
+            sigstate = s["_source"]["data"]["win"]["eventdata"]["signed"] 
+            imageLoad = s["_source"]["data"]["win"]["eventdata"]["imageLoaded"] 
+            if sigstate == "true":
+                signature = s["_source"]["data"]["win"]["eventdata"]["signature"]
+            else:
+                signature = "None"
             date_t = timefunc(s["_source"]["@timestamp"])
             result.append(
-                {"hostname": name, "driver": signature, "timestamp": date_t})
+                {"hostname": name, "driver": signature,"sigstate":sigstate,"imageLoad":imageLoad, "timestamp": date_t})
         return result

@@ -8,7 +8,7 @@
           v-bind="attrs"
           v-on="on"
       class="ma-2"
-      color="primary"
+      :color="a.status == 'active'? 'primary' : 'error'"
       outlined
       pill
     >
@@ -34,6 +34,7 @@ export default {
         console.log("call agents list");
         this.$http.get(URL).then((result) => {
             this.$data.agents = result.data;
+            console.log(result.data[0]["status"])
         });
     }
 }
