@@ -31,6 +31,9 @@
       multi-line
       timeout = -1
       max-width="1500px"
+      class="custom"
+      bottom="true"
+      vertical="true"
     >
       {{url}}
       <template v-slot:action="{ attrs }">
