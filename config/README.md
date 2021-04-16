@@ -426,12 +426,19 @@ ad.wappalyzer.com
 ![link](https://documentation.wazuh.com/current/user-manual/api/getting-started.html)
 ![docs](https://documentation.wazuh.com/current/user-manual/api/reference.html#tag/Agents)
 change for this {WAZUH_PATH}/api/configuration/api.yaml
+
 ```
 https:
-   enabled: no
+   enabled: no #change https=>http
    #key: "api/configuration/ssl/server.key"
    #cert: "api/configuration/ssl/server.crt"
    #use_ca: False
    #ca: "api/configuration/ssl/ca.crt"
    #ssl_cipher: "TLSv1.2"
 ```
+
+and change kibana wazuh plugin config in '/usr/share/kibana/data/wazuh/config/wazuh.yml'
+
+https->http
+
+if you use Cloud Flatfom, check ufw
