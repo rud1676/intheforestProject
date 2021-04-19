@@ -140,7 +140,7 @@ export default {
         data: {
           start: this.$data.start,
           end: this.$data.end,
-          date: 7
+          date: this.$store.state.date
         }
       })
       .then((result) => {

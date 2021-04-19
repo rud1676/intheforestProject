@@ -63,6 +63,7 @@ class process(Resource):
 @networkConnection.route("/imageevent")
 class connect(Resource):
     def post(self):
+        """date와 agent image로 하루의 그 프로그램에 대한 networkconnection 내역들을 다 가져옵니다!"""
         d = request.json.get("date")
         a = request.json.get("agent")
         image = request.json.get("image")

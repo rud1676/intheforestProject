@@ -31,10 +31,8 @@ export default {
     }),
     mounted() {
         const URL = this.$store.state.pyurl+"/wazuh/agents";
-        console.log("call agents list");
         this.$http.get(URL).then((result) => {
             this.$data.agents = result.data;
-            console.log(result.data[0]["status"])
         });
     }
 }

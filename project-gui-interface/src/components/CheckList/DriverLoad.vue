@@ -1,6 +1,6 @@
 <template>
   <v-container class="py-2 px-1" fluid style="height: 100vh">
-    <v-card class="mx-auto" max-width="800" color="light-green lighten-4">
+    <v-card class="mx-auto" max-width="1200" color="light-green lighten-4">
       <v-card-title>Driver Load 이벤트 감지</v-card-title>
 
       <user-list />
@@ -36,6 +36,7 @@
         if Signature is Revoke, Driver Corp is None. Click row and get Driver
         image path.
       </v-alert>
+      <line-chart />
     </v-card>
     <v-snackbar v-model="snackbar" multi-line timeout="-1">
       {{ Image }}
@@ -52,10 +53,12 @@
 import axios from "axios";
 import userList from "../common/userlist";
 import dateSlider from "../common/dateSlider.vue";
+import lineChart from "../common/Linechart.vue";
 export default {
   components: {
     userList,
-    dateSlider
+    dateSlider,
+    lineChart
   },
   data: () => ({
     search: "",
@@ -71,9 +74,9 @@ export default {
         align: "start",
         filterable: false,
         sortable: false,
-        value: "timestamp"
+        value: "time"
       },
-      { text: "Hostname", value: "hostname" },
+      { text: "Hostname", value: "agent" },
       { text: "Driver Cop.", value: "driver" },
       { text: "SignatureIs...", value: "sigstate" }
     ]
@@ -93,7 +96,7 @@ export default {
   },
   mounted() {
     const URL = this.$store.state.pyurl + this.$data.apiurl;
-    axios.post(URL, { date: 7 }).then((result) => {
+    axios.post(URL, { date: this.$store.state.date }).then((result) => {
       this.$data.events = result.data;
       this.$data.load = false;
     });

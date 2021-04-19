@@ -42,7 +42,7 @@ export default {
   }),
   methods: {
     submit() {
-      console.log("submit call");
+      console.log("DateSlide submit call");
       this.$store.state.date = this.$data.slider.val;
       if (this.$props.who == "timeout") {
         this.submit__for_timeoutcomponent();

@@ -75,7 +75,7 @@ import dateSlider from "../common/dateSlider.vue";
 export default {
   components: {
     userList,
-    dateSlider,
+    dateSlider
   },
   data: () => ({
     search: "",
@@ -87,7 +87,7 @@ export default {
       { text: "Time", value: "time", sortable: true },
       { text: "Hostname", value: "agent" },
       { text: "Path", value: "image" },
-      { text: "count", value: "count" },
+      { text: "count", value: "count" }
     ],
     expandHeaders: [
       { text: "time", value: "time" },
@@ -96,20 +96,20 @@ export default {
       { text: "sourIP", value: "sourIP" },
       { text: "sourPort", value: "sourPort" },
       { text: "ruleName", value: "ruleName" },
-      { text: "protocol", value: "protocol" },
+      { text: "protocol", value: "protocol" }
     ],
     expandEvents: [],
-    dateForExpand: 0,
+    dateForExpand: 0
   }),
   methods: {
-    test({ item, value }) {
+    test({ item }) {
       this.$data.loadexpand = true;
       const URL = this.$store.state.pyurl + "/networkConnection/imageevent";
       axios
         .post(URL, {
           date: item.date,
           agent: item.agent,
-          image: item.image,
+          image: item.image
         })
         .then((result) => {
           this.$data.expandEvents = result.data;
@@ -126,16 +126,14 @@ export default {
     },
     transdate(child) {
       this.$data.dateForExpand = child;
-    },
+    }
   },
   mounted() {
     const URL = this.$store.state.pyurl + this.$data.apiurl;
     axios.post(URL, { date: this.$store.state.date }).then((result) => {
-      console.log(this.$store.state.date);
-      console.log(result.data);
       this.$data.events = result.data;
       this.$data.load = false;
     });
-  },
+  }
 };
 </script>
