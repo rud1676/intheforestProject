@@ -4,12 +4,11 @@ mainDash = Namespace(
 
 
 @mainDash.route('/agentactive')
-class userlist(Resource):
+class agentactive(Resource):
     def post(self):
         """모든 agent에 대해 agodate만큼의 Active에 대한내용을 전부 불러옴."""
         agents = getAgentData()
         daysago = request.json.get("date")
-        print(daysago)
         result = []
         for agent in agents:
             body = {
@@ -46,4 +45,53 @@ class userlist(Resource):
                 data.append({"time": time, "status": status})
             result.append({"agent": agent, "data": data})
 
+        return result
+
+
+@mainDash.route("/downCount")
+class downCount(Resource):
+    def post(self):
+        daysago = request.json.get("date")
+        result = []
+        body = {
+            "size": 10000,
+            "query": {
+                "bool": {
+                    "must": [
+                        {
+                            "match": {
+                                "data.win.system.eventID": 15
+                            }
+                        },
+                        {
+                            "regexp": {
+                                "data.win.eventdata.targetFilename": ".+Zone.Identifier"
+                            }
+                        },
+                        {
+                            "regexp": {
+                                "data.win.eventdata.contents": ".+HostUrl.+"
+                            }
+                        },
+                        {
+                            "range": {
+                                "@timestamp": {
+                                    "gte": "now-"+str(daysago)+"d/d",
+                                    "lt": "now"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "aggs": {
+                "downcount": {
+                    "terms": {
+                        "field": "agent.name"
+                    }
+                }
+            }
+        }
+        for r in es.search(index="wazuh-alert*", body=body)["aggregations"]["downcount"]["buckets"]:
+            result.append({"agent": r["key"], "count": r["doc_count"]})
         return result

@@ -12,6 +12,7 @@ class userlist(Resource):
         """get Agent info => ip,name,status!"""
         agents = []
         for r in callWazuhApi("/agents")["data"]["affected_items"]:
+            #Manage PC는 제외
             if r["name"] == "wazuh-and-beat":
                 continue
             agents.append(
