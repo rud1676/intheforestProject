@@ -30,7 +30,7 @@ export default {
     },
     who: {
       type: String,
-      default: null,
+      default: "test",
     },
     date: {
       type: Number,
@@ -46,11 +46,13 @@ export default {
       this.$store.state.date = this.$data.slider.val;
       if (this.$props.who == "timeout") {
         this.submit__for_timeoutcomponent();
+      } else if (this.$props.who == "test") {
+        this.$emit("transAgoDate", this.slider.val);
       } else {
         this.submit_default();
       }
     },
-    //default component!
+    //default component! => 서브밋 누름으로써 api통신을 부모컴포넌트로 옮기는 작업을 해야됨! => onload와 finishload도 없어야되넴..
     submit_default() {
       this.onload();
 

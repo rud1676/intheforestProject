@@ -51,68 +51,101 @@ const routes = [
     component: () => import("@/views/Homepage.vue")
   },
   {
-    path: "/dashboard",
+    path: "/login",
+    name: "login",
+    beforeEnter: rejectAuthUser,
+    component: () => import("@/views/Login.vue")
+  },
+  {
+    path: "/main",
     beforeEnter: adminUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
+      //about admin pannel
       {
         path: "dashmain",
         name: "dashmain",
-        component: () => import("@/components/dashboard/dashMain.vue")
+        component: () => import("@/components/adminpannel/dashMain.vue")
       },
       {
-        path: "/",
+        path: "/dashboard",
         name: "dashboard",
-        component: () => import("@/components/dashboard/main.vue")
-      }
-    ]
-  },
-  {
-    path: "/discover",
-    beforeEnter: adminUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
+        component: () => import("@/components/adminpannel/main.vue")
+      },      {
+        path: "/discover",
         name: "discover",
-        component: () => import("../components/discover.vue")
-      }
-    ]
-  },
-  {
-    path: "/check",
-    beforeEnter: adminUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
+        component: () => import("../components/adminpannel/discover.vue")
+      },      {
+        path: "/check",
         name: "check",
         component: () => import("../components/check.vue")
-      }
-    ]
-  },
-  {
-    path: "/alert",
-    beforeEnter: adminUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
+      },      {
+        path: "/alert",
         name: "alert",
         component: () => import("../components/alert.vue")
-      }
-    ]
-  },
-  {
-    path: "/management",
-
-    beforeEnter: adminUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
+      },
       {
-        path: "/",
+        path: "/management",
         name: "management",
         component: () => import("../components/management.vue")
+      },
+        //intergrated dashboard!
+      {
+        path: "/integrated",
+        name: "integrated",
+        component: () => import("../components/dashboard/Integrated_dashboard.vue")
+      },
+      //------------------sector checkList router--------------------
+      {
+        path: "/driverload",
+        name: "driverload",
+        component: () => import("../components/CheckList/DriverLoad.vue")
+      },
+      {
+        path: "/wifi",
+        name: "wifi",
+        component: () => import("../components/CheckList/wifi.vue")
+      },
+      {
+        path: "/newSerivce",
+        name: "newSerivce",
+        component: () => import("../components/CheckList/newSerivce.vue")
+      },
+      {
+        path: "/timeout",
+        name: "timeout",
+        component: () => import("../components/CheckList/timeout.vue")
+      },
+      {
+        path: "/download",
+        name: "download",
+        component: () => import("../components/CheckList/downloadList.vue")
+      },
+      {
+        path: "/gametest",
+        name: "gametest",
+        component: () => import("../components/CheckList/gametest.vue")
+      },
+      {
+        path: "/rdp",
+        name: "rdp",
+        component: () => import("../components/CheckList/rdp.vue")
+      },
+      {
+        path: "/dns",
+        name: "dns",
+        component: () => import("../components/CheckList/dnsquery.vue")
+      },
+        //--------------sector for abnomal
+      {
+        path: "/thread",
+        name: "thread",
+        component: () => import("../components/abnormal/threadCreate.vue")
+      },
+      {
+        path: "/networkconnection",
+        name: "networkconnection",
+        component: () => import("../components/abnormal/networkconnection.vue")
       }
     ]
   },
@@ -127,135 +160,6 @@ const routes = [
       }
     ]
   },
-  {
-    path: "/login",
-    name: "login",
-    beforeEnter: rejectAuthUser,
-    component: () => import("@/views/Login.vue")
-  },
-  //------------------sector checkList router--------------------
-  {
-    path: "/driverload",
-    beforeEnter: onlyAuthUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
-        name: "driverload",
-        component: () => import("../components/CheckList/DriverLoad.vue")
-      }
-    ]
-  },
-  {
-    path: "/wifi",
-    beforeEnter: onlyAuthUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
-        name: "wifi",
-        component: () => import("../components/CheckList/wifi.vue")
-      }
-    ]
-  },
-  {
-    path: "/newserivce",
-    beforeEnter: onlyAuthUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
-        name: "newSerivce",
-        component: () => import("../components/CheckList/newSerivce.vue")
-      }
-    ]
-  },
-  {
-    path: "/timeout", //근무 시간 외에 활동 체크
-    beforeEnter: onlyAuthUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
-        name: "timeout",
-        component: () => import("../components/CheckList/timeout.vue")
-      }
-    ]
-  },
-  {
-    path: "/download", //근무 시간 외에 활동 체크
-    beforeEnter: onlyAuthUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
-        name: "download",
-        component: () => import("../components/CheckList/downloadList.vue")
-      }
-    ]
-  },
-  {
-    path: "/gametest", //근무 시간 외에 활동 체크
-    beforeEnter: onlyAuthUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
-        name: "gametest",
-        component: () => import("../components/CheckList/gametest.vue")
-      }
-    ]
-  },
-  {
-    path: "/rdp",
-    beforeEnter: onlyAuthUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
-        name: "rdp",
-        component: () => import("../components/CheckList/rdp.vue")
-      }
-    ]
-  },
-  {
-    path: "/dns",
-    beforeEnter: onlyAuthUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
-        name: "dns",
-        component: () => import("../components/CheckList/dnsquery.vue")
-      }
-    ]
-  },
-
-  //--------------sector for abnomal
-  {
-    path: "/thread",
-    beforeEnter: onlyAuthUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
-        name: "thread",
-        component: () => import("../components/abnormal/threadCreate.vue")
-      }
-    ]
-  },
-  {
-    path: "/networkconnection",
-    beforeEnter: onlyAuthUser,
-    component: () => import("@/views/Mainpage.vue"),
-    children: [
-      {
-        path: "/",
-        name: "networkconnection",
-        component: () => import("../components/abnormal/networkconnection.vue")
-      }
-    ]
-  }
 ];
 
 const router = new VueRouter({

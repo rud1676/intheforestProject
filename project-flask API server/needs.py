@@ -59,16 +59,29 @@ def wazuhlogin():
     global requests_headers
     response = requests.get(login_url, headers=login_headers, verify=False)
     token = json.loads(response.content.decode())['data']['token']
+    print(token)
     requests_headers = {'Content-Type': 'application/json',
                         'Authorization': f'Bearer {token}'}
     response = requests.get(
         f"{protocol}://{host}:{port}/?pretty=true", headers=requests_headers, verify=False)
     print(token)
 
-# wazuh api call!
+# wazuh api call    !
 
 
 def callWazuhApi(s):
     r = requests.get(f"{protocol}://{host}:{port}"+s +
                      "?pretty=true", headers=requests_headers, verify=False)
     return r.json()
+
+# Agent 리스트 => 이름정보만 받아옴!
+
+
+def getAgentData():
+    agents = []
+    wazuhlogin()
+    for a in callWazuhApi("/agents")["data"]["affected_items"]:
+        if a["name"] == "wazuh-and-beat":
+            continue
+        agents.append(a["name"])
+    return agents

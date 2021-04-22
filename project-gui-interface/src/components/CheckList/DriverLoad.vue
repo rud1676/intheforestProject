@@ -50,15 +50,14 @@
 </template>
 
 <script>
-import axios from "axios";
 import userList from "../common/userlist";
 import dateSlider from "../common/dateSlider.vue";
-import lineChart from "../common/Linechart.vue";
+import lineChart from "../chart/Linechart.vue";
 export default {
   components: {
     userList,
     dateSlider,
-    lineChart
+    lineChart,
   },
   data: () => ({
     search: "",
@@ -74,12 +73,12 @@ export default {
         align: "start",
         filterable: false,
         sortable: false,
-        value: "time"
+        value: "time",
       },
       { text: "Hostname", value: "agent" },
       { text: "Driver Cop.", value: "driver" },
-      { text: "SignatureIs...", value: "sigstate" }
-    ]
+      { text: "SignatureIs...", value: "sigstate" },
+    ],
   }),
   methods: {
     showimg(image) {
@@ -92,14 +91,14 @@ export default {
     eventchangt(data) {
       this.$data.events = data;
       console.log(this.$data.events);
-    }
+    },
   },
   mounted() {
     const URL = this.$store.state.pyurl + this.$data.apiurl;
-    axios.post(URL, { date: this.$store.state.date }).then((result) => {
+    this.$http.post(URL, { date: this.$store.state.date }).then((result) => {
       this.$data.events = result.data;
       this.$data.load = false;
     });
-  }
+  },
 };
 </script>
