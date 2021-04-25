@@ -9,10 +9,10 @@ import json
 import requests
 import urllib3
 from base64 import b64encode
-es = Elasticsearch('192.168.0.241:9200')
+es = Elasticsearch('34.64.140.231:9200')
 #########sector for wazuh-api config!#############
 protocol = 'http'
-host = 'localhost'
+host = '34.64.140.231'
 port = 55000
 user = 'wazuh'
 password = 'wazuh'

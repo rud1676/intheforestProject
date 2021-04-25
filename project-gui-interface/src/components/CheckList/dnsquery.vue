@@ -23,21 +23,45 @@
         ></v-data-table>
       </v-card>
       <v-divider class="mx-5 mt-4"></v-divider>
-      <v-row class="v-flex">
-        <v-col>
-
+      <v-alert
+      icon="mdi-shield-lock-outline"
+      prominent
+      text
+      type="info"
+    >
+      MALICIOUS DNS TRAFFIC Check.
+      <v-divider
+        class="my-4 info"
+        style="opacity: 0.22"
+      ></v-divider>
+      <v-row
+        align="center"
+        no-gutters
+      >
+      <v-col class="grow">
+          Iodine tool detections(High rate of null requests), Do - Exfiltration(High rate of txt requests), Detect queries with base64 encoded strings, Detect Backdoor using DNS TXT queries.
         </v-col>
-        <v-col class="d-flex justify-center">
-          <v-card-actions>
-            <v-btn
-              class="mt-2"
-              color="light-green lighten-1"
-              @click="acceptTable"
-              >checkAlert</v-btn
-            >
-          </v-card-actions>
-        </v-col>
+        <v-spacer></v-spacer>
+      <div>
+          <v-btn
+            color="info"
+            outlined
+             @click="alert = !alert">
+            Check            
+          </v-btn>          
+        </div>        
       </v-row>
+    </v-alert>
+    <v-alert
+      :value="alert"
+       border="right"
+      colored-border
+      type="error"
+      elevation="2"
+    >
+      <iframe width="100%" height="600px" :src="url"></iframe>
+    </v-alert>
+    <v-divider class="mx-5 mt-4"></v-divider>
     </v-card>
   </v-container>
 </template>
@@ -46,11 +70,12 @@
 import axios from "axios";
 export default {
   data: () => ({
-    start: "10:00",
-    end: "19:00",
+    alert: false,
+    url: "virustotal.com",
     search: "",
     load: true,
     events: [],
+    check: [], //timestamp, name, rtype, query
     headers: [
       {
         text: "TimeStamp",
@@ -61,33 +86,27 @@ export default {
       },
       { text: "Hostname", value: "name" },
       { text: "Program", value: "image" },
-      { text: "Queryname", value: "query" }
-    ]
+      { text: "Queryname", value: "query" },
+      {text: "Record Type", value: "record"},
+    ],
   }),
   methods: {
-    acceptTable: function () {
-      alert("적용하였습니다!");
-      const URL = "http://127.0.0.1/dnsquery/dnsquery";
-      axios
-        .post(URL, {
-          data: {
-            start: this.$data.start,
-            end: this.$data.end
-          }
-        })
-        .then((result) => {
-          this.$data.events = result.data;
-          this.$data.load = false;
-        });
-    }
+
   },
   mounted() {
-    const URL = this.$store.state.pyurl+"/dnsquery/dnsquery";
-    console.log("post time and abnormal detect");
-    axios.get(URL).then((result) => {
+    const URL1 = this.$store.state.pyurl+"/dnsquery/dnsquery";
+    axios.get(URL1).then((result) => {
       this.$data.events = result.data;
       this.$data.load = false;
     });
+
+    const URL2 = this.$store.state.pyurl+"/dnsquery/check";
+    axios.get(URL2).then((result)=>{
+      this.$data.check = result.data;
+    });
+
   }
+  
+
 };
 </script>
