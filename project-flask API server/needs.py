@@ -4,6 +4,8 @@ from flask_restx import Resource, Namespace, Api
 from flask_cors import CORS
 import datetime  # UTC로 나온 시간을 한국시간으로 맞추기 위함
 import re  # regex
+import pandas as pd
+import numpy as np
 # for wazuh api!
 import json
 import requests

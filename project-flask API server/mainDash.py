@@ -1,4 +1,4 @@
-from needs import es, request, Resource, Namespace, timefunc, lastPath, getAgentData
+from needs import es, request, Resource, Namespace, timefunc, lastPath, getAgentData, wazuhlogin, callWazuhApi, pd, np
 mainDash = Namespace(
     name="mainDash", description="메인 대시보드에 관한 필요한 정보를 불러오는 주소입니다.(/maindash)")
 
@@ -139,4 +139,31 @@ class serviceInstallCount(Resource):
         for r in es.search(index="wazuh-alert*", body=body)["aggregations"]["downcount"]["buckets"]:
             print(r)
             result.append({"agent": r["key"], "count": r["doc_count"]})
+        return result
+
+
+@mainDash.route("/getPackageCount")
+class getPackageCount(Resource):
+    def get(self):
+        wazuhlogin()
+        agents = []
+        result = []
+        for r in callWazuhApi("/agents")["data"]["affected_items"]:
+            if r["id"] == '000' or r["status"] == "never_connected":
+                continue
+            agents.append({"id": r["id"], "name": r["name"]})
+
+        cnt = 1  # for id
+        for a in agents:
+            apiResult = callWazuhApi(
+                "/syscollector/"+a["id"]+"/packages")["data"]["affected_items"]
+            group = pd.DataFrame(apiResult).groupby(
+                "vendor").count()["agent_id"]
+            vendorCount = []
+            for v in list(group.index):
+                vendorCount.append({"Company": v, "count": int(group[v])})
+
+            result.append({"id": cnt, "agent": a["name"], "count": len(
+                apiResult), "companyCount": vendorCount})
+            cnt += 1
         return result

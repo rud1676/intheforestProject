@@ -21,9 +21,17 @@
         <v-col>
           <data-table
             v-if="reRender"
-            title="서비스 설치된 수"
+            title="기간 동안 새롭게 서비스 설치한 갯수"
             :items="serviceinstallcount"
           ></data-table>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <data-double-table
+            v-if="reRender"
+            :items="pakageEventCount"
+          ></data-double-table>
         </v-col>
       </v-row>
     </v-card>
@@ -37,6 +45,7 @@ import DateSlider from "../common/dateSlider.vue";
 import LineChart from "../chart/Linechart";
 import PieChart from "../chart/piechart";
 import DataTable from "../chart/dataTable";
+import DataDoubleTable from "../chart/dataDoubleTable"; //this component need for id column!
 
 export default {
   components: {
@@ -45,6 +54,7 @@ export default {
     DateSlider,
     PieChart, //all event load!
     DataTable,
+    DataDoubleTable,
   },
   data: () => {
     return {
@@ -52,7 +62,8 @@ export default {
       showActiveTime: false,
       AgentStatusEvent: [], //StatusChart data
       downLoadCountData: [], //donwload count data
-      serviceinstallcount: [],
+      serviceinstallcount: [], //new service install event coint
+      pakageEventCount: [],
       reRender: false,
     };
   },
@@ -131,6 +142,7 @@ export default {
         });
       console.log("Main: ", this.$data.downLoadCountData);
     },
+    //Service 설치 이벤트 카운트를 받아와서 보여줍니다!
     serviceInstallCount: async function () {
       this.$data.serviceinstallcount = [];
       const URL = this.$store.state.pyurl + "/maindash/serviceinstallcount";
@@ -145,9 +157,18 @@ export default {
           }
         });
     },
+    pakageCountByAgent: async function () {
+      const URL = this.$store.state.pyurl + "/maindash/getPackageCount";
+      await this.$http.get(URL).then((result) => {
+        this.$data.pakageEventCount = result.data;
+        console.log(result.data);
+      });
+    },
   },
 
-  mounted: function () {},
+  mounted: function () {
+    this.pakageCountByAgent();
+  },
 };
 </script>
 
