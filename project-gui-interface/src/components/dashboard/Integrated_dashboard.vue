@@ -9,7 +9,23 @@
         >TimeLine Status about agents</v-card-title
       >
       <line-chart v-if="reRender" :chartdata="AgentStatusEvent"></line-chart>
-      <pie-chart v-if="reRender" :chartdata="downLoadCountData"></pie-chart>
+      <pie-chart v-if="reRender" :chartdata="serviceinstallcount"></pie-chart>
+      <v-row dense>
+        <v-col>
+          <data-table
+            v-if="reRender"
+            title="파일 다운로드 수"
+            :items="downLoadCountData"
+          ></data-table>
+        </v-col>
+        <v-col>
+          <data-table
+            v-if="reRender"
+            title="서비스 설치된 수"
+            :items="serviceinstallcount"
+          ></data-table>
+        </v-col>
+      </v-row>
     </v-card>
   </v-container>
 </template>
@@ -20,13 +36,15 @@ import agent from "../common/userlist";
 import DateSlider from "../common/dateSlider.vue";
 import LineChart from "../chart/Linechart";
 import PieChart from "../chart/piechart";
+import DataTable from "../chart/dataTable";
 
 export default {
   components: {
     agent,
     LineChart, //timeline status about agents
     DateSlider,
-    PieChart, //filedown count by agents
+    PieChart, //all event load!
+    DataTable,
   },
   data: () => {
     return {
@@ -34,7 +52,8 @@ export default {
       showActiveTime: false,
       AgentStatusEvent: [], //StatusChart data
       downLoadCountData: [], //donwload count data
-      reRender: true,
+      serviceinstallcount: [],
+      reRender: false,
     };
   },
   methods: {
@@ -43,8 +62,13 @@ export default {
     },
     getAllEventDate: async function () {
       this.$data.reRender = false;
+      //console.log("call: getAllActive");
       await this.getAllActiveEvent();
+      //console.log("call: downLoadCount");
       await this.downLoadCount();
+      //console.log("call: serviceInstallCount");
+      await this.serviceInstallCount();
+      //console.log("In await, async : ", this.$data.downLoadCountData);
       this.$data.reRender = true;
     },
     //LineChart에 Activate 로그를 넣어줌!
@@ -87,19 +111,36 @@ export default {
           //차트를 다시 로드하기 위한 reRender값
         });
       //for Test
-      console.log("Activate Status EventGet");
     },
+    //download count 를 agent 마다 있는 이벤트를 받아오는 api call.
     downLoadCount: async function () {
       this.$data.downLoadCountData = [];
       const URL = this.$store.state.pyurl + "/maindash/downCount";
+      console.log("Inside downLoadCount");
       await this.$http
         .post(URL, { date: this.$store.state.date })
         .then((result) => {
+          console.log("Inside downLoadCount - axios");
           for (let i = 0; i < result.data.length; i++) {
             this.$data.downLoadCountData.push({
               label: result.data[i].agent,
               data: result.data[i].count,
-              backgroundColor: this.makeRandColor(),
+            });
+          }
+          console.log("Inside downLoadCount - axios FINISH!!");
+        });
+      console.log("Main: ", this.$data.downLoadCountData);
+    },
+    serviceInstallCount: async function () {
+      this.$data.serviceinstallcount = [];
+      const URL = this.$store.state.pyurl + "/maindash/serviceinstallcount";
+      await this.$http
+        .post(URL, { date: this.$store.state.date })
+        .then((result) => {
+          for (let i = 0; i < result.data.length; i++) {
+            this.$data.serviceinstallcount.push({
+              label: result.data[i].agent,
+              data: result.data[i].count,
             });
           }
         });

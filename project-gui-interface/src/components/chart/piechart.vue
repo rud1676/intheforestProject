@@ -22,7 +22,7 @@ export default {
   }),
   mounted() {
     console.log("piechart Comeon!");
-    console.log(this.chartdata);
+    //console.log(this.chartdata);
     let data = {
       datasets: [{ data: [], backgroundColor: [] }],
       labels: [],
@@ -32,8 +32,8 @@ export default {
       data.labels.push(this.chartdata[i].label);
       data.datasets[0].backgroundColor.push(this.chartdata[i].backgroundColor);
     }
-    console.log(data);
     this.renderChart(data, this.statusOptions);
+    this.$refs.id = "hi";
   },
 };
 </script>

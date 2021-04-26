@@ -95,3 +95,48 @@ class downCount(Resource):
         for r in es.search(index="wazuh-alert*", body=body)["aggregations"]["downcount"]["buckets"]:
             result.append({"agent": r["key"], "count": r["doc_count"]})
         return result
+
+
+@mainDash.route("/serviceinstallcount")
+class serviceInstallCount(Resource):
+    def post(self):
+        daysago = request.json.get("date")
+        result = []
+        body = {
+            "size": 10000,
+            "query": {
+                "bool": {
+                    "must": [
+                        {
+                            "match": {
+                                "data.win.system.channel": "System"
+                            }
+                        },
+                        {
+                            "match": {
+                                "data.win.system.eventID": "7045"
+                            }
+                        },
+                        {
+                            "range": {
+                                "@timestamp": {
+                                    "gte": "now-"+str(daysago)+"d/d",
+                                    "lt": "now"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "aggs": {
+                "downcount": {
+                    "terms": {
+                        "field": "agent.name"
+                    }
+                }
+            }
+        }
+        for r in es.search(index="wazuh-alert*", body=body)["aggregations"]["downcount"]["buckets"]:
+            print(r)
+            result.append({"agent": r["key"], "count": r["doc_count"]})
+        return result
