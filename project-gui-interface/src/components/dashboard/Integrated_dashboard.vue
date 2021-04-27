@@ -5,17 +5,32 @@
       <v-card-title>통합 대시보드</v-card-title>
       <agent />
       <date-slider @transAgoDate="getAllEventDate"></date-slider>
-      <v-card-title class="text-center"
+
+      <v-progress-linear
+        v-if="!reRender"
+        v-model="loadvalue"
+        color="lime darken-3"
+        height="25"
+      >
+        <template v-slot:default="{ value }">
+          <strong>{{ Math.ceil(value) }}%</strong>
+        </template>
+      </v-progress-linear>
+      <v-card-title v-if="reRender" class="text-center"
         >TimeLine Status about agents</v-card-title
       >
       <line-chart v-if="reRender" :chartdata="AgentStatusEvent"></line-chart>
-      <v-card-title class="text-center">APP Usage Log Count TOP20</v-card-title>
+      <v-card-title v-if="reRender" class="text-center"
+        >APP Usage Log Count TOP20</v-card-title
+      >
       <pie-chart
         :height="h"
         v-if="reRender"
         :chartdata="appUseLogCount"
       ></pie-chart>
-      <v-card-title class="text-center">Log Count by AGENT</v-card-title>
+      <v-card-title v-if="reRender" class="text-center"
+        >Log Count by AGENT</v-card-title
+      >
       <bar-chart v-if="reRender" :chartdata="agentAlllogCount"></bar-chart>
       <v-row dense>
         <v-col>
@@ -79,6 +94,7 @@ export default {
   data: () => {
     return {
       h: 600,
+      loadvalue: 0,
       linechartEvents: null,
       showActiveTime: false,
       AgentStatusEvent: [], //StatusChart data
@@ -97,18 +113,18 @@ export default {
     },
     getAllEventDate: async function () {
       this.$data.reRender = false;
-      //console.log("call: getAllActive");
       await this.getAllActiveEvent();
-      //console.log("call: downLoadCount");
       await this.downLoadCount();
-      //console.log("call: serviceInstallCount");
+      this.$data.loadvalue = 30;
       await this.serviceInstallCount();
-      //console.log("In await, async : ", this.$data.downLoadCountData);
       await this.getAppLogCount();
+      this.$data.loadvalue = 60;
       await this.pakageCountByAgent();
       await this.AgentLogCount();
+      this.$data.loadvalue = 100;
       await this.DNSLogCount();
       this.$data.reRender = true;
+      this.$data.loadvalue = 0;
     },
     //LineChart에 Activate 로그를 넣어줌!
     getAllActiveEvent: async function () {
@@ -242,7 +258,7 @@ export default {
   },
 
   mounted: function () {
-    //this.DNSLogCount();
+    alert("보려는 날짜를 설정하고 submit버튼을 누르세요");
   },
 };
 </script>
