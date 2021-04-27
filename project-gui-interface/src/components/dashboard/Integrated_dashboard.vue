@@ -9,7 +9,14 @@
         >TimeLine Status about agents</v-card-title
       >
       <line-chart v-if="reRender" :chartdata="AgentStatusEvent"></line-chart>
-      <pie-chart v-if="reRender" :chartdata="serviceinstallcount"></pie-chart>
+      <v-card-title class="text-center">APP Usage Log Count TOP20</v-card-title>
+      <pie-chart
+        :height="h"
+        v-if="reRender"
+        :chartdata="appUseLogCount"
+      ></pie-chart>
+      <v-card-title class="text-center">Log Count by AGENT</v-card-title>
+      <bar-chart v-if="reRender" :chartdata="agentAlllogCount"></bar-chart>
       <v-row dense>
         <v-col>
           <data-table
@@ -30,8 +37,19 @@
         <v-col>
           <data-double-table
             v-if="reRender"
+            title="설치된 서비스 수"
+            subtitle="설치된 서비스 회사별로 보기"
             :items="pakageEventCount"
           ></data-double-table>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <data-table
+            v-if="reRender"
+            title="DNS Query IN Browser TOP 80"
+            :items="dns_in_browser_logCount"
+          ></data-table>
         </v-col>
       </v-row>
     </v-card>
@@ -46,6 +64,7 @@ import LineChart from "../chart/Linechart";
 import PieChart from "../chart/piechart";
 import DataTable from "../chart/dataTable";
 import DataDoubleTable from "../chart/dataDoubleTable"; //this component need for id column!
+import BarChart from "../chart/bar-chart.vue";
 
 export default {
   components: {
@@ -55,15 +74,20 @@ export default {
     PieChart, //all event load!
     DataTable,
     DataDoubleTable,
+    BarChart,
   },
   data: () => {
     return {
+      h: 600,
       linechartEvents: null,
       showActiveTime: false,
       AgentStatusEvent: [], //StatusChart data
       downLoadCountData: [], //donwload count data
       serviceinstallcount: [], //new service install event coint
-      pakageEventCount: [],
+      pakageEventCount: [], //wazuh api => pakagelist
+      appUseLogCount: [], //Process create for Product name
+      agentAlllogCount: [], //All log categorize by AGNET
+      dns_in_browser_logCount: [], //DNS LOG
       reRender: false,
     };
   },
@@ -80,6 +104,10 @@ export default {
       //console.log("call: serviceInstallCount");
       await this.serviceInstallCount();
       //console.log("In await, async : ", this.$data.downLoadCountData);
+      await this.getAppLogCount();
+      await this.pakageCountByAgent();
+      await this.AgentLogCount();
+      await this.DNSLogCount();
       this.$data.reRender = true;
     },
     //LineChart에 Activate 로그를 넣어줌!
@@ -164,10 +192,57 @@ export default {
         console.log(result.data);
       });
     },
+    getAppLogCount: async function () {
+      this.$data.appUseLogCount = [];
+      const URL = this.$store.state.pyurl + "/maindash/getAppLogCount";
+      await this.$http
+        .post(URL, { date: this.$store.state.date })
+        .then((result) => {
+          for (let i = 0; i < result.data.length; i++) {
+            this.$data.appUseLogCount.push({
+              label: result.data[i].label,
+              data: result.data[i].data,
+              backgroundColor: this.makeRandColor(),
+            });
+          }
+        });
+    },
+    AgentLogCount: async function () {
+      this.$data.agentAlllogCount = [];
+      const URL = this.$store.state.pyurl + "/maindash/AgentLogCount";
+      await this.$http
+        .post(URL, { date: this.$store.state.date })
+        .then((result) => {
+          console.log(result.data);
+          for (let i = 0; i < result.data.length; i++) {
+            this.$data.agentAlllogCount.push({
+              label: result.data[i].label,
+              data: result.data[i].data,
+              backgroundColor: this.makeRandColor(),
+            });
+          }
+        });
+    },
+    DNSLogCount: async function () {
+      this.$data.dns_in_browser_logCount = [];
+      const URL = this.$store.state.pyurl + "/maindash/DNSLogCount";
+      await this.$http
+        .post(URL, { date: this.$store.state.date })
+        .then((result) => {
+          console.log(result.data);
+          for (let i = 0; i < result.data.length; i++) {
+            this.$data.dns_in_browser_logCount.push({
+              label: result.data[i].label,
+              data: result.data[i].data,
+              backgroundColor: this.makeRandColor(),
+            });
+          }
+        });
+    },
   },
 
   mounted: function () {
-    this.pakageCountByAgent();
+    //this.DNSLogCount();
   },
 };
 </script>

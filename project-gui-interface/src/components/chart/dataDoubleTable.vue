@@ -1,5 +1,6 @@
 <template>
   <v-card>
+    <v-card-title>{{ title }}</v-card-title>
     <v-data-table
       dense
       :headers="headers"
@@ -19,7 +20,7 @@
           >
             <template v-slot:top>
               <v-toolbar flat color="white">
-                <v-toolbar-title>상세한 페이지</v-toolbar-title>
+                <v-toolbar-title>{{ subtitle }}</v-toolbar-title>
               </v-toolbar>
             </template>
           </v-data-table>
@@ -37,6 +38,10 @@ export default {
       default: () => null,
     },
     title: {
+      type: String,
+      defulat: "UnTitle",
+    },
+    subtitle: {
       type: String,
       defulat: "UnTitle",
     },

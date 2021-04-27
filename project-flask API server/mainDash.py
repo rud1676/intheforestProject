@@ -137,7 +137,6 @@ class serviceInstallCount(Resource):
             }
         }
         for r in es.search(index="wazuh-alert*", body=body)["aggregations"]["downcount"]["buckets"]:
-            print(r)
             result.append({"agent": r["key"], "count": r["doc_count"]})
         return result
 
@@ -166,4 +165,153 @@ class getPackageCount(Resource):
             result.append({"id": cnt, "agent": a["name"], "count": len(
                 apiResult), "companyCount": vendorCount})
             cnt += 1
+        return result
+
+
+@mainDash.route("/getAppLogCount")
+class getPackageCount(Resource):
+    def post(self):
+        result = []
+        daysago = request.json.get("date")
+        body = {
+            "size": 10000,
+            "query": {
+                "bool": {
+                    "must": [
+                        {
+                            "match": {
+                                "data.win.system.eventID": 1
+                            }
+                        },
+                        {
+                            "range": {
+                                "@timestamp": {
+                                    "gte": "now-"+str(daysago)+"d/d",
+                                    "lt": "now"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "sort": [
+                {"timestamp": "desc"}
+            ],
+            "aggs": {
+                "appusecount": {
+                    "terms": {
+                        "field": "data.win.eventdata.product",
+                        "size": 20
+                    }
+                }
+            }
+        }
+        for r in es.search(index="wazuh-alert*", body=body)["aggregations"]["appusecount"]["buckets"]:
+            result.append({"label": r["key"], "data": r["doc_count"]})
+
+        return result
+
+
+@mainDash.route("/AgentLogCount")
+class getPackageCount(Resource):
+    def post(self):
+        result = []
+        daysago = request.json.get("date")
+        body = {
+            "size": 10000,
+            "query": {
+                "bool": {
+                    "must": {
+                        "range": {
+                            "@timestamp": {
+                                "gte": "now-"+str(daysago)+"d/d",
+                                "lt": "now"
+                            }
+                        }
+                    },
+                    "must_not": {
+                        "match": {
+                            "agent.id": "000"
+                        }
+                    },
+                }
+            },
+            "sort": [
+                {"timestamp": "desc"}
+            ],
+            "aggs": {
+                "appusecount": {
+                    "terms": {
+                        "field": "agent.name",
+                        "size": 20
+                    }
+                }
+            }
+        }
+        for r in es.search(index="wazuh-alert*", body=body)["aggregations"]["appusecount"]["buckets"]:
+            result.append({"label": r["key"], "data": r["doc_count"]})
+
+        return result
+
+
+@mainDash.route("/DNSLogCount")
+class getPackageCount(Resource):
+    def post(self):
+        result = []
+        daysago = request.json.get("date")
+        body = {
+            "size": 10000,
+            "query": {
+                "bool": {
+                    "must": [{
+                        "range": {
+                            "@timestamp": {
+                                "gte": "now-"+str(daysago)+"d/d",
+                                "lt": "now"
+                            }
+                        }
+                    }],
+                    "should": [{
+                        "regexp": {
+                            "data.win.eventdata.image": {
+                                "value": ".+chrome[.]exe",
+                                "boost": 1
+                            }
+                        }
+                    },
+                        {
+                        "regexp": {
+                            "data.win.eventdata.image": {
+                                "value": ".+edge[.]exe",
+                                "boost": 1
+                            }
+                        }
+                    },
+                        {
+                        "regexp": {
+                            "data.win.eventdata.image": {
+                                "value": ".+whale[.]exe",
+                                "boost": 1
+                            }
+                        }
+                    }],
+                    "minimum_should_match": 1,
+                    "boost": 1
+                }
+            },
+            "sort": [
+                {"timestamp": "desc"}
+            ],
+            "aggs": {
+                "appusecount": {
+                    "terms": {
+                        "field": "data.win.eventdata.queryName",
+                        "size": 80
+                    }
+                }
+            }
+        }
+        for r in es.search(index="wazuh-alert*", body=body)["aggregations"]["appusecount"]["buckets"]:
+            result.append({"label": r["key"], "data": r["doc_count"]})
+
         return result
