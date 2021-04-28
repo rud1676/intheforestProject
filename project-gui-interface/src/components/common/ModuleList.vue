@@ -38,7 +38,7 @@ export default {
           require("../../assets/office.png"),
           true,
         ],
-        ["Anomaly", "timeout", require("../../assets/anomaly.png"), true],
+        ["Anomaly", "not", require("../../assets/anomaly.png"), true],
         ["usb Check", "driverload", require("../../assets/develop.png"), true],
       ],
     };

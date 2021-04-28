@@ -91,6 +91,9 @@ App.vue
 ---*Toolbar.vue(side menu about user menu)
 ---*dateSlider.vue(emit => on,offload (link: load value), submitEvent (link:datarow in Datatable) &&&&& props => url(api path))
 
+-->javascript (for chart. data rebuilding)
+===================CountEvent.js=================
+events => agent,time
 (component folder => dashboard folder => for several environment)
 ```
 
@@ -111,6 +114,7 @@ root path: '/' => "/login"
 ```
 
 Vuex
+
 ```
 state - UserInfo, isLogin, isLoginError, userInfo, isAdmin
 

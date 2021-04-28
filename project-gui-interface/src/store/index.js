@@ -16,7 +16,8 @@ export default new Vuex.Store({
     isLoginError: false,
     userInfo: null,
     isAdmin: true, //test를 위해 true로 바꿈
-    pyurl: "http://127.0.0.1:8888"
+    pyurl: "http://127.0.0.1:8888",
+    date: 7
   },
   mutations: {
     //로그인 성공,
@@ -42,7 +43,7 @@ export default new Vuex.Store({
       state.isLoginError = false;
       state.userInfo = null;
       state.isAdmin = false;
-    },
+    }
     //for making Loading view, call this function in dashboard
   },
   actions: {

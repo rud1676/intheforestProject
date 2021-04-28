@@ -5,8 +5,9 @@ wificonnection = Namespace(
 
 @wificonnection.route('/wifi')
 class userlist(Resource):
-    def get(self):
+    def post(self):
         """wi-fi(사실 랜연결도 잡음)연결 감지이벤트불러오기"""
+        daysago = request.json.get("date")
         body = {
             "query": {
                 "bool": {
@@ -19,7 +20,7 @@ class userlist(Resource):
                         {
                             "range": {
                                 "@timestamp": {
-                                    "gte": "now-7d/d",
+                                    "gte": "now-"+str(daysago)+"d/d",
                                     "lt": "now"
                                 }
                             }

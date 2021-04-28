@@ -1,10 +1,15 @@
 <template>
   <v-container class="py-2 px-1" fluid style="height: 100vh">
-    <v-card class="mx-auto" max-width="800" color="light-green lighten-4">
+    <v-card class="mx-auto" max-width="1200" color="light-green lighten-4">
       <v-card-title>Driver Load 이벤트 감지</v-card-title>
 
-        <user-list/>
-        <date-slider @onload="pload" @finishload="pload" @submitEvent="eventchangt" :url="apiurl"/>
+      <user-list />
+      <date-slider
+        @onload="pload"
+        @finishload="pload"
+        @submitEvent="eventchangt"
+        :url="apiurl"
+      />
       <v-card>
         <v-card-title>
           <v-text-field
@@ -27,28 +32,16 @@
         ></v-data-table>
       </v-card>
       <v-divider class="mx-5 mt-4"></v-divider>
-            <v-alert
-      border="top"
-      colored-border
-      type="info"
-      elevation="2"
-    >
-      if Signature is Revoke, Driver Corp is None. Click row and get Driver image path.
-    </v-alert>
+      <v-alert border="top" colored-border type="info" elevation="2">
+        if Signature is Revoke, Driver Corp is None. Click row and get Driver
+        image path.
+      </v-alert>
+      <line-chart />
     </v-card>
-    <v-snackbar
-      v-model="snackbar"
-      multi-line
-      timeout = -1
-    >
-      {{Image}}
+    <v-snackbar v-model="snackbar" multi-line timeout="-1">
+      {{ Image }}
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="white"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
+        <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -57,21 +50,22 @@
 </template>
 
 <script>
-import axios from "axios";
-import userList from "../common/userlist"
-import dateSlider from '../common/dateSlider.vue';
+import userList from "../common/userlist";
+import dateSlider from "../common/dateSlider.vue";
+import lineChart from "../chart/Linechart.vue";
 export default {
-  components:{
+  components: {
     userList,
-    dateSlider
+    dateSlider,
+    lineChart,
   },
   data: () => ({
     search: "",
-    Image:"",
+    Image: "",
     load: true,
     snackbar: false,
     alertOn: "unknown",
-    apiurl:"/driverload/event",
+    apiurl: "/driverload/event",
     events: [],
     headers: [
       {
@@ -79,29 +73,29 @@ export default {
         align: "start",
         filterable: false,
         sortable: false,
-        value: "timestamp",
+        value: "time",
       },
-      { text: "Hostname", value: "hostname" },
+      { text: "Hostname", value: "agent" },
       { text: "Driver Cop.", value: "driver" },
       { text: "SignatureIs...", value: "sigstate" },
     ],
   }),
   methods: {
-    showimg(image){
-      this.$data.Image= image.imageLoad;
+    showimg(image) {
+      this.$data.Image = image.imageLoad;
       this.$data.snackbar = true;
     },
-    pload(load){
-      this.$data.load =load;
+    pload(load) {
+      this.$data.load = load;
     },
-    eventchangt(data){
+    eventchangt(data) {
       this.$data.events = data;
-      console.log(this.$data.events)
-    }
+      console.log(this.$data.events);
+    },
   },
   mounted() {
-    const URL = this.$store.state.pyurl+this.$data.apiurl;
-    axios.post(URL,{"date":7}).then((result) => {
+    const URL = this.$store.state.pyurl + this.$data.apiurl;
+    this.$http.post(URL, { date: this.$store.state.date }).then((result) => {
       this.$data.events = result.data;
       this.$data.load = false;
     });

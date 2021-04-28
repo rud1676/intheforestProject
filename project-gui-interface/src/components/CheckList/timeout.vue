@@ -2,29 +2,27 @@
   <v-container class="py-2 px-1" fluid style="height: 100vh">
     <v-card class="mx-auto" max-width="800" color="light-green lighten-4">
       <v-card-title>근무 시간 외에 컴퓨터 활동 감지</v-card-title>
-      <user-list/>
-        <div class="d-flex mx-12">
-    <v-slider
-      v-model="slider.val"
-      :label="slider.label"
-      :thumb-color="slider.color"
-      min = "0"
-      max = "30"
-      thumb-label="always"
-    ></v-slider>
-    <v-btn @click="submit">submit</v-btn>
-  </div>
+      <user-list />
+      <date-slide
+        @onload="pload"
+        @finishload="pload"
+        @submitEvent="eventchangt"
+        :url="apiurl"
+        :endtime="end"
+        :starttime="start"
+        who="timeout"
+        ref="sumbit"
+      />
       <v-card>
         <v-card-title>
-              <v-tooltip bottom>
-      <template v-slot:activator="{ on, attrs }">
-          <v-icon class="pr-3"
-          v-bind="attrs"
-          v-on="on" 
-          medium>mdi-checkbox-marked-circle</v-icon>
-      </template>
-      <span>보이는 날짜는 -1d startime~ d endtime 에서 endday임</span>
-    </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon class="pr-3" v-bind="attrs" v-on="on" medium
+                >mdi-checkbox-marked-circle</v-icon
+              >
+            </template>
+            <span>보이는 날짜는 -1d startime~ d endtime 에서 endday임</span>
+          </v-tooltip>
           <v-text-field
             v-model="search"
             append-icon="mdi-magnify"
@@ -81,17 +79,18 @@
 
 <script>
 import axios from "axios";
-import userList from "../common/userlist"
+import userList from "../common/userlist";
+import dateSlide from "../common/dateSlider";
 export default {
-  components:{
+  components: {
     userList,
+    dateSlide
   },
   data: () => ({
-    slider: { label: '..days ago', val: 7, color: 'blue' },
     start: "10:00",
     end: "19:00",
     search: "",
-    apiurl:"/timeout/",
+    apiurl: "/timeout/",
     load: true,
     events: [],
     headers: [
@@ -106,46 +105,42 @@ export default {
     ]
   }),
   methods: {
-    pload(load){
-      this.$data.load =load;
+    pload(load) {
+      this.$data.load = load;
     },
-    eventchangt(data){
+    eventchangt(data) {
       this.$data.events = data;
-      console.log(this.$data.events)
+      console.log(this.$data.events);
     },
     acceptTable: function () {
       alert("적용하였습니다!");
-      this.submit();
+      this.$refs.sumbit.submit__for_timeoutcomponent(); //자식(dataslider에 있는 거 불러오기)
     },
-    submit(){
-        this.onload()
-        const URL = this.$store.state.pyurl+this.$data.apiurl;
-        this.$http.post(URL,{
+    submit() {
+      this.onload();
+      const URL = this.$store.state.pyurl + this.$data.apiurl;
+      this.$http
+        .post(URL, {
           data: {
-          start: this.$data.start,
-          end: this.$data.end,
-          date: this.$data.slider.val
+            start: this.$data.start,
+            end: this.$data.end,
+            date: this.$data.slider.val
           }
-        }).then((result) => {
+        })
+        .then((result) => {
           this.$data.events = result.data;
-          this.finishload()
-    });
-      },
-      onload(){
-        this.$data.load = true
-      },
-      finishload(){
-        this.$data.load = false
-      }
+          this.finishload();
+        });
+    }
   },
   mounted() {
-    const URL = this.$store.state.pyurl+this.$data.apiurl;
+    const URL = this.$store.state.pyurl + this.$data.apiurl;
     axios
       .post(URL, {
         data: {
           start: this.$data.start,
           end: this.$data.end,
-          date:7
+          date: this.$store.state.date
         }
       })
       .then((result) => {

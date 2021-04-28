@@ -2,6 +2,13 @@
   <v-container class="py-2 px-1" fluid style="height: 100vh">
     <v-card class="mx-auto" max-width="1400" color="light-green lighten-4">
       <v-card-title>일주일 간 서비스 설치 내역</v-card-title>
+      <user-list />
+      <date-slider
+        @onload="pload"
+        @finishload="pload"
+        @submitEvent="eventchangt"
+        :url="apiurl"
+      />
       <v-card>
         <v-card-title>
           <v-text-field
@@ -41,10 +48,17 @@
 
 <script>
 import axios from "axios";
+import userList from "../common/userlist";
+import dateSlider from "../common/dateSlider.vue";
 export default {
+  components: {
+    userList,
+    dateSlider
+  },
   data: () => ({
     search: "",
     load: true,
+    apiurl: "/service/7045",
     events: [],
     headers: [
       {
@@ -52,20 +66,28 @@ export default {
         align: "start",
         filterable: false,
         sortable: false,
-        value: "time",
+        value: "time"
       },
       { text: "Hostname", value: "agent" },
       { text: "기기이름", value: "service" },
-      { text: "connect", value: "path" },
-    ],
+      { text: "connect", value: "path" }
+    ]
   }),
-  methods: {},
+  methods: {
+    pload(load) {
+      this.$data.load = load;
+    },
+    eventchangt(data) {
+      this.$data.events = data;
+      console.log(this.$data.events);
+    }
+  },
   mounted() {
-    const URL = this.$store.state.pyurl+"/service/7045";
-    axios.get(URL).then((result) => {
+    const URL = this.$store.state.pyurl + this.$data.apiurl;
+    axios.post(URL, { date: 7 }).then((result) => {
       this.$data.events = result.data;
       this.$data.load = false;
     });
-  },
+  }
 };
 </script>

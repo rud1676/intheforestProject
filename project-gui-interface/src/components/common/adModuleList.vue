@@ -18,7 +18,6 @@
               align="center"
             >
               {{ text }}
-              <div>{{ description }}</div>
               <img width="150" style="margin: 15px auto" :src="img" />
             </v-card>
           </v-item>

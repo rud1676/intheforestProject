@@ -12,6 +12,12 @@
       <v-divider></v-divider>
 
       <v-list>
+        <v-list-item @click="$router.push({ name: 'integrated' });">
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+        <v-list-item-title>Integrated Dashboard</v-list-item-title>
+        </v-list-item>
         <v-list-group
           v-for="lev1 in lev1"
           :key="lev1.no"
@@ -43,21 +49,6 @@
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
-        <!-- <v-list-item
-          v-for="[icon, text, l, admin] in links"
-          :key="l"
-          link
-          v-on:click="tolink(l)"
-          v-show="isAdmin(admin)"
-        >
-          <v-list-item-icon>
-            <v-icon>{{ icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content> 
-            <v-list-item-title>{{ text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item> -->
       </v-list>
     </v-navigation-drawer>
   </div>
@@ -78,7 +69,6 @@ export default {
       ["mdi-tune", "Management", "management", false],
     ],
     lev1: [
-      //admin true인것은 무엇인가?
       {
         title: "No.1",
         no: 1,
@@ -96,7 +86,6 @@ export default {
         admin: false,
       },
     ],
-    //라우터 링크 추가하기
     lev2: [
       {
         no: 1,
