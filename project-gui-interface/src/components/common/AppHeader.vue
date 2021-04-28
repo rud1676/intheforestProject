@@ -12,11 +12,17 @@
       <v-divider></v-divider>
 
       <v-list>
-        <v-list-item @click="$router.push({ name: 'integrated' });">
+        <v-list-item @click="$router.push({ name: 'integrated' })">
           <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
+            <v-icon>mdi-monitor-dashboard</v-icon>
           </v-list-item-icon>
-        <v-list-item-title>Integrated Dashboard</v-list-item-title>
+          <v-list-item-title>Integrated Dashboard</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="$router.push({ name: 'agent' })">
+          <v-list-item-icon>
+            <v-icon>mdi-desktop-classic</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>AGENT Dashboard</v-list-item-title>
         </v-list-item>
         <v-list-group
           v-for="lev1 in lev1"
@@ -163,24 +169,6 @@ export default {
         title: "Discover",
         link: "discover",
         icon: "mdi-magnify",
-      },
-      {
-        no: 3,
-        title: "Check",
-        link: "check",
-        icon: "mdi-check",
-      },
-      {
-        no: 3,
-        title: "Function",
-        link: "function",
-        icon: "mdi-function",
-      },
-      {
-        no: 3,
-        title: "Alert",
-        link: "alert",
-        icon: "mdi-bullhorn-outline",
       },
     ],
   }),

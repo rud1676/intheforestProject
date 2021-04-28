@@ -1,8 +1,8 @@
 <!--Using Chart js-->
 <script>
-import { Pie } from "vue-chartjs";
+import { Bar } from "vue-chartjs";
 export default {
-  extends: Pie,
+  extends: Bar,
   props: {
     chartdata: {
       type: Array,
@@ -24,7 +24,7 @@ export default {
     console.log("piechart Comeon!");
     //console.log(this.chartdata);
     let data = {
-      datasets: [{ data: [], backgroundColor: [] }],
+      datasets: [{ label: "AGENT LOG COUNT", data: [], backgroundColor: [] }],
       labels: [],
     };
     for (let i = 0; i < this.chartdata.length; i++) {

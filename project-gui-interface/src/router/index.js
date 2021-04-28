@@ -58,42 +58,37 @@ const routes = [
   },
   {
     path: "/main",
-    beforeEnter: adminUser,
     component: () => import("@/views/Mainpage.vue"),
     children: [
       //about admin pannel
       {
         path: "dashmain",
         name: "dashmain",
+        beforeEnter: adminUser,
         component: () => import("@/components/adminpannel/dashMain.vue")
       },
       {
         path: "/dashboard",
         name: "dashboard",
+        beforeEnter: adminUser,
         component: () => import("@/components/adminpannel/main.vue")
-      },      {
+      }, {
         path: "/discover",
         name: "discover",
+        beforeEnter: adminUser,
         component: () => import("../components/adminpannel/discover.vue")
-      },      {
-        path: "/check",
-        name: "check",
-        component: () => import("../components/check.vue")
-      },      {
-        path: "/alert",
-        name: "alert",
-        component: () => import("../components/alert.vue")
       },
-      {
-        path: "/management",
-        name: "management",
-        component: () => import("../components/management.vue")
-      },
-        //intergrated dashboard!
+      //intergrated dashboard!
       {
         path: "/integrated",
         name: "integrated",
         component: () => import("../components/dashboard/Integrated_dashboard.vue")
+      },
+      //AGENT Dashboard
+      {
+        path: "/agent",
+        name: "agent",
+        component: () => import("../components/dashboard/agent_dashboard.vue")
       },
       //------------------sector checkList router--------------------
       {
@@ -136,7 +131,7 @@ const routes = [
         name: "dns",
         component: () => import("../components/CheckList/dnsquery.vue")
       },
-        //--------------sector for abnomal
+      //--------------sector for abnomal
       {
         path: "/thread",
         name: "thread",

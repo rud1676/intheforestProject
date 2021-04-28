@@ -8,11 +8,11 @@ wazuh = Namespace(
 @wazuh.route('/agents')
 class userlist(Resource):
     def get(self):
-        wazuhlogin()
         """get Agent info => ip,name,status!"""
+        wazuhlogin()
         agents = []
         for r in callWazuhApi("/agents")["data"]["affected_items"]:
-            #Manage PC는 제외
+            # Manage PC는 제외
             if r["name"] == "wazuh-and-beat":
                 continue
             agents.append(

@@ -5,11 +5,68 @@
       <v-card-title>통합 대시보드</v-card-title>
       <agent />
       <date-slider @transAgoDate="getAllEventDate"></date-slider>
-      <v-card-title class="text-center"
+
+      <v-progress-linear
+        v-if="!reRender"
+        v-model="loadvalue"
+        color="lime darken-3"
+        height="25"
+      >
+        <template v-slot:default="{ value }">
+          <strong>{{ Math.ceil(value) }}%</strong>
+        </template>
+      </v-progress-linear>
+      <v-card-title v-if="reRender" class="text-center"
         >TimeLine Status about agents</v-card-title
       >
       <line-chart v-if="reRender" :chartdata="AgentStatusEvent"></line-chart>
-      <pie-chart v-if="reRender" :chartdata="downLoadCountData"></pie-chart>
+      <v-card-title v-if="reRender" class="text-center"
+        >APP Usage Log Count TOP20</v-card-title
+      >
+      <pie-chart
+        :height="h"
+        v-if="reRender"
+        :chartdata="appUseLogCount"
+      ></pie-chart>
+      <v-card-title v-if="reRender" class="text-center"
+        >Log Count by AGENT</v-card-title
+      >
+      <bar-chart v-if="reRender" :chartdata="agentAlllogCount"></bar-chart>
+      <v-row dense>
+        <v-col>
+          <data-table
+            v-if="reRender"
+            title="파일 다운로드 수"
+            :items="downLoadCountData"
+          ></data-table>
+        </v-col>
+        <v-col>
+          <data-table
+            v-if="reRender"
+            title="기간 동안 새롭게 서비스 설치한 갯수"
+            :items="serviceinstallcount"
+          ></data-table>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <data-double-table
+            v-if="reRender"
+            title="설치된 서비스 수"
+            subtitle="설치된 서비스 회사별로 보기"
+            :items="pakageEventCount"
+          ></data-double-table>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <data-table
+            v-if="reRender"
+            title="DNS Query IN Browser TOP 80"
+            :items="dns_in_browser_logCount"
+          ></data-table>
+        </v-col>
+      </v-row>
     </v-card>
   </v-container>
 </template>
@@ -20,21 +77,34 @@ import agent from "../common/userlist";
 import DateSlider from "../common/dateSlider.vue";
 import LineChart from "../chart/Linechart";
 import PieChart from "../chart/piechart";
+import DataTable from "../chart/dataTable";
+import DataDoubleTable from "../chart/dataDoubleTable"; //this component need for id column!
+import BarChart from "../chart/bar-chart.vue";
 
 export default {
   components: {
     agent,
     LineChart, //timeline status about agents
     DateSlider,
-    PieChart, //filedown count by agents
+    PieChart, //all event load!
+    DataTable,
+    DataDoubleTable,
+    BarChart,
   },
   data: () => {
     return {
+      h: 600,
+      loadvalue: 0,
       linechartEvents: null,
       showActiveTime: false,
       AgentStatusEvent: [], //StatusChart data
       downLoadCountData: [], //donwload count data
-      reRender: true,
+      serviceinstallcount: [], //new service install event coint
+      pakageEventCount: [], //wazuh api => pakagelist
+      appUseLogCount: [], //Process create for Product name
+      agentAlllogCount: [], //All log categorize by AGNET
+      dns_in_browser_logCount: [], //DNS LOG
+      reRender: false,
     };
   },
   methods: {
@@ -45,7 +115,16 @@ export default {
       this.$data.reRender = false;
       await this.getAllActiveEvent();
       await this.downLoadCount();
+      this.$data.loadvalue = 30;
+      await this.serviceInstallCount();
+      await this.getAppLogCount();
+      this.$data.loadvalue = 60;
+      await this.pakageCountByAgent();
+      await this.AgentLogCount();
+      this.$data.loadvalue = 100;
+      await this.DNSLogCount();
       this.$data.reRender = true;
+      this.$data.loadvalue = 0;
     },
     //LineChart에 Activate 로그를 넣어줌!
     getAllActiveEvent: async function () {
@@ -87,18 +166,90 @@ export default {
           //차트를 다시 로드하기 위한 reRender값
         });
       //for Test
-      console.log("Activate Status EventGet");
     },
+    //download count 를 agent 마다 있는 이벤트를 받아오는 api call.
     downLoadCount: async function () {
       this.$data.downLoadCountData = [];
       const URL = this.$store.state.pyurl + "/maindash/downCount";
+      console.log("Inside downLoadCount");
       await this.$http
         .post(URL, { date: this.$store.state.date })
         .then((result) => {
+          console.log("Inside downLoadCount - axios");
           for (let i = 0; i < result.data.length; i++) {
             this.$data.downLoadCountData.push({
               label: result.data[i].agent,
               data: result.data[i].count,
+            });
+          }
+          console.log("Inside downLoadCount - axios FINISH!!");
+        });
+      console.log("Main: ", this.$data.downLoadCountData);
+    },
+    //Service 설치 이벤트 카운트를 받아와서 보여줍니다!
+    serviceInstallCount: async function () {
+      this.$data.serviceinstallcount = [];
+      const URL = this.$store.state.pyurl + "/maindash/serviceinstallcount";
+      await this.$http
+        .post(URL, { date: this.$store.state.date })
+        .then((result) => {
+          for (let i = 0; i < result.data.length; i++) {
+            this.$data.serviceinstallcount.push({
+              label: result.data[i].agent,
+              data: result.data[i].count,
+            });
+          }
+        });
+    },
+    pakageCountByAgent: async function () {
+      const URL = this.$store.state.pyurl + "/maindash/getPackageCount";
+      await this.$http.get(URL).then((result) => {
+        this.$data.pakageEventCount = result.data;
+        console.log(result.data);
+      });
+    },
+    getAppLogCount: async function () {
+      this.$data.appUseLogCount = [];
+      const URL = this.$store.state.pyurl + "/maindash/getAppLogCount";
+      await this.$http
+        .post(URL, { date: this.$store.state.date })
+        .then((result) => {
+          for (let i = 0; i < result.data.length; i++) {
+            this.$data.appUseLogCount.push({
+              label: result.data[i].label,
+              data: result.data[i].data,
+              backgroundColor: this.makeRandColor(),
+            });
+          }
+        });
+    },
+    AgentLogCount: async function () {
+      this.$data.agentAlllogCount = [];
+      const URL = this.$store.state.pyurl + "/maindash/AgentLogCount";
+      await this.$http
+        .post(URL, { date: this.$store.state.date })
+        .then((result) => {
+          console.log(result.data);
+          for (let i = 0; i < result.data.length; i++) {
+            this.$data.agentAlllogCount.push({
+              label: result.data[i].label,
+              data: result.data[i].data,
+              backgroundColor: this.makeRandColor(),
+            });
+          }
+        });
+    },
+    DNSLogCount: async function () {
+      this.$data.dns_in_browser_logCount = [];
+      const URL = this.$store.state.pyurl + "/maindash/DNSLogCount";
+      await this.$http
+        .post(URL, { date: this.$store.state.date })
+        .then((result) => {
+          console.log(result.data);
+          for (let i = 0; i < result.data.length; i++) {
+            this.$data.dns_in_browser_logCount.push({
+              label: result.data[i].label,
+              data: result.data[i].data,
               backgroundColor: this.makeRandColor(),
             });
           }
@@ -106,7 +257,9 @@ export default {
     },
   },
 
-  mounted: function () {},
+  mounted: function () {
+    alert("보려는 날짜를 설정하고 submit버튼을 누르세요");
+  },
 };
 </script>
 
