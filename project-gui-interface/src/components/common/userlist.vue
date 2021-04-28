@@ -6,6 +6,7 @@
           v-bind="attrs"
           v-on="on"
           class="ma-2"
+          @click="clickevent(a)"
           :color="a.status == 'active' ? 'primary' : 'error'"
           outlined
           pill
@@ -25,6 +26,12 @@ export default {
   data: () => ({
     agents: [{ name: "TEST", ip: "123.123.123.123", active: "error" }],
   }),
+  methods: {
+    clickevent: function (l) {
+      console.log(l);
+      this.$emit("clickEvent", l.name);
+    },
+  },
   mounted() {
     const URL = this.$store.state.pyurl + "/wazuh/agents";
 

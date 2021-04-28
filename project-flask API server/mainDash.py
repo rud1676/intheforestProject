@@ -169,7 +169,7 @@ class getPackageCount(Resource):
 
 
 @mainDash.route("/getAppLogCount")
-class getPackageCount(Resource):
+class AppLogCount(Resource):
     def post(self):
         result = []
         daysago = request.json.get("date")
@@ -213,7 +213,7 @@ class getPackageCount(Resource):
 
 
 @mainDash.route("/AgentLogCount")
-class getPackageCount(Resource):
+class LogCount(Resource):
     def post(self):
         result = []
         daysago = request.json.get("date")
@@ -255,7 +255,7 @@ class getPackageCount(Resource):
 
 
 @mainDash.route("/DNSLogCount")
-class getPackageCount(Resource):
+class DNSLogCount(Resource):
     def post(self):
         result = []
         daysago = request.json.get("date")

@@ -21,17 +21,19 @@ export default {
       type: String,
       defulat: "UnTitle",
     },
-  },
-  data() {
-    return {
-      headers: [
+    headers: {
+      type: Array,
+      default: () => [
         {
           text: "AgentName",
           value: "label",
         },
         { text: "EventCount", value: "data" },
       ],
-    };
+    },
+  },
+  data() {
+    return {};
   },
   mounted() {
     this.$data.aggr = this.$props.items;

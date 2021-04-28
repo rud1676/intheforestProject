@@ -84,6 +84,12 @@ const routes = [
         name: "integrated",
         component: () => import("../components/dashboard/Integrated_dashboard.vue")
       },
+      //AGENT Dashboard
+      {
+        path: "/agent",
+        name: "agent",
+        component: () => import("../components/dashboard/agent_dashboard.vue")
+      },
       //------------------sector checkList router--------------------
       {
         path: "/driverload",
