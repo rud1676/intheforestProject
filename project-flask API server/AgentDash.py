@@ -25,12 +25,11 @@ class scanPortData(Resource):
 
 
 @AgentDash.route('/scanProcesses')
-class lasttime(Resource):
+class scanProcesses(Resource):
     def post(self):
         """Agent의 이름을 받아서 사용중인 ProcessData를 가져옵니다!"""
         wazuhlogin()
         agentName = request.json.get("agent")
-        print(agentName)
         result = []
         agentid = ""
         for r in callWazuhApi("/agents")["data"]["affected_items"]:
@@ -39,12 +38,47 @@ class lasttime(Resource):
                 break
         apiResult = callWazuhApi(
             "/syscollector/"+agentid+"/processes")["data"]["affected_items"]
+        t = apiResult[0]["scan"]["time"].replace("Z", "").replace("T", " ")
         for r in apiResult:
             if "cmd" in r:
-                result.append({"process": r["name"], "PID": r["pid"], "PPID": r["ppid"], "stime": r["stime"], "size": r["size"], "vmsize": r["vm_size"],
-                               "session": r["session"], "nlwp": r["nlwp"], "nice": r["nice"], "priority": r["priority"], "Command": r["cmd"]})
+                result.append({"process": r["name"], "PID": r["pid"], "PPID": r["ppid"],
+                               "session": r["session"], "InThreads": r["nlwp"], "priority": r["priority"], "Command": r["cmd"]})
             else:
-                result.append({"process": r["name"], "PID": r["pid"], "PPID": r["ppid"], "size": r["size"],
-                               "vmsize": r["vm_size"], "session": r["session"], "nlwp": r["nlwp"], "nice": r["nice"], "priority": r["priority"]})
-        return result
+                result.append({"process": r["name"], "PID": r["pid"], "PPID": r["ppid"],
+                               "session": r["session"], "InThreads": r["nlwp"], "priority": r["priority"], "Command": "..."})
+        data = {"result": result, "time": t}
+        return data
 # {protocol}://{host}:{port}/syscollector/{agent_id}/processes
+
+
+@AgentDash.route("/ScanPackage")
+class ScanPackage(Resource):
+    def post(self):
+        wazuhlogin()
+        agentName = request.json.get("agent")
+        result = []
+        agentid = ""
+        for r in callWazuhApi("/agents")["data"]["affected_items"]:
+            if r["name"] == agentName:
+                agentid = r["id"]
+                break
+        apiResult = callWazuhApi(
+            "/syscollector/"+agentid+"/packages")["data"]["affected_items"]
+
+        for r in apiResult:
+            dic = {}
+            dic["Program"] = r["name"]
+            if "vendor" in r:
+                dic["Company"] = r["vendor"]
+            else:
+                dic["Company"] = "..."
+            if "location" in r:
+                dic["Path"] = r["location"]
+            else:
+                dic["Path"] = "Unknown"
+            if "install_time" in r:
+                dic["Install_time"] = r["install_time"]
+            else:
+                dic["Install_time"] = "Unknown"
+            result.append(dic)
+        return result
