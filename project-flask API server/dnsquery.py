@@ -6,10 +6,11 @@ dnsquery = Namespace(name='dnsquery',
 
 @dnsquery.route("/dnsquery")
 class alert(Resource):
-    def get(self):
+    def post(self):
         result = []
+        daysago = request.json.get("date")
         body = {
-            "size": 1000,
+            "size": 10000,
             "query": {
                 "bool": {
                     "must": [
@@ -21,7 +22,7 @@ class alert(Resource):
                         {
                             "range": {
                                 "@timestamp": {
-                                    "gte": "now-7d/d",
+                                    "gte": "now-"+str(daysago)+"d/d",
                                     "lt": "now"
                                 }
                             }

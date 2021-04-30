@@ -2,27 +2,17 @@
   <v-container class="py-2 px-1" fluid style="height: 100vh">
     <v-card class="mx-auto" max-width="1400" color="light-green lighten-4">
       <v-card-title>Dns Query 리스트</v-card-title>
-      <v-card>
-        <v-card-title>
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Filter about user, program, query"
-            single-line
-            hide-details
-          ></v-text-field>
-        </v-card-title>
-        <v-data-table
-          dense
-          :headers="headers"
-          :items="events"
-          :loading="load"
-          :search="search"
-          loading-text="wait a moment"
-          class="elevation-1"
-          @click:row="clickurl"
-        ></v-data-table>
-      </v-card>
+      <userlist></userlist>
+      <date-slider @transAgoDate="getAllEventDate"></date-slider>
+      <data-table
+        :headers="headers"
+        :items="events"
+        :Ifsearch="filter"
+        :load="load"
+        @ClickEvent="clickurl"
+        title="RDP and Chromoting"
+      >
+      </data-table>
       <v-divider class="mx-5 mt-4"></v-divider>
       <v-alert icon="mdi-shield-lock-outline" prominent text type="info">
         MALICIOUS DNS TRAFFIC Check.
@@ -115,12 +105,15 @@
 </template>
 
 <script>
-import axios from "axios";
+import userlist from "../common/userlist.vue";
+import DateSlider from "../common/dateSlider.vue";
+import DataTable from "../chart/dataTable.vue";
 export default {
+  components: { userlist, DateSlider, DataTable },
   data: () => ({
     alert: false,
+    filter: true,
     url: "",
-    search: "",
     load: true,
     events: [],
     check: [], //timestamp, name, rtype, query
@@ -130,7 +123,6 @@ export default {
         text: "TimeStamp",
         align: "start",
         filterable: false,
-        sortable: false,
         value: "timestamp",
       },
       { text: "Hostname", value: "name" },
@@ -149,6 +141,14 @@ export default {
   }),
   computed: {},
   methods: {
+    getAllEventDate() {
+      this.$data.load = true;
+      const URL1 = this.$store.state.pyurl + "/dnsquery/dnsquery";
+      this.$http.post(URL1, { date: this.$store.state.date }).then((result) => {
+        this.$data.events = result.data;
+        this.$data.load = false;
+      });
+    },
     clickurl(items) {
       this.$data.url = items.query;
     },
@@ -156,7 +156,7 @@ export default {
       if (this.url != "") {
         this.alert = !this.alert;
         const URL2 = this.$store.state.pyurl + "/dnsquery/check";
-        axios
+        this.$http
           .get(URL2, {
             params: {
               domain: this.url,
@@ -183,11 +183,7 @@ export default {
     },
   },
   mounted() {
-    const URL1 = this.$store.state.pyurl + "/dnsquery/dnsquery";
-    axios.get(URL1).then((result) => {
-      this.$data.events = result.data;
-      this.$data.load = false;
-    });
+    this.getAllEventDate();
   },
 };
 </script>

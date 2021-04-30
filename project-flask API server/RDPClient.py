@@ -4,27 +4,38 @@ rdp = Namespace(
 
 
 @rdp.route('/get')
-class userlist(Resource):
-    def get(self):
+class rdpEventGet(Resource):
+    def post(self):
+        daysago = request.json.get("date")
         """rdp 사용과 관련된 이벤트 1024,1026"""
         body = {
+            "size": 10000,
             "query": {
                 "bool": {
                     "must": [
+                        {
+                            "range": {
+                                "@timestamp": {
+                                    "gte": "now-"+str(daysago)+"d/d",
+                                    "lt": "now"
+                                }
+                            }
+                        }
+                    ],
+                    "should": [
                         {
                             "match": {
                                 "data.win.system.channel": "Microsoft-Windows-TerminalServices-RDPClient/Operational"
                             }
                         },
                         {
-                            "range": {
-                                "@timestamp": {
-                                    "gte": "now-7d/d",
-                                    "lt": "now"
-                                }
+                            "match": {
+                                "data.win.system.providerName": "chromoting",
                             }
-                        }
-                    ]
+                        },
+                    ],
+                    "minimum_should_match": 1,
+                    "boost": 1,
                 }
             }
         }

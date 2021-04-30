@@ -13,7 +13,10 @@
     <v-data-table
       :headers="headers"
       :items="items"
+      :loading="load"
+      loading-text="wait a moment"
       :search="search"
+      @click:row="clickEvent"
       :items-per-page="5"
       class="elevation-1"
     ></v-data-table>
@@ -23,6 +26,10 @@
 <script>
 export default {
   props: {
+    load: {
+      type: Boolean,
+      default: false,
+    },
     items: {
       type: Array,
       default: () => null,
@@ -46,12 +53,16 @@ export default {
       default: false,
     },
   },
+  methods: {
+    clickEvent(image) {
+      this.$emit("ClickEvent", image);
+    },
+  },
   data() {
     return { search: "" };
   },
   mounted() {
     this.$data.aggr = this.$props.items;
-    console.log("datatable Mounted!:", this.$props.items);
   },
 };
 </script>
