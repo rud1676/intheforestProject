@@ -1,12 +1,36 @@
 <template>
   <div id="inspire">
-    <v-navigation-drawer color="#9CCC65" clipped app>
-      <v-sheet color="#7CB342" class="pa-4 justify-center">
+    <v-navigation-drawer color="#9CCC65" clipped app
+    permanent
+     :mini-variant.sync="mini"
+    >
+      <v-sheet color="#7CB342" class="pa-4 d-flex" >
+        <v-row>
+          <v-col>
         <v-avatar class="mb-4" color="grey darken-1" size="64">
           <img src="../../assets/logo.png"
-        /></v-avatar>
+        />
+        
+        </v-avatar>
+        
+        </v-col>
 
+        </v-row>
+        <v-row>
+
+          <v-col>
+            <v-btn
+          icon
+          @click.stop="mini = !mini"
+        >
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-btn>
+          </v-col>
+          <v-col>
         <div>IntheForest-Project</div>
+        </v-col>
+        </v-row>
+        
       </v-sheet>
 
       <v-divider></v-divider>
@@ -63,9 +87,13 @@
 <script>
 import store from "@/store/index";
 export default {
+  mounted () {
+      console.log(this.$vuetify.breakpoint.width)
+    },
   data: () => ({
     cards: ["Today", "Yesterday"],
-    drawer: null,
+    drawer: true,
+    mini: false,
     links: [
       ["mdi-view-dashboard", "Dashboard", "dashboard", true],
       ["mdi-magnify", "Discover", "discover", true],
@@ -172,6 +200,7 @@ export default {
       },
     ],
   }),
+  
   methods: {
     tolink: function (l) {
       this.$router.push({ name: l }); //link에 path가 아닌 router name으로 링크 이동하게 바꿈(라우팅이 child가 있기때문에 의미가 확실한 이름으로 바꿈)
@@ -183,6 +212,7 @@ export default {
       }
     },
   },
+  
 };
 </script>
 

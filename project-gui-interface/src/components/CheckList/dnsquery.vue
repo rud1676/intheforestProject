@@ -53,7 +53,7 @@
         </div>        
       </v-row>
     </v-alert>
-    <v-alert
+    <v-alert :v-if="alert"
       :value="alert"
        border="right"
       colored-border
@@ -188,7 +188,9 @@ export default {
     },
     dnscheck(){
       if(this.url != ""){
-      this.alert = !this.alert;
+      this.check = []
+      this.check2 = []
+      this.alert =false;
       const URL2 = this.$store.state.pyurl+"/dnsquery/check";
       axios.get(URL2,{
         params:{
@@ -201,16 +203,11 @@ export default {
       this.positives = result.data[0].positives;
       this.value = (this.total - this.positives)/this.total*100;
       delete result.data[0];
-      // for(var i = 0; i < result.data.length;i++){
-      //   if(result.data[i].clean == "clean site"){
-      //     result.data[i].clean =
-      //   }
-
-      // };
       this.check = result.data.slice(1,this.total/2+1);  
       this.check2 = result.data.slice(this.total/2+1,);
       console.log(this.check);
       console.log(this.check2);
+      this.alert =true;
 
       })
     }
