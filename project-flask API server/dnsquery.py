@@ -4,13 +4,13 @@ dnsquery = Namespace(name='dnsquery',
                      description="About dnsquery 이벤트")
 
 
-
 @dnsquery.route("/dnsquery")
 class alert(Resource):
-    def get(self):
+    def post(self):
         result = []
+        daysago = request.json.get("date")
         body = {
-            "size": 1000,
+            "size": 10000,
             "query": {
                 "bool": {
                     "must": [
@@ -22,7 +22,7 @@ class alert(Resource):
                         {
                             "range": {
                                 "@timestamp": {
-                                    "gte": "now-7d/d",
+                                    "gte": "now-"+str(daysago)+"d/d",
                                     "lt": "now"
                                 }
                             }
@@ -40,14 +40,12 @@ class alert(Resource):
             image = lastPath(r["_source"]["data"]["win"]["eventdata"]["image"])
 
             query = lastPath(r["_source"]["data"]["win"]
-                            ["eventdata"]["queryName"])
-            record = lastPath(r["_source"]["data"]["win"]["system"]["eventRecordID"])
+                             ["eventdata"]["queryName"])
+            record = lastPath(r["_source"]["data"]["win"]
+                              ["system"]["eventRecordID"])
             result.append({"timestamp": time, "name": name,
-                           "image": image, "query": query, "record":record})
+                           "image": image, "query": query, "record": record})
         return result
-
-
-
 
 
 @dnsquery.route("/check")
@@ -62,22 +60,17 @@ class alert(Resource):
         result = []
         result.append({"date": response.json()["scan_date"],
                        "positives": response.json()["positives"],
-                       "total" : response.json()["total"],
-                        "scans" : response.json()["scans"]
-                      })
-        
+                       "total": response.json()["total"],
+                       "scans": response.json()["scans"]
+                       })
 
-        a = response.json()["scans"];
+        a = response.json()["scans"]
         i = 0
-        for key,value in a.items():
-
-            scans = key;
-            detected = value['detected'];
-            clean = value['result'];
-            result.append({"scans": scans, "detected": detected, "clean": clean})
+        for key, value in a.items():
+            scans = key
+            detected = value['detected']
+            clean = value['result']
+            result.append(
+                {"scans": scans, "detected": detected, "clean": clean})
         print(result)
-        return result;
-
-
-
-
+        return result

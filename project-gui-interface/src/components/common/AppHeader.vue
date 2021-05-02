@@ -4,33 +4,38 @@
     permanent
      :mini-variant.sync="mini"
     >
-      <v-sheet color="#7CB342" class="pa-4 d-flex" >
+      <v-sheet color="#7CB342" class="pa-1 d-flex" >
         <v-row>
           <v-col>
-        <v-avatar class="mb-4" color="grey darken-1" size="64">
+        <v-avatar class="mb-4" color="grey darken-1" size="50">
           <img src="../../assets/logo.png"
         />
         
         </v-avatar>
         
         </v-col>
-
-        </v-row>
-        <v-row>
-
-          <v-col>
+  <v-col>
             <v-btn
+            v-if="!mini"  
           icon
           @click.stop="mini = !mini"
         >
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
+        <v-btn
+            v-if="mini"  
+          icon
+          @click.stop="mini = !mini"
+        >
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-btn>
           </v-col>
-          <v-col>
-        <div>IntheForest-Project</div>
-        </v-col>
+
         </v-row>
-        
+
+        <div class="pt-4">
+        IntheForest-Project
+        </div>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -55,11 +60,12 @@
           color="green darken-3"
         >
           <template v-slot:activator>
+            <v-list-item-icon>
+            <v-icon>{{ lev1.icon }} </v-icon>
+            </v-list-item-icon>
+                <v-list-item-title>{{ lev1.title }}</v-list-item-title>
             <v-list-item-content>
-              <strong>
-                <v-icon>{{ lev1.icon }} </v-icon>
-                {{ lev1.title }}
-              </strong>
+                
             </v-list-item-content>
           </template>
           <v-divider></v-divider>

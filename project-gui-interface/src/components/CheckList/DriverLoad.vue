@@ -2,41 +2,21 @@
   <v-container class="py-2 px-1" fluid style="height: 100vh">
     <v-card class="mx-auto" max-width="1200" color="light-green lighten-4">
       <v-card-title>Driver Load 이벤트 감지</v-card-title>
-
       <user-list />
-      <date-slider
-        @onload="pload"
-        @finishload="pload"
-        @submitEvent="eventchangt"
-        :url="apiurl"
-      />
-      <v-card>
-        <v-card-title>
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Filter about user"
-            single-line
-            hide-details
-          ></v-text-field>
-        </v-card-title>
-        <v-data-table
-          dense
-          :headers="headers"
-          :items="events"
-          :loading="load"
-          :search="search"
-          @click:row="showimg"
-          loading-text="wait a moment"
-          class="elevation-1"
-        ></v-data-table>
-      </v-card>
+      <date-slider @transAgoDate="getAllEventDate" />
+      <data-table
+        :headers="headers"
+        :items="events"
+        :Ifsearch="filter"
+        :load="load"
+        @ClickEvent="showimg"
+        title="RDP and Chromoting"
+      ></data-table>
       <v-divider class="mx-5 mt-4"></v-divider>
       <v-alert border="top" colored-border type="info" elevation="2">
         if Signature is Revoke, Driver Corp is None. Click row and get Driver
         image path.
       </v-alert>
-      <line-chart />
     </v-card>
     <v-snackbar v-model="snackbar" multi-line timeout="-1">
       {{ Image }}
@@ -52,15 +32,16 @@
 <script>
 import userList from "../common/userlist";
 import dateSlider from "../common/dateSlider.vue";
-import lineChart from "../chart/Linechart.vue";
+import DataTable from "../chart/dataTable.vue";
 export default {
   components: {
     userList,
     dateSlider,
-    lineChart,
+    DataTable,
   },
   data: () => ({
     search: "",
+    filter: true,
     Image: "",
     load: true,
     snackbar: false,
@@ -81,12 +62,19 @@ export default {
     ],
   }),
   methods: {
+    getAllEventDate() {
+      this.$data.load = true;
+      const URL = this.$store.state.pyurl + this.$data.apiurl;
+      this.$http.post(URL, { date: this.$store.state.date }).then((result) => {
+        this.$data.events = result.data;
+        this.$data.load = false;
+      });
+    },
     showimg(image) {
+      console.log("hi");
+      console.log(image);
       this.$data.Image = image.imageLoad;
       this.$data.snackbar = true;
-    },
-    pload(load) {
-      this.$data.load = load;
     },
     eventchangt(data) {
       this.$data.events = data;
@@ -94,11 +82,7 @@ export default {
     },
   },
   mounted() {
-    const URL = this.$store.state.pyurl + this.$data.apiurl;
-    this.$http.post(URL, { date: this.$store.state.date }).then((result) => {
-      this.$data.events = result.data;
-      this.$data.load = false;
-    });
+    this.getAllEventDate();
   },
 };
 </script>

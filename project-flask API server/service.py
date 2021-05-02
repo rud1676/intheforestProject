@@ -39,6 +39,7 @@ class userlist(Resource):
         print(daysago)
         result = []
         for r in es.search(index="wazuh-alert*", body=body)["hits"]["hits"]:
+            print(r)
             agent = r["_source"]["agent"]["name"]
             time = timefunc(r["_source"]["timestamp"])
             service = r["_source"]["data"]["win"]["eventdata"]["serviceName"]

@@ -3,32 +3,14 @@
     <v-card class="mx-auto" max-width="1400" color="light-green lighten-4">
       <v-card-title>일주일 간 서비스 설치 내역</v-card-title>
       <user-list />
-      <date-slider
-        @onload="pload"
-        @finishload="pload"
-        @submitEvent="eventchangt"
-        :url="apiurl"
-      />
-      <v-card>
-        <v-card-title>
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Hostname, service, path"
-            single-line
-            hide-details
-          ></v-text-field>
-        </v-card-title>
-        <v-data-table
-          dense
-          :headers="headers"
-          :items="events"
-          :loading="load"
-          :search="search"
-          loading-text="wait a moment"
-          class="elevation-1"
-        ></v-data-table>
-      </v-card>
+      <date-slider @transAgoDate="getAllEventDate" />
+      <data-table
+        :headers="headers"
+        :items="events"
+        :Ifsearch="filter"
+        :load="load"
+        title="RDP and Chromoting"
+      ></data-table>
       <v-divider class="mx-5 mt-4"></v-divider>
       <v-row class="v-flex">
         <v-col>
@@ -50,14 +32,17 @@
 import axios from "axios";
 import userList from "../common/userlist";
 import dateSlider from "../common/dateSlider.vue";
+import DataTable from "../chart/dataTable.vue";
 export default {
   components: {
     userList,
-    dateSlider
+    dateSlider,
+    DataTable,
   },
   data: () => ({
+    filter: true,
     search: "",
-    load: true,
+    load: false,
     apiurl: "/service/7045",
     events: [],
     headers: [
@@ -65,29 +50,26 @@ export default {
         text: "TimeStamp",
         align: "start",
         filterable: false,
-        sortable: false,
-        value: "time"
+        sortable: true,
+        value: "time",
       },
       { text: "Hostname", value: "agent" },
-      { text: "기기이름", value: "service" },
-      { text: "connect", value: "path" }
-    ]
+      { text: "패키지이름", value: "service" },
+      { text: "설치경로", value: "path" },
+    ],
   }),
   methods: {
-    pload(load) {
-      this.$data.load = load;
+    getAllEventDate() {
+      this.$data.load = true;
+      const URL = this.$store.state.pyurl + this.$data.apiurl;
+      axios.post(URL, { date: this.$store.state.date }).then((result) => {
+        this.$data.events = result.data;
+        this.$data.load = false;
+      });
     },
-    eventchangt(data) {
-      this.$data.events = data;
-      console.log(this.$data.events);
-    }
   },
   mounted() {
-    const URL = this.$store.state.pyurl + this.$data.apiurl;
-    axios.post(URL, { date: 7 }).then((result) => {
-      this.$data.events = result.data;
-      this.$data.load = false;
-    });
-  }
+    this.getAllEventDate();
+  },
 };
 </script>
