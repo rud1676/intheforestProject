@@ -10,22 +10,15 @@
         :Ifsearch="filter"
         :load="load"
         @ClickEvent="showimg"
-        title="RDP and Chromoting"
+        title="ProcessCreate Event"
       ></data-table>
-      <v-divider class="mx-5 mt-4"></v-divider>
-      <v-alert border="top" colored-border type="info" elevation="2">
-        if Signature is Revoke, Driver Corp is None. Click row and get Driver
-        image path.
-      </v-alert>
+      <v-divider class="mx-5 mt-4"> </v-divider>
     </v-card>
-    <v-snackbar v-model="snackbar" multi-line timeout="-1">
-      {{ Image }}
-      <template v-slot:action="{ attrs }">
-        <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
+    <v-overlay :value="overlay">
+      <v-btn class="white--text" color="teal" @click="overlay = false">
+        {{ overlayData.hashes }}
+      </v-btn>
+    </v-overlay>
   </v-container>
 </template>
 
@@ -40,43 +33,42 @@ export default {
     DataTable,
   },
   data: () => ({
+    overlay: true,
     search: "",
     filter: true,
     Image: "",
     load: true,
     snackbar: false,
     alertOn: "unknown",
-    apiurl: "/driverload/event",
+    apiurl: "/process/getEvent",
     events: [],
     headers: [
       {
         text: "TimeStamp",
         align: "start",
-        filterable: false,
-        sortable: false,
+        filterable: true,
         value: "time",
       },
       { text: "Hostname", value: "agent" },
-      { text: "Driver Cop.", value: "driver" },
-      { text: "SignatureIs...", value: "sigstate" },
+      { text: "FileName", value: "originalFileName" },
+      { text: "description", value: "description" },
     ],
+    overlayData: {},
   }),
   methods: {
     getAllEventDate() {
       this.$data.load = true;
       const URL = this.$store.state.pyurl + this.$data.apiurl;
       this.$http.post(URL, { date: this.$store.state.date }).then((result) => {
+        console.log(result.data);
         this.$data.events = result.data;
         this.$data.load = false;
       });
     },
     showimg(image) {
       this.$data.Image = image.imageLoad;
-      this.$data.snackbar = true;
-    },
-    eventchangt(data) {
-      this.$data.events = data;
-      console.log(this.$data.events);
+      this.$data.overlayData = image;
+      this.$data.overlay = true;
     },
   },
   mounted() {

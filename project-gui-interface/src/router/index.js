@@ -28,13 +28,6 @@ const adminUser = (to, from, next) => {
   }
 };
 
-// const originalPush = VueRouter.prototype.push;
-// VueRouter.prototype.push = function push(location) {
-//   return originalPush.call(this, location).catch(() => {
-//     return window.location.reload()
-//   })
-// };
-
 Vue.use(VueRouter);
 const routes = [
   {
@@ -141,6 +134,11 @@ const routes = [
         path: "/networkconnection",
         name: "networkconnection",
         component: () => import("../components/abnormal/networkconnection.vue")
+      },
+      {
+        path: "/processcreate",
+        name: "ProcessCreate",
+        component: () => import("../components/abnormal/ProcessCreate.vue")
       }
     ]
   },

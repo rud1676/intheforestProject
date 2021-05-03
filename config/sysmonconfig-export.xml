@@ -226,7 +226,6 @@
 				<CommandLine condition="begin with">"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --type=</CommandLine>				<!--Google:Chrome: massive command-line arguments-->
 				<CommandLine condition="begin with">"C:\Program Files\Google\Chrome\Application\chrome.exe" --type=</CommandLine>				<!--Google:Chrome: massive command-line arguments-->
 				<!--추가로 제외시킬 목록들(02.03)-->
-				<Image condition="is">C:\Windows\System32\RuntimeBroker.exe</Image>
 				<Image condition="is">C:\Windows\System32\dllhost.exe</Image>
 				<Image condition="is">C:\Windows\System32\backgroundTaskHost.exe</Image>
 				<Image condition="is">C:\Program Files (x86)\Google\Update\GoogleUpdate.exe</Image>
@@ -267,6 +266,8 @@
 				<Image condition="end with">FileCoAuth.exe</Image>
 
 				<!--(02.03)-->
+				<!--4.30 product =>-->
+				<Product condition="is">Microsoft® Windows® Operating System</Product>
 			</ProcessCreate>
 		</RuleGroup>
 

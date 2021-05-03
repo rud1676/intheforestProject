@@ -186,4 +186,5 @@ export default {
     this.getAllEventDate();
   },
 };
+//이건 adnormal dectection으로 옮겨서 분석할 수 있게 도와주기!
 </script>

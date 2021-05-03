@@ -38,7 +38,6 @@ class alert(Resource):
             time = timefunc(r["_source"]["@timestamp"])
             name = r["_source"]["agent"]["name"]
             image = lastPath(r["_source"]["data"]["win"]["eventdata"]["image"])
-
             query = lastPath(r["_source"]["data"]["win"]
                              ["eventdata"]["queryName"])
             record = lastPath(r["_source"]["data"]["win"]

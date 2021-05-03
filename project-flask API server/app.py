@@ -3,7 +3,7 @@ from driverload import driverload
 from networkConnection import networkConnection
 from timeout import timeout
 from fileDownList import filedown
-from gamelist import gamelist
+from ProcessCreate import ProcessCreate
 from dnsquery import dnsquery
 from wificonnection import wificonnection
 from service import service
@@ -26,7 +26,7 @@ api.add_namespace(driverload, '/driverload')
 api.add_namespace(networkConnection, '/networkConnection')
 api.add_namespace(timeout, '/timeout')
 api.add_namespace(filedown, '/filedown')
-api.add_namespace(gamelist, '/gamelist')
+api.add_namespace(ProcessCreate, '/process')
 api.add_namespace(dnsquery, '/dnsquery')
 api.add_namespace(wificonnection, '/wificonnection')
 api.add_namespace(service, '/service')
