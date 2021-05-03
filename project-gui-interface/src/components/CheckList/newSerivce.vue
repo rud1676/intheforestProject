@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import userList from "../common/userlist";
 import dateSlider from "../common/dateSlider.vue";
 import DataTable from "../chart/dataTable.vue";
@@ -61,11 +60,12 @@ export default {
   methods: {
     getAllEventDate() {
       this.$data.load = true;
-      const URL = this.$store.state.pyurl + this.$data.apiurl;
-      axios.post(URL, { date: this.$store.state.date }).then((result) => {
-        this.$data.events = result.data;
-        this.$data.load = false;
-      });
+      this.$http
+        .post(this.$data.apiurl, { date: this.$store.state.date })
+        .then((result) => {
+          this.$data.events = result.data;
+          this.$data.load = false;
+        });
     },
   },
   mounted() {

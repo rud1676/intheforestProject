@@ -58,12 +58,12 @@ export default {
       this.getRDPevent();
     },
     getRDPevent() {
-      const URL = this.$store.state.pyurl + this.$data.apiurl;
-      console.log("post time and abnormal detect");
-      this.$http.post(URL, { date: this.$store.state.date }).then((result) => {
-        this.$data.events = result.data;
-        this.$data.load = false;
-      });
+      this.$http
+        .post(this.$data.apiurl, { date: this.$store.state.date })
+        .then((result) => {
+          this.$data.events = result.data;
+          this.$data.load = false;
+        });
     },
   },
   mounted() {

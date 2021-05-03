@@ -10,96 +10,32 @@
         :Ifsearch="filter"
         :load="load"
         @ClickEvent="clickurl"
-        title="RDP and Chromoting"
+        title="DNS Query about All Agent"
       >
       </data-table>
       <v-divider class="mx-5 mt-4"></v-divider>
-      <v-alert icon="mdi-shield-lock-outline" prominent text type="info">
-        MALICIOUS DNS TRAFFIC Check.
-        <v-divider class="my-4 info" style="opacity: 0.22"></v-divider>
-        <v-row align="center" no-gutters>
-          <v-col class="grow"> Check domain : {{ url }} </v-col>
-          <v-spacer></v-spacer>
-          <div>
-            <v-btn color="info" outlined @click="dnscheck"> Check </v-btn>
-          </div>
-        </v-row>
-      </v-alert>
-      <v-alert
-        :value="alert"
-        border="right"
-        colored-border
-        type="error"
-        elevation="2"
-      >
-        <v-progress-circular
-          :rotate="360"
-          :size="100"
-          :width="15"
-          :value="value"
-          color="teal"
-        >
-          {{ positives }} / {{ total }}
-        </v-progress-circular>
-        | {{ date }} UTC a moment ago
-        <div>{{ url }}</div>
-        <v-row no-gutters>
-          <v-col>
-            <v-card>
-              <v-simple-table dense>
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th>Scans</th>
-                      <th>Result</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in check" :key="item.scans">
-                      <td>{{ item.scans }}</td>
-                      <td>
-                        <v-icon v-if="item.clean === 'clean site'" color="green"
-                          >mdi-check-circle-outline</v-icon
-                        >
-                        <v-icon v-else>mdi-help</v-icon>
-                        {{ item.clean }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            </v-card>
-          </v-col>
-
-          <v-col>
-            <v-card>
-              <v-simple-table dense>
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th>Scans</th>
-                      <th>Result</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in check2" :key="item.scans">
-                      <td>{{ item.scans }}</td>
-                      <td>
-                        <v-icon v-if="item.clean === 'clean site'" color="green"
-                          >mdi-check-circle-outline</v-icon
-                        >
-                        <v-icon v-else>mdi-help</v-icon>
-                        {{ item.clean }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-alert>
-      <v-divider class="mx-5 mt-4"></v-divider>
+      <malicious-check
+        :url="url"
+        labeling="URL"
+        :loading="loading"
+        :error="error"
+        @dnscheck="dnscheck"
+      ></malicious-check>
+      <malicious-result
+        :alert="alert"
+        :value="value"
+        :positives="positives"
+        :total="total"
+        :date="date"
+        :url="url"
+        :check="check"
+        :check2="check2"
+        @close="close"
+      ></malicious-result>
+      <malicous-dialog
+        :dialog="dialog"
+        @dialog="dialogAccept"
+      ></malicous-dialog>
     </v-card>
   </v-container>
 </template>
@@ -108,13 +44,26 @@
 import userlist from "../common/userlist.vue";
 import DateSlider from "../common/dateSlider.vue";
 import DataTable from "../chart/dataTable.vue";
+import MaliciousCheck from "../chart/maliciousCheck.vue";
+import MaliciousResult from "../chart/maliciousResult.vue";
+import MalicousDialog from "../common/malicousDialog.vue";
 export default {
-  components: { userlist, DateSlider, DataTable },
+  components: {
+    userlist,
+    DateSlider,
+    DataTable,
+    MaliciousCheck,
+    MaliciousResult,
+    MalicousDialog,
+  },
   data: () => ({
     alert: false,
     filter: true,
+    error: false,
+    dialog: false,
     url: "",
     load: true,
+    loading: false,
     events: [],
     check: [], //timestamp, name, rtype, query
     check2: [],
@@ -128,7 +77,6 @@ export default {
       { text: "Hostname", value: "name" },
       { text: "Program", value: "image" },
       { text: "Queryname", value: "query" },
-      { text: "Record Type", value: "record" },
     ],
     headers2: [
       { text: "Scans", value: "scans" },
@@ -143,21 +91,31 @@ export default {
   methods: {
     getAllEventDate() {
       this.$data.load = true;
-      const URL1 = this.$store.state.pyurl + "/dnsquery/dnsquery";
-      this.$http.post(URL1, { date: this.$store.state.date }).then((result) => {
-        this.$data.events = result.data;
-        this.$data.load = false;
-      });
+      this.$http
+        .post("/dnsquery/dnsquery", { date: this.$store.state.date })
+        .then((result) => {
+          this.$data.events = result.data;
+          this.$data.load = false;
+        });
+    },
+    dialogAccept() {
+      this.dialog = false;
+    },
+    close() {
+      this.alert = false;
     },
     clickurl(items) {
       this.$data.url = items.query;
     },
     dnscheck() {
+      this.error = false;
       if (this.url != "") {
-        this.alert = !this.alert;
-        const URL2 = this.$store.state.pyurl + "/dnsquery/check";
+        this.loading = true;
+        this.check = [];
+        this.check2 = [];
+        this.alert = false;
         this.$http
-          .get(URL2, {
+          .get("/dnsquery/check", {
             params: {
               domain: this.url,
             },
@@ -168,16 +126,17 @@ export default {
             this.positives = result.data[0].positives;
             this.value = ((this.total - this.positives) / this.total) * 100;
             delete result.data[0];
-            // for(var i = 0; i < result.data.length;i++){
-            //   if(result.data[i].clean == "clean site"){
-            //     result.data[i].clean =
-            //   }
-
-            // };
             this.check = result.data.slice(1, this.total / 2 + 1);
             this.check2 = result.data.slice(this.total / 2 + 1);
             console.log(this.check);
             console.log(this.check2);
+            this.loading = false;
+            this.alert = true;
+          })
+          .catch((error) => {
+            this.error = true;
+            this.dialog = true;
+            console.log(error);
           });
       }
     },

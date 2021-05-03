@@ -99,3 +99,30 @@ class userlist(Resource):
             result.append(dic)
 
         return result
+
+
+@ProcessCreate.route("/check")
+class alert(Resource):
+    def get(self):
+        url = 'https://www.virustotal.com/vtapi/v2/file/report'
+        params = {
+            'apikey': 'ac9eed711ba588d4ecfa6371821f13eedaa68e19d648869af18420c0463f6bcf'}
+        params['resource'] = request.args.get('hash', '')
+        response = requests.get(url, params=params)
+        print(response)
+        print("hi")
+        result = []
+        result.append({"date": response.json()["scan_date"],
+                       "positives": response.json()["positives"],
+                       "total": response.json()["total"],
+                       "scans": response.json()["scans"]
+                       })
+
+        a = response.json()["scans"]
+        for key, value in a.items():
+            scans = key
+            detected = value['detected']
+            clean = value['result']
+            result.append(
+                {"scans": scans, "detected": detected, "clean": clean})
+        return result

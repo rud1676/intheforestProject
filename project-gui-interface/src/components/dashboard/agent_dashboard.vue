@@ -107,27 +107,30 @@ export default {
     },
     GetPortData: async function (a) {
       this.$data.agentName = a;
-      const URL = this.$store.state.pyurl + "/agentdash/scanPortData";
-      await this.$http.post(URL, { agent: a }).then((result) => {
-        this.$data.PortDataTable = result.data;
-      });
+      await this.$http
+        .post("/agentdash/scanPortData", { agent: a })
+        .then((result) => {
+          this.$data.PortDataTable = result.data;
+        });
     },
     ScanPackage: async function (a) {
       this.$data.ScanPackageDataTable = [];
-      const URL = this.$store.state.pyurl + "/agentdash/ScanPackage";
-      await this.$http.post(URL, { agent: a }).then((result) => {
-        this.$data.ScanPackageDataTable = result.data;
-      });
+      await this.$http
+        .post("/agentdash/ScanPackage", { agent: a })
+        .then((result) => {
+          this.$data.ScanPackageDataTable = result.data;
+        });
     },
     GetProcessData: async function (a) {
       //vmsize size 등 각 필드에 대한 연구
       this.$data.agentName = a;
-      const URL = this.$store.state.pyurl + "/agentdash/scanProcesses";
-      await this.$http.post(URL, { agent: a }).then((result) => {
-        console.log(result.data.time);
-        this.$data.scantime = result.data.time;
-        this.$data.ProcessDataTable = result.data.result;
-      });
+      await this.$http
+        .post("/agentdash/scanProcesses", { agent: a })
+        .then((result) => {
+          console.log(result.data.time);
+          this.$data.scantime = result.data.time;
+          this.$data.ProcessDataTable = result.data.result;
+        });
     },
   },
   mounted() {},

@@ -55,6 +55,7 @@ class alert(Resource):
         params = {'apikey': 'ac9eed711ba588d4ecfa6371821f13eedaa68e19d648869af18420c0463f6bcf',
                   'resource': ''}
         params['resource'] = request.args.get('domain', '')
+        print(params)
         response = requests.get(url, params=params)
         result = []
         result.append({"date": response.json()["scan_date"],

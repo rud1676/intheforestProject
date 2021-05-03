@@ -78,13 +78,12 @@
 </template>
 
 <script>
-import axios from "axios";
 import userList from "../common/userlist";
 import dateSlide from "../common/dateSlider";
 export default {
   components: {
     userList,
-    dateSlide
+    dateSlide,
   },
   data: () => ({
     start: "10:00",
@@ -99,10 +98,10 @@ export default {
         align: "start",
         filterable: false,
         sortable: false,
-        value: "date"
+        value: "date",
       },
-      { text: "Hostname", value: "agent" }
-    ]
+      { text: "Hostname", value: "agent" },
+    ],
   }),
   methods: {
     pload(load) {
@@ -118,35 +117,33 @@ export default {
     },
     submit() {
       this.onload();
-      const URL = this.$store.state.pyurl + this.$data.apiurl;
       this.$http
-        .post(URL, {
+        .post(this.$data.apiurl, {
           data: {
             start: this.$data.start,
             end: this.$data.end,
-            date: this.$data.slider.val
-          }
+            date: this.$data.slider.val,
+          },
         })
         .then((result) => {
           this.$data.events = result.data;
           this.finishload();
         });
-    }
+    },
   },
   mounted() {
-    const URL = this.$store.state.pyurl + this.$data.apiurl;
-    axios
-      .post(URL, {
+    this.$http
+      .post(this.$data.apiurl, {
         data: {
           start: this.$data.start,
           end: this.$data.end,
-          date: this.$store.state.date
-        }
+          date: this.$store.state.date,
+        },
       })
       .then((result) => {
         this.$data.events = result.data;
         this.$data.load = false;
       });
-  }
+  },
 };
 </script>

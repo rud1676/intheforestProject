@@ -136,8 +136,8 @@ const routes = [
         component: () => import("../components/abnormal/networkconnection.vue")
       },
       {
-        path: "/processcreate",
-        name: "ProcessCreate",
+        path: "/processCreate",
+        name: "processCreate",
         component: () => import("../components/abnormal/ProcessCreate.vue")
       }
     ]
