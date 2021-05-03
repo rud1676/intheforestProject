@@ -33,10 +33,8 @@ export default {
     },
   },
   mounted() {
-    const URL = this.$store.state.pyurl + "/wazuh/agents";
-
     this.$http
-      .get(URL)
+      .get("/wazuh/agents")
       .then((result) => {
         this.$data.agents = result.data;
         console.log("wazuiagent call!");

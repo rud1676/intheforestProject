@@ -91,11 +91,12 @@ export default {
   methods: {
     getAllEventDate() {
       this.$data.load = true;
-      const URL1 = this.$store.state.pyurl + "/dnsquery/dnsquery";
-      this.$http.post(URL1, { date: this.$store.state.date }).then((result) => {
-        this.$data.events = result.data;
-        this.$data.load = false;
-      });
+      this.$http
+        .post("/dnsquery/dnsquery", { date: this.$store.state.date })
+        .then((result) => {
+          this.$data.events = result.data;
+          this.$data.load = false;
+        });
     },
     dialogAccept() {
       this.dialog = false;
@@ -113,9 +114,8 @@ export default {
         this.check = [];
         this.check2 = [];
         this.alert = false;
-        const URL2 = this.$store.state.pyurl + "/dnsquery/check";
         this.$http
-          .get(URL2, {
+          .get("/dnsquery/check", {
             params: {
               domain: this.url,
             },

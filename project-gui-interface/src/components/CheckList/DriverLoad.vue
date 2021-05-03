@@ -64,11 +64,12 @@ export default {
   methods: {
     getAllEventDate() {
       this.$data.load = true;
-      const URL = this.$store.state.pyurl + this.$data.apiurl;
-      this.$http.post(URL, { date: this.$store.state.date }).then((result) => {
-        this.$data.events = result.data;
-        this.$data.load = false;
-      });
+      this.$http
+        .post(this.$data.apiurl, { date: this.$store.state.date })
+        .then((result) => {
+          this.$data.events = result.data;
+          this.$data.load = false;
+        });
     },
     showimg(image) {
       console.log("hi");

@@ -53,7 +53,6 @@ export default {
   },
   methods: {
     clickevent() {
-      console.log("hi");
       this.$emit("dnscheck");
     },
   },

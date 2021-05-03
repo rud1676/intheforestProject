@@ -12,8 +12,11 @@ from wazuhapi import wazuh
 from mainDash import mainDash
 from AgentDash import AgentDash
 from alertfunction import alert  # make after... first modify function
+from ProcessCreate import ProcessCreate
 app = Flask(__name__)
-CORS(app)
+
+
+CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app,
           version='0.1',
           title="elk api server",
@@ -21,7 +24,7 @@ api = Api(app,
           terms_url="/",
           contact="rud167637@gmail.com",
           license="차후에...결정")
-
+app.config['CORS_HEADERS'] = 'Content-Type'
 api.add_namespace(driverload, '/driverload')
 api.add_namespace(networkConnection, '/networkConnection')
 api.add_namespace(timeout, '/timeout')
@@ -35,6 +38,7 @@ api.add_namespace(alert, '/alert')
 api.add_namespace(wazuh, '/wazuh')
 api.add_namespace(mainDash, '/maindash')
 api.add_namespace(AgentDash, '/agentdash')
+api.add_namespace(ProcessCreate, '/process')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8888)

@@ -129,10 +129,9 @@ export default {
     //LineChart에 Activate 로그를 넣어줌!
     getAllActiveEvent: async function () {
       this.AgentStatusEvent = [];
-      const URL = this.$store.state.pyurl + "/maindash/agentactive";
       const moment = this.$moment;
       await this.$http
-        .post(URL, { date: this.$store.state.date })
+        .post("/maindash/agentactive", { date: this.$store.state.date })
         .then((result) => {
           let datas = result.data; //data들을 datas로 명칭
           for (let i = 0; i < datas.length; i++) {
@@ -170,10 +169,9 @@ export default {
     //download count 를 agent 마다 있는 이벤트를 받아오는 api call.
     downLoadCount: async function () {
       this.$data.downLoadCountData = [];
-      const URL = this.$store.state.pyurl + "/maindash/downCount";
       console.log("Inside downLoadCount");
       await this.$http
-        .post(URL, { date: this.$store.state.date })
+        .post("/maindash/downCount", { date: this.$store.state.date })
         .then((result) => {
           console.log("Inside downLoadCount - axios");
           for (let i = 0; i < result.data.length; i++) {
@@ -189,9 +187,8 @@ export default {
     //Service 설치 이벤트 카운트를 받아와서 보여줍니다!
     serviceInstallCount: async function () {
       this.$data.serviceinstallcount = [];
-      const URL = this.$store.state.pyurl + "/maindash/serviceinstallcount";
       await this.$http
-        .post(URL, { date: this.$store.state.date })
+        .post("/maindash/serviceinstallcount", { date: this.$store.state.date })
         .then((result) => {
           for (let i = 0; i < result.data.length; i++) {
             this.$data.serviceinstallcount.push({
@@ -202,17 +199,15 @@ export default {
         });
     },
     pakageCountByAgent: async function () {
-      const URL = this.$store.state.pyurl + "/maindash/getPackageCount";
-      await this.$http.get(URL).then((result) => {
+      await this.$http.get("/maindash/getPackageCount").then((result) => {
         this.$data.pakageEventCount = result.data;
         console.log(result.data);
       });
     },
     getAppLogCount: async function () {
       this.$data.appUseLogCount = [];
-      const URL = this.$store.state.pyurl + "/maindash/getAppLogCount";
       await this.$http
-        .post(URL, { date: this.$store.state.date })
+        .post("/maindash/getAppLogCount", { date: this.$store.state.date })
         .then((result) => {
           for (let i = 0; i < result.data.length; i++) {
             this.$data.appUseLogCount.push({
@@ -225,9 +220,8 @@ export default {
     },
     AgentLogCount: async function () {
       this.$data.agentAlllogCount = [];
-      const URL = this.$store.state.pyurl + "/maindash/AgentLogCount";
       await this.$http
-        .post(URL, { date: this.$store.state.date })
+        .post("/maindash/AgentLogCount", { date: this.$store.state.date })
         .then((result) => {
           console.log(result.data);
           for (let i = 0; i < result.data.length; i++) {
@@ -241,9 +235,8 @@ export default {
     },
     DNSLogCount: async function () {
       this.$data.dns_in_browser_logCount = [];
-      const URL = this.$store.state.pyurl + "/maindash/DNSLogCount";
       await this.$http
-        .post(URL, { date: this.$store.state.date })
+        .post("/maindash/DNSLogCount", { date: this.$store.state.date })
         .then((result) => {
           console.log(result.data);
           for (let i = 0; i < result.data.length; i++) {
