@@ -1,5 +1,4 @@
-import requests
-from needs import es, request, Resource, Namespace, timefunc, lastPath
+from needs import es, request, Resource, Namespace, timefunc, lastPath, requests
 dnsquery = Namespace(name='dnsquery',
                      description="About dnsquery 이벤트")
 
@@ -55,9 +54,10 @@ class alert(Resource):
         params = {'apikey': 'ac9eed711ba588d4ecfa6371821f13eedaa68e19d648869af18420c0463f6bcf',
                   'resource': ''}
         params['resource'] = request.args.get('domain', '')
-        print(params)
+
         response = requests.get(url, params=params)
         result = []
+        print(response)
         result.append({"date": response.json()["scan_date"],
                        "positives": response.json()["positives"],
                        "total": response.json()["total"],

@@ -5,15 +5,32 @@ createThread = Namespace(name='createThread',
 
 @createThread.route("/thread")
 class alert(Resource):
-    def get(self):
+    def post(self):
         """SQL문으로 createThread 정보를 얻어옵니다."""
-        body = {
-            "query": "select DISTINCT data.win.eventdata.sourceImage,data.win.eventdata.targetImage,agent.name from wazuh-alert* where data.win.system.eventID='8'"
+        body = body = {
+            "size": 10000,
+            "query": {
+                "bool": {
+                    "must": [
+                        {
+                            "match": {
+                                "data.win.system.eventID": 15
+                            }
+                        },
+                        {
+                            "range": {
+                                "@timestamp": {
+                                    "gte": "now-"+str(daysago)+"d/d",
+                                    "lt": "now"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "sort": [
+                {"timestamp": "desc"}
+            ]
         }
         result = []
-        for r in es.index(index="_opendistro", doc_type="_sql", body=body)["datarows"]:
-            source = r[0]
-            target = r[1]
-            name = r[2]
-            result.append({"source": source, "target": target, "name": name})
         return result

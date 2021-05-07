@@ -11,6 +11,8 @@
           dense
           color="info"
           clearable
+          background-color="blue darken-2"
+          readonly
         ></v-text-field>
       </v-col>
       <v-progress-circular

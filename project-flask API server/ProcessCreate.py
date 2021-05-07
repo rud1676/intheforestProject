@@ -1,4 +1,4 @@
-from needs import es, request, Resource, Namespace, timefunc, lastPath
+from needs import es, request, Resource, Namespace, timefunc, lastPath, requests
 # 크롤링 때문에 임포트
 ProcessCreate = Namespace(name="ProcessCreate", description="test")
 
@@ -31,7 +31,7 @@ class userlist(Resource):
                 }
             }
         }
-        for r in es.search(index="wazuh-alert*", body=body)["hits"]["hits"]:
+        for cnt, r in enumerate(es.search(index="wazuh-alert*", body=body)["hits"]["hits"]):
             dic = {}
             eventdata = r["_source"]["data"]["win"]["eventdata"]
             dic["time"] = timefunc(r["_source"]["timestamp"])
@@ -96,6 +96,7 @@ class userlist(Resource):
                 dic["parentProcessId"] = eventdata["parentProcessId"]
             else:
                 dic["parentProcessId"] = "..."
+            dic["id"] = cnt
             result.append(dic)
 
         return result
@@ -103,22 +104,21 @@ class userlist(Resource):
 
 @ProcessCreate.route("/check")
 class alert(Resource):
-    def get(self):
-        url = 'https://www.virustotal.com/vtapi/v2/file/report'
+    def post(self):
+        url = 'https://www.virustotal.com/vtapi/v2/file/report'  # 이거 나중에 물어보자
         params = {
             'apikey': 'ac9eed711ba588d4ecfa6371821f13eedaa68e19d648869af18420c0463f6bcf'}
-        params['resource'] = request.args.get('hash', '')
-        response = requests.get(url, params=params)
+        params['resource'] = request.json.get('hash')
+        response = requests.get(url, params=params).json()
         print(response)
-        print("hi")
         result = []
-        result.append({"date": response.json()["scan_date"],
-                       "positives": response.json()["positives"],
-                       "total": response.json()["total"],
-                       "scans": response.json()["scans"]
+        result.append({"date": response["scan_date"],
+                       "positives": response["positives"],
+                       "total": response["total"],
+                       "scans": response["scans"]
                        })
 
-        a = response.json()["scans"]
+        a = response["scans"]
         for key, value in a.items():
             scans = key
             detected = value['detected']

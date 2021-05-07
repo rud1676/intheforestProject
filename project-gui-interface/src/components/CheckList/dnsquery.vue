@@ -26,7 +26,6 @@
         :value="value"
         :positives="positives"
         :total="total"
-        :date="date"
         :url="url"
         :check="check"
         :check2="check2"
@@ -85,7 +84,6 @@ export default {
     total: 100,
     value: 100,
     positives: 0,
-    date: "",
   }),
   computed: {},
   methods: {
@@ -121,7 +119,6 @@ export default {
             },
           })
           .then((result) => {
-            this.date = result.data[0].date;
             this.total = result.data[0].total;
             this.positives = result.data[0].positives;
             this.value = ((this.total - this.positives) / this.total) * 100;

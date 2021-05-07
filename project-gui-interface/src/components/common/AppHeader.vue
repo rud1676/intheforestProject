@@ -176,7 +176,7 @@ export default {
       },
       {
         no: 2,
-        title: "ProcessCreate Events",
+        title: "실행한 프로세스 목록",
         icon: "mdi-shield-search",
         link: "processCreate",
       },
@@ -214,4 +214,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

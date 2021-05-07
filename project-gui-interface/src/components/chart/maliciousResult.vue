@@ -18,14 +18,12 @@
         >
           {{ positives }} / {{ total }}
         </v-progress-circular>
-
-        | {{ date }} UTC a moment ago
+        검사한 사이트마다 의심되는 결과가 나온 비율
       </v-col>
-      <v-spacer></v-spacer>
 
       <v-btn color="info" outlined @click="close"> Close </v-btn>
     </v-row>
-    <div class="my-5">{{ url }}</div>
+    <div class="my-5">검사 값: {{ url }}</div>
     <v-row no-gutters>
       <v-col>
         <v-card>
@@ -41,7 +39,9 @@
                 <tr v-for="item in check" :key="item.scans">
                   <td>{{ item.scans }}</td>
                   <td>
-                    <v-icon v-if="item.clean === 'clean site'" color="green"
+                    <v-icon
+                      v-if="item.clean === 'clean site' || item.clean === null"
+                      color="green"
                       >mdi-check-circle-outline</v-icon
                     >
                     <v-icon v-else>mdi-help</v-icon>
@@ -60,7 +60,7 @@
             <template v-slot:default>
               <thead>
                 <tr>
-                  <th>Scans</th>
+                  <th>ScansCompany</th>
                   <th>Result</th>
                 </tr>
               </thead>
@@ -68,7 +68,9 @@
                 <tr v-for="item in check2" :key="item.scans">
                   <td>{{ item.scans }}</td>
                   <td>
-                    <v-icon v-if="item.clean === 'clean site'" color="green"
+                    <v-icon
+                      v-if="item.clean === 'clean site' || item.clean === null"
+                      color="green"
                       >mdi-check-circle-outline</v-icon
                     >
                     <v-icon v-else>mdi-help</v-icon>
@@ -101,10 +103,6 @@ export default {
     total: {
       type: Number,
       default: 100,
-    },
-    date: {
-      type: String,
-      default: "",
     },
     url: {
       type: String,

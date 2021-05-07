@@ -10,7 +10,7 @@
         :Ifsearch="filter"
         :load="load"
         @ClickEvent="showimg"
-        title="RDP and Chromoting"
+        title="USB감지"
       ></data-table>
       <v-divider class="mx-5 mt-4"></v-divider>
       <v-alert border="top" colored-border type="info" elevation="2">

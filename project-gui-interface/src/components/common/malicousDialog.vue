@@ -7,16 +7,12 @@
 
       <v-card-text>
         <h2>Notice</h2>
-        The Public API is limited to 500 requests per day and a rate of 4
-        requests per minute.
-        <div>
-          The Public API must not be used in commercial products, services or
-          business workflows.
-        </div>
-        <div>
-          The Private API returns more threat data and exposes more endpoints.
-        </div>
-        The Private API is governed by an SLA that guarantees readiness of data.
+        <br />
+        <p>
+          Malicious Check기능은 하루에 500개의 요청과 분당 4개의 요청으로
+          제한합니다.
+        </p>
+        <p>그외의 문제는 관리자에게 문의하십시오.</p>
       </v-card-text>
 
       <v-divider></v-divider>
