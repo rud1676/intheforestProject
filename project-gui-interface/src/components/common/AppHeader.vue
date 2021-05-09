@@ -34,13 +34,13 @@
           <v-list-item-icon>
             <v-icon>mdi-monitor-dashboard</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Integrated Dashboard</v-list-item-title>
+          <v-list-item-title>통합 대시보드</v-list-item-title>
         </v-list-item>
         <v-list-item @click="$router.push({ name: 'agent' })">
           <v-list-item-icon>
             <v-icon>mdi-desktop-classic</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>AGENT Dashboard</v-list-item-title>
+          <v-list-item-title>근무자 대시보드</v-list-item-title>
         </v-list-item>
         <v-list-group
           v-for="lev1 in lev1"
