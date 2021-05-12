@@ -7,29 +7,19 @@
       permanent
       :mini-variant.sync="mini"
     >
-      <v-sheet color="#7CB342" class="pa-1 d-flex">
-        <v-row>
-          <v-col>
-            <v-avatar class="mb-4" color="grey darken-1" size="50">
-              <img src="../../assets/logo.png" />
-            </v-avatar>
-          </v-col>
-          <v-col>
-            <v-btn v-if="!mini" icon @click.stop="mini = !mini">
+    <v-sheet color="#7CB342">
+    <v-list-item class="px-2 py-3 d-flex">
+        <v-list-item-avatar color="grey darken-1">
+          <v-img src="../../assets/logo.png"></v-img>
+        </v-list-item-avatar>
+        <v-list-item-title>IntheForest-Project</v-list-item-title>
+
+        <v-btn v-if="!mini" icon @click.stop="mini = !mini">
               <v-icon>mdi-chevron-left</v-icon>
-            </v-btn>
-            <v-btn v-if="mini" icon @click.stop="mini = !mini">
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-
-        <div class="pt-4">IntheForest-Project</div>
+        </v-btn>
+      </v-list-item>
       </v-sheet>
-
       <v-divider></v-divider>
-
-      <v-list>
         <v-list-item @click="$router.push({ name: 'integrated' })">
           <v-list-item-icon>
             <v-icon>mdi-monitor-dashboard</v-icon>
@@ -42,37 +32,35 @@
           </v-list-item-icon>
           <v-list-item-title>근무자 대시보드</v-list-item-title>
         </v-list-item>
-        <v-list-group
-          v-for="lev1 in lev1"
-          :key="lev1.no"
-          v-show="isAdmin(lev1.admin)"
-          color="green darken-3"
+
+
+      <v-list-group
+        v-for="item in items"
+        :key="item.title"
+        :prepend-icon="item.action"
+        color="green darken-3"
+        v-show="isAdmin(item.admin)"
+      >
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title"></v-list-item-title>
+          </v-list-item-content>
+        </template>
+<v-divider></v-divider>
+        <v-list-item
+          v-for="child in item.items"
+          :key="child.title"
+          link
+          v-on:click="tolink(child.link)"
         >
-          <template v-slot:activator>
-            <v-list-item-icon>
-              <v-icon>{{ lev1.icon }} </v-icon>
+          <v-list-item-icon>
+              <v-icon>{{ child.action }}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>{{ lev1.title }}</v-list-item-title>
-            <v-list-item-content> </v-list-item-content>
-          </template>
-          <v-divider></v-divider>
-          <v-list-item
-            prepend-icon="mdi-check-circle"
-            v-for="lev2 in lev2"
-            :key="lev2.title"
-            link
-            v-show="lev2.no == lev1.no"
-            v-on:click="tolink(lev2.link)"
-          >
-            <v-list-item-icon>
-              <v-icon>{{ lev2.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title v-text="lev2.title"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-group>
-      </v-list>
+          <v-list-item-content>
+            <v-list-item-title v-text="child.title"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
     </v-navigation-drawer>
   </div>
 </template>
@@ -95,108 +83,97 @@ export default {
       ["mdi-alarm", "alert", "alert", true],
       ["mdi-tune", "Management", "management", false],
     ],
-    lev1: [
+    items:[
       {
-        title: "사용자 행동패턴 분석",
-        no: 1,
-        admin: true,
-      },
-      {
-        title: "이상 징후 분석",
-        no: 2,
-        admin: true,
-      },
-      {
-        title: "관리자 설정",
-        icon: "mdi-wrench",
-        no: 3,
-        admin: false,
-      },
-    ],
-    lev2: [
-      {
-        no: 1,
+      action: 'mdi-account',
+      admin: true,
+      items: [
+        {
         title: "게임 관련",
-        icon: "mdi-gamepad-variant-outline",
+        action: "mdi-gamepad-variant-outline",
         link: "gametest",
-      },
-      {
-        no: 1,
+        },
+        {
         title: "요청한 DNS 목록",
-        icon: "mdi-gamepad-variant-outline",
+        action: "mdi-microsoft-internet-explorer",
         link: "dns",
-      },
-      {
-        no: 1,
+        },
+        {
         title: "USB 인식 감지",
-        icon: "mdi-usb-flash-drive",
+        action: "mdi-usb-flash-drive",
         link: "driverload",
-      },
-      {
-        no: 1,
-        title: "지정 시간 외 사용자 로그감지",
-        icon: "mdi-office-building-marker-outline",
+        },
+        {
+          title: "지정 시간 외 사용자 로그감지",
+        action: "mdi-office-building-marker-outline",
         link: "timeout",
-      },
-      {
-        no: 1,
+        },
+        {
         title: "파일 다운로드 In Browser",
-        icon: "mdi-folder-download-outline",
+        action: "mdi-folder-download-outline",
         link: "download",
-      },
-      {
-        no: 1,
+        },
+        {
         title: "연결된 네트워크 감지",
-        icon: "mdi-wifi",
-        link: "wifi",
-      },
-      {
-        no: 1,
-        title: "새로운 프로그램 설치",
-        icon: "mdi-progress-download",
+        action: "mdi-wifi",
+        link: "wifi", 
+        },
+        {
+          title: "새로운 프로그램 설치",
+        action: "mdi-progress-download",
         link: "newSerivce",
-      },
-      {
-        no: 1,
+        }
+        ,{
         title: "원격 데스크톱 연결 감지",
-        icon: "mdi-remote",
+        action: "mdi-remote",
         link: "rdp",
+        },
+      ],
+      title:'사용자 행동패턴 분석',
       },
       {
-        no: 2,
-        title: "인터넷 연결된 프로세스",
-        icon: "mdi-shield-search",
+        action:'mdi-shield-plus-outline',
+        items:[
+          {
+            title: "인터넷 연결된 프로세스",
+        action: "mdi-shield-search",
         link: "networkconnection",
-      },
-      {
-        no: 2,
-        title: "Thread InJection",
-        icon: "mdi-shield-search",
+          },
+          {
+            title: "Thread InJection",
+        action: "mdi-shield-search",
         link: "thread",
-      },
-      {
-        no: 2,
-        title: "실행한 프로세스 목록",
-        icon: "mdi-shield-search",
+          },
+          {
+            title: "실행한 프로세스 목록",
+        action: "mdi-shield-search",
         link: "processCreate",
+          },
+          {
+             title: "외부 침입",
+        action: "mdi-shield-check",
+          }
+        ],
+        title:'이상 징후 분석',
+        admin: true,
       },
       {
-        no: 2,
-        title: "외부 침입",
-        icon: "mdi-shield-check",
-      },
-      {
-        no: 3,
-        title: "Dashboard",
+        title:'관리자 설정',
+        admin: false,
+        action:'mdi-wrench',
+        items:[
+          {
+            title: "Dashboard",
         link: "dashboard",
-        icon: "mdi-chart-bar",
-      },
-      {
-        no: 3,
-        title: "Discover",
+        action: "mdi-chart-bar",
+          },
+          {
+            title: "Discover",
         link: "discover",
-        icon: "mdi-magnify",
-      },
+        action: "mdi-magnify",
+          }
+        ]
+      }
     ],
   }),
 
