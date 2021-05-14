@@ -3,24 +3,22 @@
     <v-container grid-list-md>
       <v-layout wrap>
         <v-flex v-for="[text, l, img, admin] in adminlinks"
-        :key="l"
+        :key="text"
         link
+        shrink  
+              
         >
-
-          <v-item>
             <v-card
               v-if="isAdmin(admin)"
-              slot-scope="{ active }"
-              :color="active ? 'primary' : ''"
-              height="200"
-              width="200"
+              height="220"
+              width="220"
               @click="tolink(l)"
               align="center"
             >
-              {{ text }}
-              <img width="150" style="margin: 15px auto" :src="img" />
+            <v-card-title class="justify-center py-2">{{ text }}</v-card-title>
+              
+              <img width="150" style=" auto" :src="img" />
             </v-card>
-          </v-item>
         </v-flex>
       </v-layout>
     </v-container>
@@ -35,9 +33,7 @@ data(){
       adminlinks: [
       [ 'Dashboard', '/dashboard',require("../../assets/dashboard.png"),false],
       [ 'Discover', '/discover',require("../../assets/search.png"),false],
-      [ 'check', '/check',require("../../assets/check.png"),false],
-      [ 'function', '/function',require("../../assets/function.png"),false],
-      [ 'alert', '/alert', require("../../assets/alert.png"),false],
+
       ],
     }
   },

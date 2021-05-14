@@ -9,8 +9,8 @@
     >
     <v-sheet color="#7CB342">
     <v-list-item class="px-2 py-3 d-flex">
-        <v-list-item-avatar color="grey darken-1">
-          <v-img src="../../assets/logo.png"></v-img>
+        <v-list-item-avatar color="white">
+          <v-img src="../../assets/logo3.png"></v-img>
         </v-list-item-avatar>
         <v-list-item-title>IntheForest-Project</v-list-item-title>
 
@@ -24,15 +24,15 @@
           <v-list-item-icon>
             <v-icon>mdi-monitor-dashboard</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>통합 대시보드</v-list-item-title>
+          <v-list-item-title class="font-weight-bold">통합 대시보드</v-list-item-title>
         </v-list-item>
+
         <v-list-item @click="$router.push({ name: 'agent' })">
           <v-list-item-icon>
             <v-icon>mdi-desktop-classic</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>근무자 대시보드</v-list-item-title>
+          <v-list-item-title class="font-weight-bold">근무자 대시보드</v-list-item-title>
         </v-list-item>
-
 
       <v-list-group
         v-for="item in items"
@@ -43,7 +43,7 @@
       >
         <template v-slot:activator>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title"></v-list-item-title>
+            <v-list-item-title v-text="item.title" class="font-weight-bold"></v-list-item-title>
           </v-list-item-content>
         </template>
 <v-divider></v-divider>
@@ -60,8 +60,10 @@
             <v-list-item-title v-text="child.title"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-divider></v-divider>
       </v-list-group>
     </v-navigation-drawer>
+    
   </div>
 </template>
 
@@ -129,7 +131,7 @@ export default {
         link: "rdp",
         },
       ],
-      title:'사용자 행동패턴 분석',
+      title:'체크 리스트',
       },
       {
         action:'mdi-shield-plus-outline',
