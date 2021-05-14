@@ -95,8 +95,7 @@ export default {
     },
   },
   mounted() {
-    const URL = this.$store.state.pyurl + this.$data.apiurl;
-    axios.post(URL, { date: 7 }).then((result) => {
+    axios.post(this.$data.apiurl, { date: 7 }).then((result) => {
       console.log(result.data);
       this.$data.events = result.data;
       this.$data.load = false;
