@@ -12,7 +12,7 @@ from wazuhapi import wazuh
 from mainDash import mainDash
 from AgentDash import AgentDash
 from alertfunction import alert  # make after... first modify function
-from ProcessCreate import ProcessCreate
+from login import login
 app = Flask(__name__)
 
 
@@ -20,7 +20,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app,
           version='0.1',
           title="elk api server",
-          description="로그를 쌓은 ELK에 query하는 API서버",    
+          description="로그를 쌓은 ELK에 query하는 API서버",
           terms_url="/",
           contact="rud167637@gmail.com",
           license="차후에...결정")
@@ -39,6 +39,7 @@ api.add_namespace(wazuh, '/wazuh')
 api.add_namespace(mainDash, '/maindash')
 api.add_namespace(AgentDash, '/agentdash')
 api.add_namespace(ProcessCreate, '/process')
+api.add_namespace(login, '/login')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8888)

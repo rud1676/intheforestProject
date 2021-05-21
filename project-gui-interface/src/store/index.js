@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axois from "axios";
 import createPersistedState from "vuex-persistedstate";
 import router from "@/router";
 
@@ -17,9 +18,10 @@ export default new Vuex.Store({
     userInfo: null,
     isAdmin: true, //test를 위해 true로 바꿈
     pyurl: "http://127.0.0.1:8888",
-    date: 7
+    date: 7,
   },
   mutations: {
+
     //로그인 성공,
     userloginSuccess(state, payload) {
       state.isLogin = true;
@@ -48,19 +50,25 @@ export default new Vuex.Store({
   },
   actions: {
     //로그인 시도
-    login({ state, commit }, loginObj) {
-      let selectedUser = null;
-      state.allUsers.forEach((user) => {
-        if (user.id === loginObj.id) selectedUser = user;
-      });
-      if (selectedUser === null || selectedUser.password !== loginObj.password)
+    async login({ commit }, loginObj) {
+      let user = null;
+      let state = null;
+      console.log(loginObj);
+      await axois.post("/login/logon", loginObj).then(r => {
+        user = r.data.user;
+        state = r.data.state;
+        console.log(r)
+      })
+      if (user === null) {
+        alert(state);
         commit("loginError");
-      else if (selectedUser.admin == true) {
-        commit("adminloginSuccess", selectedUser);
+      }
+      else if (user.admin == "true") {
+        commit("adminloginSuccess", user);
         console.log("admin login");
         router.push("/home");
       } else {
-        commit("userloginSuccess", selectedUser);
+        commit("userloginSuccess", user);
         console.log("user login");
         router.push("/home");
       }

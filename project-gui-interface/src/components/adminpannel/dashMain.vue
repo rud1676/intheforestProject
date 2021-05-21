@@ -27,14 +27,13 @@ export default {
     items: [
       {
         text: "Sysmon-Dashboard",
-        url: "http://34.64.140.231:5601/goto/e5d1eb97d811ddf8da258c3809387a70",
+        url: "http://34.64.140.231:5601/goto/aad152199ba0943a5cfbb9cf8a4a19be",
       },
       {
-        text: "metric-dashboard",
-        url: "http://34.64.140.231:5601/goto/f097d5b2937db80c14e95b2fbd615510",
+        text: "Wazuh-dashboard",
+        url:
+          "http://34.64.140.231:5601/app/wazuh#/overview/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_a=(columns:!(_source),filters:!(('$state':(isImplicit:!t,store:appState),meta:(alias:!n,disabled:!f,index:'wazuh-alerts-*',key:manager.name,negate:!f,params:(query:wazuh-and-beat),removable:!f,type:phrase),query:(match:(manager.name:(query:wazuh-and-beat,type:phrase))))),index:'wazuh-alerts-*',interval:auto,query:(language:kuery,query:''),sort:!())&tabView=panels&tab=general",
       },
-      { text: "Maplestory", url: "check" },
-      { text: "twitch", url: "function" },
     ],
   }),
   mounted() {

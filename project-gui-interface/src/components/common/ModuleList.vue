@@ -30,7 +30,6 @@ export default {
   data() {
     return {
       links: [
-        ["Game------", "gametest", require("../../assets/game.png"), true],
         ["Download", "download", require("../../assets/download.png"), true],
         [
           "Not office hours",

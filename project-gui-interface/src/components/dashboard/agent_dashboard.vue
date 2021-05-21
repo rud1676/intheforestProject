@@ -1,6 +1,7 @@
 <template>
   <v-container class="py-2 px-1" fluid style="height: 100vh">
     <v-card class="mx-auto" max-width="1400" color="light-green lighten-4">
+      <v-card-title>AGENT 대시보드</v-card-title>
       <userlist @clickEvent="AgentClick"></userlist>
       <v-divider></v-divider>
       <v-progress-linear

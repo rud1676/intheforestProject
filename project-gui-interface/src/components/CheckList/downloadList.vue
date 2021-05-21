@@ -54,7 +54,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import userList from "../common/userlist";
 import dateSlider from "../common/dateSlider.vue";
 export default {
@@ -95,7 +94,7 @@ export default {
     },
   },
   mounted() {
-    axios.post(this.$data.apiurl, { date: 7 }).then((result) => {
+    this.$http.post(this.$data.apiurl, { date: 7 }).then((result) => {
       console.log(result.data);
       this.$data.events = result.data;
       this.$data.load = false;

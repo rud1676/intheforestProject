@@ -40,6 +40,7 @@ const routes = [
   },
   {
     path: "/home",
+    name: "home",
     beforeEnter: onlyAuthUser,
     component: () => import("@/views/Homepage.vue")
   },
@@ -139,7 +140,18 @@ const routes = [
         path: "/processCreate",
         name: "processCreate",
         component: () => import("../components/abnormal/ProcessCreate.vue")
-      }
+      },
+      //------------account && admin can manage user!
+      {
+        path: "/userInfo",
+        name: "userInfo",
+        component: () => import("../components/userInfo.vue")
+      },
+      {
+        path: "/manageuser",
+        name: "manageuser",
+        component: () => import("../components/manageUser.vue")
+      },
     ]
   },
   {

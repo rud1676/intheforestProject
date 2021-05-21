@@ -40,7 +40,7 @@ def timefunc(t):
     # 시간 변환 자꾸 해야되서 중복제거 => datetime struct => string으로 , 표준시간이랑 +9시간 차이나는거 조정
     times = t.replace("T", " ")[:19]
     date_t = datetime.datetime.strptime(times, '%Y-%m-%d %H:%M:%S')
-    date_t = date_t + datetime.timedelta(hours=0)  # In Company not add 9
+    date_t = date_t + datetime.timedelta(hours=9)  # In Company not add 9
     return str(date_t)
 
 

@@ -30,18 +30,21 @@ export default {
         icon: "mdi-calendar-account",
         descript:
           "Integrated dashboard about Sysmon - ProcessCreate,DNSQuery,FileCreate and so on..",
+        url: "http://34.64.140.231:5601/goto/aad152199ba0943a5cfbb9cf8a4a19be",
       },
-      { text: "Wazuh-dashboard", icon: "mdi-account" },
+      {
+        text: "Wazuh-dashboard",
+        icon: "mdi-account",
+        descript:
+          "Integrated dashboard about Sysmon - ProcessCreate,DNSQuery,FileCreate and so on..",
+        url:
+          "http://34.64.140.231:5601/app/wazuh#/overview/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_a=(columns:!(_source),filters:!(('$state':(isImplicit:!t,store:appState),meta:(alias:!n,disabled:!f,index:'wazuh-alerts-*',key:manager.name,negate:!f,params:(query:wazuh-and-beat),removable:!f,type:phrase),query:(match:(manager.name:(query:wazuh-and-beat,type:phrase))))),index:'wazuh-alerts-*',interval:auto,query:(language:kuery,query:''),sort:!())&tabView=panels&tab=general",
+      },
     ],
   }),
   methods: {
     link: function (item) {
-      console.log(
-        this.$router.push({
-          name: "dashmain",
-          query: { currentItem: item.text },
-        })
-      );
+      window.open(item.url);
     },
   },
 };
