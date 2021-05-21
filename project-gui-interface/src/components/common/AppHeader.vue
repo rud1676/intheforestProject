@@ -7,12 +7,21 @@
       permanent
       :mini-variant.sync="mini"
     >
+<<<<<<< HEAD
       <v-sheet color="#7CB342">
         <v-list-item class="px-2 py-3 d-flex">
           <v-list-item-avatar color="grey darken-1">
             <v-img src="../../assets/logo.png"></v-img>
           </v-list-item-avatar>
           <v-list-item-title>IntheForest-Project</v-list-item-title>
+=======
+    <v-sheet color="#7CB342">
+    <v-list-item class="px-2 py-3 d-flex">
+        <v-list-item-avatar color="white">
+          <v-img src="../../assets/logo3.png"></v-img>
+        </v-list-item-avatar>
+        <v-list-item-title>IntheForest-Project</v-list-item-title>
+>>>>>>> 73bc65e25d101754bced64a95bb82662a03649a2
 
           <v-btn v-if="!mini" icon @click.stop="mini = !mini">
             <v-icon>mdi-chevron-left</v-icon>
@@ -20,6 +29,7 @@
         </v-list-item>
       </v-sheet>
       <v-divider></v-divider>
+<<<<<<< HEAD
       <v-list-item @click="$router.push({ name: 'integrated' })">
         <v-list-item-icon>
           <v-icon>mdi-monitor-dashboard</v-icon>
@@ -32,6 +42,21 @@
         </v-list-item-icon>
         <v-list-item-title>근무자 대시보드</v-list-item-title>
       </v-list-item>
+=======
+        <v-list-item @click="$router.push({ name: 'integrated' })">
+          <v-list-item-icon>
+            <v-icon>mdi-monitor-dashboard</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title class="font-weight-bold">통합 대시보드</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item @click="$router.push({ name: 'agent' })">
+          <v-list-item-icon>
+            <v-icon>mdi-desktop-classic</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title class="font-weight-bold">근무자 대시보드</v-list-item-title>
+        </v-list-item>
+>>>>>>> 73bc65e25d101754bced64a95bb82662a03649a2
 
       <v-list-group
         v-for="item in items"
@@ -42,7 +67,7 @@
       >
         <template v-slot:activator>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title"></v-list-item-title>
+            <v-list-item-title v-text="item.title" class="font-weight-bold"></v-list-item-title>
           </v-list-item-content>
         </template>
         <v-divider></v-divider>
@@ -59,8 +84,10 @@
             <v-list-item-title v-text="child.title"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-divider></v-divider>
       </v-list-group>
     </v-navigation-drawer>
+    
   </div>
 </template>
 
@@ -84,6 +111,7 @@ export default {
     ],
     items: [
       {
+<<<<<<< HEAD
         action: "mdi-account",
         admin: true,
         items: [
@@ -124,6 +152,53 @@ export default {
           },
         ],
         title: "사용자 행동패턴 분석",
+=======
+      action: 'mdi-account',
+      admin: true,
+      items: [
+        {
+        title: "게임 관련",
+        action: "mdi-gamepad-variant-outline",
+        link: "gametest",
+        },
+        {
+        title: "요청한 DNS 목록",
+        action: "mdi-microsoft-internet-explorer",
+        link: "dns",
+        },
+        {
+        title: "USB 인식 감지",
+        action: "mdi-usb-flash-drive",
+        link: "driverload",
+        },
+        {
+          title: "지정 시간 외 사용자 로그감지",
+        action: "mdi-office-building-marker-outline",
+        link: "timeout",
+        },
+        {
+        title: "파일 다운로드 In Browser",
+        action: "mdi-folder-download-outline",
+        link: "download",
+        },
+        {
+        title: "연결된 네트워크 감지",
+        action: "mdi-wifi",
+        link: "wifi", 
+        },
+        {
+          title: "새로운 프로그램 설치",
+        action: "mdi-progress-download",
+        link: "newSerivce",
+        }
+        ,{
+        title: "원격 데스크톱 연결 감지",
+        action: "mdi-remote",
+        link: "rdp",
+        },
+      ],
+      title:'체크 리스트',
+>>>>>>> 73bc65e25d101754bced64a95bb82662a03649a2
       },
       {
         action: "mdi-shield-plus-outline",

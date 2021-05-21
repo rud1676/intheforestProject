@@ -3,7 +3,7 @@
     <toolbar></toolbar>
   
         <img
-          width="400"
+          width="420"
           style="display: block; margin: -60px auto;"
           src="../assets/logo.png"
         />
