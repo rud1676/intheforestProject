@@ -12,7 +12,9 @@
               width="220"
               @click="tolink(l)"
               align="center"
-            ><v-card-title class="justify-center py-2">{{ text }}</v-card-title>
+              ><v-card-title class="justify-center py-2">{{
+                text
+              }}</v-card-title>
 
               <img width="150" style=" auto" :src="img" />
             </v-card>
@@ -29,10 +31,6 @@ export default {
   data() {
     return {
       links: [
-<<<<<<< HEAD
-=======
-        ["Game", "gametest", require("../../assets/game.png"), true],
->>>>>>> 73bc65e25d101754bced64a95bb82662a03649a2
         ["Download", "download", require("../../assets/download.png"), true],
         [
           "Not office hours",
@@ -40,7 +38,12 @@ export default {
           require("../../assets/office.png"),
           true,
         ],
-        ["Anomaly", "networkconnection", require("../../assets/anomaly.png"), true],
+        [
+          "Anomaly",
+          "networkconnection",
+          require("../../assets/anomaly.png"),
+          true,
+        ],
         ["Usb Check", "driverload", require("../../assets/develop.png"), true],
       ],
     };

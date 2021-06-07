@@ -2,17 +2,16 @@
 
 ## about independent
 
-### sysmon and winlogbeat
+### sysmon and wazuh (AGENT & WAZUH)
 
 - sysmon: v12.03
-- metricbeat oss: v7.9.1
-- wazuh:
+- wazuh: v4.1
 
 ### gui interface
 
 - Nodejs : v14.15.1
-- npm : 6.14.8
-- vue/cli : 4.5.4
+- npm : v6.14.8
+- vue/cli : v4.5.4
 
 ### api server interface
 
@@ -22,17 +21,12 @@
 
 **installed package**
 
-```
-flask                     1.1.2                      py_0
-flask-cors                3.0.9                      py_0    anaconda
-flask-restx               0.2.0                    pypi_0    pypi
-elasticsearch             7.10.1                     pypi   for connecting elk stack
--
-------------------------below is unnecessary, just for my recording------------
-beautifulsoup4            4.9.3              pyhb0f4dca_0   (not used)
-urllib3                   1.25.11                    py_0   (not used)
-selenium                  3.141.0         py38he774522_1000 (not used)
-```
+|package name|version|description|
+|----|---|---|
+|flask|1.1.2|..|
+|flask-cors|3.0.9|CORS|
+|flask-restx|0.2.0|API|
+|elasticsearch|7.10.1|pypi-for connecting elk stack|
 
 ## How to Use....
 

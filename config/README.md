@@ -251,6 +251,21 @@ ad.wappalyzer.com
 /var/ossec/ruleset/rules 폴더안에 0595-win-sysmon_rules.xml 파일 수정 => 아래 구문들 바꾸기 (level =0>3으로 수정한것 뿐)
 
 ```
+<group name="windows,sysmon,">
+  <rule id="61600" level="3">
+    <if_sid>60004</if_sid>
+    <field name="win.system.severityValue">^INFORMATION$</field>
+    <description>Windows Sysmon informational event</description>
+    <options>no_full_log</options>
+  </rule>
+
+  <rule id="61601" level="3">
+    <if_sid>60004</if_sid>
+    <field name="win.system.severityValue">^WARNING$</field>
+    <description>Windows Sysmon warning event</description>
+    <options>no_full_log</options>
+    <group>gpg13_4.12,</group>
+  </rule>
   <rule id="61603" level="3">
     <if_sid>61600</if_sid>
     <field name="win.system.eventID">^1$</field>

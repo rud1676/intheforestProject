@@ -9,11 +9,12 @@ import numpy as np
 # for wazuh api!
 import json
 import requests
-import urllib3
+#import urllib3
 import requests
 from base64 import b64encode
 
-hostUrl = "34.64.140.231"
+
+hostUrl = "34.64.147.254"
 
 es = Elasticsearch(hostUrl+':9200')
 #########sector for wazuh-api config!#############

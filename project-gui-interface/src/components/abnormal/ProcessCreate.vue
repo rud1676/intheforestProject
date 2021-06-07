@@ -1,7 +1,7 @@
 <template>
   <v-container class="py-2 px-1" fluid style="height: 100vh">
     <v-card class="mx-auto" max-width="1200" color="light-green lighten-4">
-      <v-card-title>Driver Load 이벤트 감지</v-card-title>
+      <v-card-title>ProcessCreate 이벤트</v-card-title>
       <user-list />
       <date-slider @transAgoDate="getAllEventDate" />
       <data-table-detail
